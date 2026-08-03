@@ -17,7 +17,7 @@ Dark mode (dark-charcoal):
 | Category | Themes |
 |---|---|
 | **Dark** | dark-aubergine, dark-obsidian, dark-charcoal, dark-navy |
-| **Light** | light-paper, light-frost |
+| **Light** | light-paper, light-frost, light-cloud, light-cream, light-mint, light-rose, light-sand, light-lavender |
 | **Vibrant** | vibrant-synthwave, vibrant-neon, vibrant-sunset, vibrant-pacific |
 | **Nature** | nature-forest, nature-nordic, nature-desert |
 | **Minimal** | minimal-graphite, minimal-bone |
@@ -40,6 +40,29 @@ hermes config set display.skin dark-aubergine
 ```
 
 Or in the app: `/skin` in the CLI, or Appearance → theme in the desktop app. Every surface repaints live within about a second.
+
+## Adding your own theme
+
+Three ways:
+
+1. **In the app**: open **Themes**, click **+ Add theme**, paste a skin YAML, and it installs instantly. The backend validates the shape and rejects malformed input, duplicates, and unsafe names.
+2. **By hand**: drop a `.yaml` file into `~/.hermes/skins/` (profile-aware: `$HERMES_HOME/skins/`) and it appears everywhere, CLI, TUI, and desktop.
+3. **With the generator**: add a seed palette to the `THEMES` list at the top of `scripts/generate_themes.py` and re-run it. The generator derives the full color set and enforces the contrast gate for you.
+
+A minimal hand-written skin:
+
+```yaml
+name: my-theme
+description: My custom look
+colors:
+  background: "#1a1a2e"
+  ui_accent: "#ffd700"
+  banner_text: "#f5f5f5"
+  banner_dim: "#8a8a8a"
+  banner_border: "#333355"
+```
+
+Contrast is your job in the first two options and the generator's job in the third. For hand-written skins, keep primary text at 6:1 and accents at 4.5:1 against the background.
 
 ## Quality
 
@@ -89,6 +112,7 @@ Restart the app once so the backend mounts, then open **Themes** from the sideba
 
 ```bash
 python3 scripts/generate_themes.py   # regenerates themes/*.yaml + docs/preview.html
+python3 -m pytest tests/ -q          # invariant checks: structure, WCAG gate, idempotency, installer
 open docs/preview.html               # browse the gallery
 ```
 
