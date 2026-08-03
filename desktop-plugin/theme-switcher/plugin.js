@@ -7,6 +7,10 @@
  * (plugins/theme-switcher) writes display.skin through the canonical config
  * writer, so the gateway announces the change and every surface repaints.
  *
+ * Features: search + polarity/category filters, hover preview mockup,
+ * undo on apply, random theme, install-a-theme from pasted YAML, and a
+ * statusbar chip showing the active theme.
+ *
  * Plain ESM loaded uncompiled: UI is jsx() calls, NOT JSX syntax; only
  * @hermes/plugin-sdk, react, react/jsx-runtime resolve.
  */
@@ -15,7 +19,6 @@ import {
   Badge,
   Button,
   cn,
-  Codicon,
   EmptyState,
   ErrorState,
   haptic,
@@ -25,17 +28,20 @@ import {
   ROUTES_AREA,
   SIDEBAR_NAV_AREA,
   Skeleton,
+  STATUSBAR_AREAS,
   useQuery
 } from '@hermes/plugin-sdk'
 import { jsx, jsxs } from 'react/jsx-runtime'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const ID = 'theme-switcher'
 
 // Assigned in register(ctx) — components can't see ctx directly.
 let rest
 
-// ── Theme card ──────────────────────────────────────────────────────────────
+const CATEGORY_ORDER = ['Dark', 'Light', 'Vibrant', 'Nature', 'Minimal', 'Retro', 'Built-in', 'Other']
+
+// ── Color helpers ───────────────────────────────────────────────────────────
 
 function polarityOf(colors) {
   // Luminance of the background decides light vs dark; fall back to the text
@@ -59,7 +65,78 @@ function swatch(color, label) {
   })
 }
 
-function ThemeCard({ theme, active, onApply, applying }) {
+// ── Hover preview mockup ────────────────────────────────────────────────────
+
+function ThemeMockup({ colors }) {
+  const c = colors || {}
+  const bg = c.background || '#111114'
+  const text = c.text || '#e8e8e8'
+  const secondary = c.secondary || '#9a9a9a'
+  const accent = c.accent || c.tool || '#8888aa'
+  const border = c.border || '#333338'
+  const isLight = polarityOf(c) === 'light'
+  const overlay = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'
+  const overlayStrong = isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.10)'
+
+  return jsxs('div', {
+    className: 'flex h-full w-full flex-col overflow-hidden rounded-lg border text-left',
+    style: { backgroundColor: bg, borderColor: border, color: text },
+    children: [
+      jsx('div', { className: 'h-1.5 w-full shrink-0', style: { backgroundColor: accent } }),
+      jsxs('div', { className: 'flex min-h-0 flex-1 gap-2 p-2.5', children: [
+        jsxs('div', { className: 'flex w-1/4 shrink-0 flex-col gap-1 pt-1', children: [
+          jsx('div', { className: 'h-1.5 w-full rounded', style: { backgroundColor: border } }),
+          jsx('div', { className: 'h-1.5 w-3/4 rounded', style: { backgroundColor: secondary } }),
+          jsx('div', { className: 'h-1.5 w-2/3 rounded', style: { backgroundColor: accent } })
+        ]}),
+        jsxs('div', { className: 'flex min-w-0 flex-1 flex-col gap-1.5', children: [
+          jsx('div', {
+            className: 'self-start max-w-[80%] rounded-md rounded-tl-none border px-2 py-1',
+            style: { borderColor: border, backgroundColor: overlay },
+            children: jsx('span', { className: 'block truncate text-[0.5625rem]', style: { color: text }, children: 'User message' })
+          }),
+          jsx('div', {
+            className: 'self-end max-w-[80%] rounded-md rounded-tr-none border px-2 py-1',
+            style: { borderColor: accent, backgroundColor: overlayStrong },
+            children: jsx('span', { className: 'block truncate text-[0.5625rem]', style: { color: accent }, children: 'Assistant reply' })
+          }),
+          jsxs('div', { className: 'mt-0.5 flex items-center gap-1.5', style: { color: secondary }, children: [
+            jsx('span', { className: 'h-1.5 w-1.5 shrink-0 rounded-full', style: { backgroundColor: accent } }),
+            jsx('span', { className: 'text-[0.5rem]', children: 'tool call in progress' })
+          ]})
+        ]})
+      ]}),
+      jsxs('div', {
+        className: 'flex shrink-0 items-center justify-between px-2.5 py-1.5',
+        style: { backgroundColor: border, color: text },
+        children: [
+          jsx('span', { className: 'text-[0.5rem]', children: 'status bar' }),
+          jsx('span', { className: 'text-[0.5rem]', style: { color: accent }, children: 'tokens' })
+        ]
+      })
+    ]
+  })
+}
+
+function PreviewPanel({ theme }) {
+  if (!theme) return null
+  const c = theme.colors || {}
+  const isLight = polarityOf(c) === 'light'
+  return jsxs('div', {
+    className: 'pointer-events-none fixed right-6 top-24 z-30 w-72 rounded-xl border border-(--ui-stroke-secondary) bg-(--ui-bg-primary) p-3 shadow-2xl',
+    children: [
+      jsxs('div', { className: 'flex items-baseline justify-between gap-2', children: [
+        jsx('span', { className: 'truncate text-xs font-semibold', children: theme.name }),
+        jsx('span', { className: 'shrink-0 text-[0.625rem] text-(--ui-text-tertiary)', children: `${theme.category || ''} ${isLight ? '☀ light' : '☾ dark'}` })
+      ]}),
+      jsx('div', { className: 'mt-2 h-40', children: jsx(ThemeMockup, { colors: c }) })
+    ]
+  })
+}
+
+// ── Theme card ──────────────────────────────────────────────────────────────
+
+function ThemeCard({ theme, active, onApply, applying, onHover }) {
   const isActive = theme.name === active
   const c = theme.colors || {}
   const accent = c.accent || c.tool || c.background
@@ -69,6 +146,10 @@ function ThemeCard({ theme, active, onApply, applying }) {
     type: 'button',
     onClick: () => onApply(theme.name),
     disabled: applying,
+    onMouseEnter: () => onHover(theme),
+    onMouseLeave: () => onHover(null),
+    onFocus: () => onHover(theme),
+    onBlur: () => onHover(null),
     title: `${theme.description || theme.name} (${isLight ? 'light' : 'dark'})`,
     // Inline width (7 per row at 8px gap) because the app's Tailwind build
     // only ships grid-cols-1/2/4/6 — plugin grid classes get purged.
@@ -128,10 +209,105 @@ function ThemeCard({ theme, active, onApply, applying }) {
   })
 }
 
+// ── Install modal ───────────────────────────────────────────────────────────
+
+function InstallModal({ onClose, onInstalled }) {
+  const [content, setContent] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [err, setErr] = useState('')
+
+  const submit = async () => {
+    setBusy(true)
+    setErr('')
+    try {
+      const res = await rest('/install', { method: 'POST', body: { content }, timeoutMs: 8000 })
+      if (res && res.ok) {
+        haptic('tap')
+        host.notify({ kind: 'success', message: `Theme installed: ${res.name}` })
+        onInstalled(res.name)
+      } else {
+        setErr((res && res.error) || 'install failed')
+      }
+    } catch (e) {
+      setErr(e?.message ?? String(e))
+    }
+    setBusy(false)
+  }
+
+  return jsxs('div', {
+    className: 'fixed inset-0 z-40 flex items-center justify-center bg-black/50 p-6',
+    onClick: onClose,
+    children: [
+      jsxs('div', {
+        className: 'w-full max-w-lg rounded-xl border border-(--ui-stroke-secondary) bg-(--ui-bg-primary) p-5 shadow-2xl',
+        onClick: e => e.stopPropagation(),
+        children: [
+          jsx('div', { className: 'text-sm font-semibold', children: 'Add a theme' }),
+          jsx('div', { className: 'mt-1 text-xs text-(--ui-text-tertiary)', children: 'Paste a Hermes skin YAML. It lands in your skins folder and appears on this page immediately.' }),
+          jsx('textarea', {
+            value: content,
+            onChange: e => setContent(e.target.value),
+            rows: 10,
+            spellCheck: false,
+            placeholder: 'name: my-theme\ndescription: My custom look\ncolors:\n  background: "#111114"\n  ui_accent: "#7dd3fc"\n',
+            className: 'mt-3 w-full resize-y rounded-md border border-(--ui-stroke-secondary) bg-(--ui-bg-secondary) p-2 font-mono text-xs outline-none focus:border-(--ui-accent)'
+          }),
+          err ? jsx('div', { className: 'mt-2 text-xs text-(--ui-error)', children: err }) : null,
+          jsxs('div', { className: 'mt-3 flex justify-end gap-2', children: [
+            jsx(Button, { variant: 'secondary', size: 'sm', onClick: onClose, children: 'Cancel' }),
+            jsx(Button, { variant: 'primary', size: 'sm', onClick: submit, disabled: busy || !content.trim(), children: busy ? 'Installing…' : 'Install' })
+          ]})
+        ]
+      })
+    ]
+  })
+}
+
+// ── Statusbar chip ──────────────────────────────────────────────────────────
+
+function ThemeChip() {
+  const { data } = useQuery({
+    queryKey: ['theme-switcher', 'list'],
+    queryFn: () => rest('/list'),
+    refetchInterval: 30_000
+  })
+  const skins = (data && data.skins) || []
+  const active = (data && data.active) || ''
+  const t = skins.find(s => s.name === active)
+  const c = (t && t.colors) || {}
+  const dot = c.accent || c.tool || c.background
+
+  return jsx('button', {
+    type: 'button',
+    onClick: () => {
+      haptic('tap')
+      host.navigate('/themes')
+    },
+    title: 'Open Theme Switcher',
+    className: 'flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[0.6875rem] text-(--ui-text-secondary) hover:bg-(--ui-bg-tertiary) hover:text-(--ui-text-primary)',
+    children: [
+      dot ? jsx('span', { className: 'h-2 w-2 shrink-0 rounded-full', style: { backgroundColor: dot } }) : null,
+      jsx('span', { className: 'truncate', children: active || 'default' })
+    ]
+  })
+}
+
 // ── Page ────────────────────────────────────────────────────────────────────
 
 function ThemesPage() {
   const [applying, setApplying] = useState(null)
+  const [hoverTheme, setHoverTheme] = useState(null)
+  const [last, setLast] = useState(null)
+  const [q, setQ] = useState('')
+  const [pol, setPol] = useState('all')
+  const [cat, setCat] = useState('All')
+  const [installOpen, setInstallOpen] = useState(false)
+
+  useEffect(() => {
+    if (!last) return
+    const t = setTimeout(() => setLast(null), 6000)
+    return () => clearTimeout(t)
+  }, [last])
 
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['theme-switcher', 'list'],
@@ -139,13 +315,18 @@ function ThemesPage() {
     refetchInterval: 30_000
   })
 
-  const apply = async name => {
+  const apply = async (name, opts = {}) => {
     setApplying(name)
     try {
-      await rest('/apply', { method: 'POST', body: { name }, timeoutMs: 8000 })
-      haptic('tap')
-      host.notify({ kind: 'success', message: `Theme applied: ${name}` })
-      await queryClient.invalidateQueries({ queryKey: ['theme-switcher'] })
+      const res = await rest('/apply', { method: 'POST', body: { name }, timeoutMs: 8000 })
+      if (res && res.ok) {
+        haptic('tap')
+        host.notify({ kind: 'success', message: `Theme applied: ${name}` })
+        if (!opts.silent && res.previous && res.previous !== name) setLast({ name, previous: res.previous })
+        await queryClient.invalidateQueries({ queryKey: ['theme-switcher'] })
+      } else {
+        host.notify({ kind: 'error', message: (res && res.error) || `Could not apply ${name}` })
+      }
     } catch (e) {
       host.notify({ kind: 'error', message: `Could not apply ${name}: ${e?.message ?? e}` })
     } finally {
@@ -170,46 +351,118 @@ function ThemesPage() {
 
   const skins = data.skins || []
   const active = data.active || ''
-  const CATEGORY_ORDER = ['Dark', 'Light', 'Vibrant', 'Nature', 'Minimal', 'Retro', 'Built-in', 'Other']
   const ordered = [...skins].sort((a, b) => {
     const ia = CATEGORY_ORDER.indexOf(a.category)
     const ib = CATEGORY_ORDER.indexOf(b.category)
     return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib) || a.name.localeCompare(b.name)
   })
 
+  const cats = ['All', ...CATEGORY_ORDER.filter(c => skins.some(s => s.category === c))]
+  const ql = q.trim().toLowerCase()
+  const filtered = ordered.filter(t => {
+    if (pol !== 'all' && polarityOf(t.colors) !== pol) return false
+    if (cat !== 'All' && (t.category || 'Other') !== cat) return false
+    if (ql && !`${t.name} ${t.description || ''}`.toLowerCase().includes(ql)) return false
+    return true
+  })
+
+  const applyRandom = () => {
+    const pool = filtered.length ? filtered : ordered
+    if (!pool.length) return
+    const pick = pool[(Math.random() * pool.length) | 0]
+    apply(pick.name)
+  }
+
+  const chipCls = cn(
+    'rounded-md border border-(--ui-stroke-secondary) px-2 py-1 text-xs',
+    'bg-(--ui-bg-secondary) text-(--ui-text-secondary) hover:border-(--ui-stroke-strong) hover:text-(--ui-text-primary)'
+  )
+
   return jsxs('div', {
-    className: 'flex h-full min-h-0 flex-col overflow-y-auto',
+    className: 'relative flex h-full min-h-0 flex-col overflow-y-auto',
     children: [
       jsxs('div', {
         className: 'border-b border-(--ui-stroke-secondary) px-4 py-3',
         children: [
-          jsx('div', {
-            className: 'text-sm font-semibold',
-            children: 'Theme Switcher'
-          }),
+          jsx('div', { className: 'text-sm font-semibold', children: 'Theme Switcher' }),
           jsx('div', {
             className: 'mt-0.5 text-xs text-(--ui-text-tertiary)',
-            children: `Active: ${active} · ${skins.length} skins installed · click any card to apply · ☀ light ☾ dark`
+            children:
+              q.trim() || pol !== 'all' || cat !== 'All'
+                ? `Active: ${active} · showing ${filtered.length} of ${skins.length} · ☀ light ☾ dark`
+                : `Active: ${active} · ${skins.length} skins installed · click any card to apply · ☀ light ☾ dark`
           })
+        ]
+      }),
+      jsxs('div', {
+        className: 'flex flex-wrap items-center gap-2 border-b border-(--ui-stroke-secondary) px-4 py-2',
+        children: [
+          jsx('input', {
+            type: 'search',
+            value: q,
+            onChange: e => setQ(e.target.value),
+            placeholder: 'Search themes…',
+            className: 'w-44 rounded-md border border-(--ui-stroke-secondary) bg-(--ui-bg-secondary) px-2 py-1 text-xs outline-none focus:border-(--ui-accent)'
+          }),
+          [['all', 'All'], ['light', '☀ Light'], ['dark', '☾ Dark']].map(([k, label]) =>
+            jsx('button', {
+              key: k,
+              type: 'button',
+              onClick: () => setPol(k),
+              className: cn(chipCls, pol === k && 'border-(--ui-accent) bg-(--ui-bg-tertiary) text-(--ui-accent)'),
+              children: label
+            })
+          ),
+          jsx('select', {
+            value: cat,
+            onChange: e => setCat(e.target.value),
+            className: 'rounded-md border border-(--ui-stroke-secondary) bg-(--ui-bg-secondary) px-2 py-1 text-xs outline-none focus:border-(--ui-accent)',
+            children: cats.map(c => jsx('option', { key: c, value: c, children: c }))
+          }),
+          jsx('button', { type: 'button', onClick: applyRandom, className: chipCls, children: '🎲 Random' }),
+          jsx('button', { type: 'button', onClick: () => setInstallOpen(true), className: chipCls, children: '＋ Add theme' }),
+          last
+            ? jsxs('div', {
+                className: 'ml-auto flex items-center gap-2 rounded-md border border-(--ui-accent) bg-(--ui-bg-tertiary) px-2 py-1 text-xs',
+                children: [
+                  jsx('span', { className: 'text-(--ui-text-secondary)', children: `Applied ${last.name}` }),
+                  jsx('button', {
+                    type: 'button',
+                    onClick: () => {
+                      const prev = last.previous
+                      setLast(null)
+                      apply(prev, { silent: true })
+                    },
+                    className: 'font-medium text-(--ui-accent) hover:underline',
+                    children: 'Undo'
+                  })
+                ]
+              })
+            : null
         ]
       }),
       skins.length === 0
         ? jsx(EmptyState, {
             title: 'No skins found',
-            description: 'Drop YAML skins into your Hermes skins folder and they will appear here.'
+            description: 'Drop YAML skins into your Hermes skins folder and they will appear here, or use Add theme.'
           })
-        : jsx('div', {
-            className: 'flex flex-wrap gap-2 px-4 py-3',
-            children: ordered.map(t =>
-              jsx(ThemeCard, {
-                key: t.name,
-                theme: t,
-                active,
-                onApply: apply,
-                applying: applying === t.name
-              })
-            )
-          })
+        : filtered.length === 0
+          ? jsx(EmptyState, { title: 'No themes match', description: 'Try a different search or filter.' })
+          : jsx('div', {
+              className: 'flex flex-wrap gap-2 px-4 py-3',
+              children: filtered.map(t =>
+                jsx(ThemeCard, {
+                  key: t.name,
+                  theme: t,
+                  active,
+                  onApply: apply,
+                  applying: applying === t.name,
+                  onHover: setHoverTheme
+                })
+              )
+            }),
+      jsx(PreviewPanel, { theme: hoverTheme }),
+      installOpen ? jsx(InstallModal, { onClose: () => setInstallOpen(false), onInstalled: () => setInstallOpen(false) }) : null
     ]
   })
 }
@@ -220,7 +473,7 @@ export default {
   id: ID,
   name: 'Themes',
   description:
-    'Browse and apply every installed Hermes skin from the desktop app — grouped by category, one click to repaint every surface.',
+    'Browse and apply every installed Hermes skin from the desktop app — search, preview, one click to repaint every surface.',
   defaultEnabled: true,
   register(ctx) {
     rest = ctx.rest
@@ -238,6 +491,12 @@ export default {
         area: SIDEBAR_NAV_AREA,
         order: 56,
         data: { path: '/themes', label: 'Themes', codicon: 'paintcan' }
+      },
+      {
+        id: 'chip',
+        area: STATUSBAR_AREAS.right,
+        order: 91,
+        render: () => jsx(ThemeChip, {})
       },
       {
         id: 'open',

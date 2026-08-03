@@ -8,11 +8,19 @@ announces the change and every surface (CLI, TUI, desktop) repaints live.
 
 from __future__ import annotations
 
+import re
 from typing import Any, Dict, List
 
 from fastapi import APIRouter, Body
 
+try:
+    import yaml as _yaml
+except Exception:  # pragma: no cover - hermes ships pyyaml
+    _yaml = None
+
 router = APIRouter()
+
+_prev_skin: str = ""
 
 CATEGORY_PREFIXES = [
     ("dark-", "Dark"),
@@ -107,6 +115,7 @@ def list_themes() -> Dict[str, Any]:
 
 @router.post("/apply")
 def apply_theme(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
+    global _prev_skin
     name = str(payload.get("name", "")).strip()
     if not name:
         return {"ok": False, "error": "name required"}
@@ -114,7 +123,44 @@ def apply_theme(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
     if name not in available:
         return {"ok": False, "error": f"unknown skin: {name}"}
     try:
+        _prev_skin = _active()
         _apply_skin(name)
     except Exception as e:  # noqa: BLE001 - surface honest failure to the UI
         return {"ok": False, "error": f"apply failed: {e}"}
-    return {"ok": True, "active": name}
+    return {"ok": True, "active": name, "previous": _prev_skin}
+
+
+@router.post("/install")
+def install_theme(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
+    """Install a skin from raw YAML pasted in the desktop app."""
+    content = str(payload.get("content", "")).strip()
+    if not content:
+        return {"ok": False, "error": "theme YAML required"}
+    if _yaml is None:
+        return {"ok": False, "error": "yaml unavailable"}
+    try:
+        data = _yaml.safe_load(content)
+    except Exception as e:  # noqa: BLE001
+        return {"ok": False, "error": f"invalid YAML: {e}"}
+    if not isinstance(data, dict):
+        return {"ok": False, "error": "theme YAML must be a mapping"}
+    name = str(data.get("name", "")).strip()
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", name):
+        return {"ok": False, "error": "theme name must be lowercase letters, numbers, hyphens"}
+    colors = data.get("colors")
+    if not isinstance(colors, dict) or not colors:
+        return {"ok": False, "error": "theme must define a colors section"}
+    if not colors.get("background") and not colors.get("ui_accent"):
+        return {"ok": False, "error": "theme must define background or ui_accent"}
+    if name in {s["name"] for s in _skins()}:
+        return {"ok": False, "error": f"theme '{name}' already exists"}
+
+    from hermes_constants import get_hermes_home
+
+    skins_dir = get_hermes_home() / "skins"
+    skins_dir.mkdir(parents=True, exist_ok=True)
+    path = skins_dir / f"{name}.yaml"
+    if path.exists():
+        return {"ok": False, "error": f"theme '{name}' already exists"}
+    path.write_text(content, encoding="utf-8")
+    return {"ok": True, "active": _active(), "name": name}
