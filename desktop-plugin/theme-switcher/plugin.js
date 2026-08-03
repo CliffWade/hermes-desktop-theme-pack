@@ -379,6 +379,9 @@ function ThemesPage() {
   const skins = data.skins || []
   const active = data.active || ''
   const ordered = [...skins].sort((a, b) => {
+    const la = isLightTheme(a) ? 0 : 1
+    const lb = isLightTheme(b) ? 0 : 1
+    if (la !== lb) return la - lb
     const ia = CATEGORY_ORDER.indexOf(a.category)
     const ib = CATEGORY_ORDER.indexOf(b.category)
     return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib) || a.name.localeCompare(b.name)
@@ -478,18 +481,56 @@ function ThemesPage() {
           })
         : filtered.length === 0
           ? jsx(EmptyState, { title: 'No themes match', description: 'Try a different search or filter.' })
-          : jsx('div', {
-              className: 'flex flex-wrap gap-2 px-4 py-3',
-              children: filtered.map(t =>
-                jsx(ThemeCard, {
-                  key: t.name,
-                  theme: t,
-                  active,
-                  onApply: apply,
-                  applying: applying === t.name,
-                  onHover: setHoverTheme
-                })
-              )
+          : jsxs('div', {
+              className: 'px-4 py-3',
+              children: [
+                filtered.some(t => isLightTheme(t))
+                  ? jsxs('div', { className: 'mb-2', children: [
+                      jsx('div', {
+                        className: 'mb-1 text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)',
+                        children: `☀ Light (${filtered.filter(t => isLightTheme(t)).length})`
+                      }),
+                      jsx('div', {
+                        className: 'flex flex-wrap gap-2',
+                        children: filtered
+                          .filter(t => isLightTheme(t))
+                          .map(t =>
+                            jsx(ThemeCard, {
+                              key: t.name,
+                              theme: t,
+                              active,
+                              onApply: apply,
+                              applying: applying === t.name,
+                              onHover: setHoverTheme
+                            })
+                          )
+                      })
+                    ]})
+                  : null,
+                filtered.some(t => !isLightTheme(t))
+                  ? jsxs('div', { className: 'mb-2', children: [
+                      jsx('div', {
+                        className: 'mb-1 text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)',
+                        children: `☾ Dark (${filtered.filter(t => !isLightTheme(t)).length})`
+                      }),
+                      jsx('div', {
+                        className: 'flex flex-wrap gap-2',
+                        children: filtered
+                          .filter(t => !isLightTheme(t))
+                          .map(t =>
+                            jsx(ThemeCard, {
+                              key: t.name,
+                              theme: t,
+                              active,
+                              onApply: apply,
+                              applying: applying === t.name,
+                              onHover: setHoverTheme
+                            })
+                          )
+                      })
+                    ]})
+                  : null
+              ]
             }),
       jsx(PreviewPanel, { theme: hoverTheme }),
       installOpen ? jsx(InstallModal, { onClose: () => setInstallOpen(false), onInstalled: () => setInstallOpen(false) }) : null
