@@ -1,0 +1,48 @@
+# Hermes skin — minimal-bone.
+# Warm bone white with stone gray.
+name: minimal-bone
+description: Warm bone white with stone gray
+
+colors:
+  background: "#eae6dc"
+  ui_accent: "#696458"
+  banner_accent: "#696458"
+  banner_title: "#2e2b24"
+  banner_text: "#2e2b24"
+  ui_text: "#2e2b24"
+  banner_dim: "#6b665c"
+  banner_border: "#d4cebf"
+  ui_border: "#d4cebf"
+  ui_ok: "#2c854d"
+  ui_warn: "#977316"
+  ui_error: "#bc5656"
+  prompt: "#2e2b24"
+  input_rule: "#696458"
+  response_border: "#8a8374"
+  status_bar_bg: "#ece8df"
+  status_bar_text: "#2e2b24"
+  status_bar_good: "#2c854d"
+  status_bar_warn: "#977316"
+  status_bar_critical: "#bc5656"
+  session_label: "#696458"
+  session_border: "#d4cebf"
+  ui_tool: "#8a8374"
+  ui_thinking: "#6b665c"
+  diff_added: "#2c854d"
+  diff_removed: "#bc5656"
+  diff_added_word: "#467658"
+  diff_removed_word: "#945c5c"
+  syntax_string: "#3d7953"
+  syntax_number: "#876c26"
+  syntax_keyword: "#706c61"
+  syntax_comment: "#6b665c"
+  completion_menu_bg: "#dfdbd1"
+  completion_menu_current_bg: "#d5d0c5"
+  completion_menu_meta_bg: "#d7d3ca"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

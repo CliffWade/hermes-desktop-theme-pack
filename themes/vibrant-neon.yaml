@@ -1,0 +1,48 @@
+# Hermes skin — vibrant-neon.
+# Electric green on deep teal-black.
+name: vibrant-neon
+description: Electric green on deep teal-black
+
+colors:
+  background: "#081420"
+  ui_accent: "#6dffce"
+  banner_accent: "#6dffce"
+  banner_title: "#e0f7ef"
+  banner_text: "#e0f7ef"
+  ui_text: "#e0f7ef"
+  banner_dim: "#7fa3c9"
+  banner_border: "#123044"
+  ui_border: "#123044"
+  ui_ok: "#4ade80"
+  ui_warn: "#fbbf24"
+  ui_error: "#f87171"
+  prompt: "#e0f7ef"
+  input_rule: "#6dffce"
+  response_border: "#00e5a0"
+  status_bar_bg: "#07121d"
+  status_bar_text: "#e0f7ef"
+  status_bar_good: "#4ade80"
+  status_bar_warn: "#fbbf24"
+  status_bar_critical: "#f87171"
+  session_label: "#6dffce"
+  session_border: "#123044"
+  ui_tool: "#00e5a0"
+  ui_thinking: "#7fa3c9"
+  diff_added: "#4ade80"
+  diff_removed: "#f87171"
+  diff_added_word: "#77e6a0"
+  diff_removed_word: "#fa9494"
+  syntax_string: "#65e393"
+  syntax_number: "#fbc53a"
+  syntax_keyword: "#79ffd2"
+  syntax_comment: "#7fa3c9"
+  completion_menu_bg: "#15222c"
+  completion_menu_current_bg: "#06423c"
+  completion_menu_meta_bg: "#1e2b35"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

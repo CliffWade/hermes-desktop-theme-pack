@@ -1,0 +1,48 @@
+# Hermes skin — dark-charcoal.
+# Steel gray-blue, calm and neutral.
+name: dark-charcoal
+description: Steel gray-blue, calm and neutral
+
+colors:
+  background: "#16181d"
+  ui_accent: "#8ec5ff"
+  banner_accent: "#8ec5ff"
+  banner_title: "#e6e9ef"
+  banner_text: "#e6e9ef"
+  ui_text: "#e6e9ef"
+  banner_dim: "#8b919c"
+  banner_border: "#262a33"
+  ui_border: "#262a33"
+  ui_ok: "#4ade80"
+  ui_warn: "#fbbf24"
+  ui_error: "#f87171"
+  prompt: "#e6e9ef"
+  input_rule: "#8ec5ff"
+  response_border: "#4f9cf0"
+  status_bar_bg: "#14161a"
+  status_bar_text: "#e6e9ef"
+  status_bar_good: "#4ade80"
+  status_bar_warn: "#fbbf24"
+  status_bar_critical: "#f87171"
+  session_label: "#8ec5ff"
+  session_border: "#262a33"
+  ui_tool: "#4f9cf0"
+  ui_thinking: "#8b919c"
+  diff_added: "#4ade80"
+  diff_removed: "#f87171"
+  diff_added_word: "#77e6a0"
+  diff_removed_word: "#fa9494"
+  syntax_string: "#65e393"
+  syntax_number: "#fbc53a"
+  syntax_keyword: "#97caff"
+  syntax_comment: "#8b919c"
+  completion_menu_bg: "#22252a"
+  completion_menu_current_bg: "#23354b"
+  completion_menu_meta_bg: "#2b2d32"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

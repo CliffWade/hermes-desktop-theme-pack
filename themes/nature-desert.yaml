@@ -1,0 +1,48 @@
+# Hermes skin — nature-desert.
+# Sand dune amber on warm dark.
+name: nature-desert
+description: Sand dune amber on warm dark
+
+colors:
+  background: "#1d1710"
+  ui_accent: "#f0c07a"
+  banner_accent: "#f0c07a"
+  banner_title: "#f0e6d8"
+  banner_text: "#f0e6d8"
+  ui_text: "#f0e6d8"
+  banner_dim: "#a89072"
+  banner_border: "#3a2c1c"
+  ui_border: "#3a2c1c"
+  ui_ok: "#4ade80"
+  ui_warn: "#fbbf24"
+  ui_error: "#f87171"
+  prompt: "#f0e6d8"
+  input_rule: "#f0c07a"
+  response_border: "#d99a3d"
+  status_bar_bg: "#1a150e"
+  status_bar_text: "#f0e6d8"
+  status_bar_good: "#4ade80"
+  status_bar_warn: "#fbbf24"
+  status_bar_critical: "#f87171"
+  session_label: "#f0c07a"
+  session_border: "#3a2c1c"
+  ui_tool: "#d99a3d"
+  ui_thinking: "#a89072"
+  diff_added: "#4ade80"
+  diff_removed: "#f87171"
+  diff_added_word: "#77e6a0"
+  diff_removed_word: "#fa9494"
+  syntax_string: "#65e393"
+  syntax_number: "#fbc53a"
+  syntax_keyword: "#f1c585"
+  syntax_comment: "#a89072"
+  completion_menu_bg: "#2a231c"
+  completion_menu_current_bg: "#46341a"
+  completion_menu_meta_bg: "#322c24"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

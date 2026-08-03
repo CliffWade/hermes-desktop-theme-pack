@@ -1,0 +1,48 @@
+# Hermes skin — vibrant-synthwave.
+# Retro synthwave, hot pink on violet.
+name: vibrant-synthwave
+description: Retro synthwave, hot pink on violet
+
+colors:
+  background: "#1a0b2e"
+  ui_accent: "#ff8ac0"
+  banner_accent: "#ff8ac0"
+  banner_title: "#f5e9ff"
+  banner_text: "#f5e9ff"
+  ui_text: "#f5e9ff"
+  banner_dim: "#b78fd4"
+  banner_border: "#3c1f5c"
+  ui_border: "#3c1f5c"
+  ui_ok: "#4ade80"
+  ui_warn: "#fbbf24"
+  ui_error: "#f87171"
+  prompt: "#f5e9ff"
+  input_rule: "#ff8ac0"
+  response_border: "#ff2e88"
+  status_bar_bg: "#170a29"
+  status_bar_text: "#f5e9ff"
+  status_bar_good: "#4ade80"
+  status_bar_warn: "#fbbf24"
+  status_bar_critical: "#f87171"
+  session_label: "#ff8ac0"
+  session_border: "#3c1f5c"
+  ui_tool: "#ff2e88"
+  ui_thinking: "#b78fd4"
+  diff_added: "#4ade80"
+  diff_removed: "#f87171"
+  diff_added_word: "#77e6a0"
+  diff_removed_word: "#fa9494"
+  syntax_string: "#65e393"
+  syntax_number: "#fbc53a"
+  syntax_keyword: "#ff93c5"
+  syntax_comment: "#b78fd4"
+  completion_menu_bg: "#27183b"
+  completion_menu_current_bg: "#4c1342"
+  completion_menu_meta_bg: "#302143"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

@@ -1,0 +1,48 @@
+# Hermes skin — retro-blue.
+# Commodore-style bright blue.
+name: retro-blue
+description: Commodore-style bright blue
+
+colors:
+  background: "#04081a"
+  ui_accent: "#8ccaff"
+  banner_accent: "#8ccaff"
+  banner_title: "#d6e6ff"
+  banner_text: "#d6e6ff"
+  ui_text: "#d6e6ff"
+  banner_dim: "#6a86b0"
+  banner_border: "#122452"
+  ui_border: "#122452"
+  ui_ok: "#4ade80"
+  ui_warn: "#fbbf24"
+  ui_error: "#f87171"
+  prompt: "#d6e6ff"
+  input_rule: "#8ccaff"
+  response_border: "#44aaff"
+  status_bar_bg: "#040717"
+  status_bar_text: "#d6e6ff"
+  status_bar_good: "#4ade80"
+  status_bar_warn: "#fbbf24"
+  status_bar_critical: "#f87171"
+  session_label: "#8ccaff"
+  session_border: "#122452"
+  ui_tool: "#44aaff"
+  ui_thinking: "#6a86b0"
+  diff_added: "#4ade80"
+  diff_removed: "#f87171"
+  diff_added_word: "#77e6a0"
+  diff_removed_word: "#fa9494"
+  syntax_string: "#65e393"
+  syntax_number: "#fbc53a"
+  syntax_keyword: "#95ceff"
+  syntax_comment: "#6a86b0"
+  completion_menu_bg: "#111528"
+  completion_menu_current_bg: "#122c4c"
+  completion_menu_meta_bg: "#191e31"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
