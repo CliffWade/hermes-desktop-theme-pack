@@ -68,6 +68,15 @@ def _skins() -> List[Dict[str, str]]:
             if name.startswith(prefix):
                 cat = label
                 break
+        installed_at = None
+        if s.get("source") != "builtin":
+            try:
+                from hermes_constants import get_hermes_home
+
+                p = get_hermes_home() / "skins" / f"{name}.yaml"
+                installed_at = int(p.stat().st_mtime)
+            except Exception:
+                installed_at = None
         out.append(
             {
                 "name": name,
@@ -75,6 +84,7 @@ def _skins() -> List[Dict[str, str]]:
                 "source": s.get("source", "user"),
                 "category": cat,
                 "colors": _skin_preview(name),
+                "installed_at": installed_at,
             }
         )
     return out

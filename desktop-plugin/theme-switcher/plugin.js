@@ -161,6 +161,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
   const c = theme.colors || {}
   const accent = c.accent || c.tool || c.background
   const isLight = isLightTheme(theme)
+  const isNew = theme.installed_at && Date.now() / 1000 - theme.installed_at < 14 * 24 * 3600
 
   return jsxs('button', {
     type: 'button',
@@ -202,12 +203,18 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
                 className: 'shrink-0 text-[0.5625rem] text-(--ui-accent)',
                 children: 'Active'
               })
-            : theme.category
-              ? jsx('span', {
-                  className: 'shrink-0 text-[0.5625rem] uppercase tracking-wide text-(--ui-text-tertiary)',
-                  children: theme.category
+            : isNew
+              ? jsx(Badge, {
+                  variant: 'outline',
+                  className: 'shrink-0 text-[0.5625rem] text-(--ui-ok)',
+                  children: 'NEW'
                 })
-              : null
+              : theme.category
+                ? jsx('span', {
+                    className: 'shrink-0 text-[0.5625rem] uppercase tracking-wide text-(--ui-text-tertiary)',
+                    children: theme.category
+                  })
+                : null
         ]
       }),
       jsxs('div', {
