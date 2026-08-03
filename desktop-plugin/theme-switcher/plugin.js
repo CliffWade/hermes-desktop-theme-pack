@@ -46,73 +46,51 @@ function swatch(color, label) {
   })
 }
 
-function PalettePreview({ colors }) {
-  if (!colors || !colors.background) return null
-  const bg = colors.background
-  const accent = colors.accent || colors.tool
-  const text = colors.text
-  const secondary = colors.secondary
-  const border = colors.border
-
-  return jsxs('div', {
-    className: 'mb-2 w-full rounded-md border px-3 py-2.5',
-    style: { backgroundColor: bg, borderColor: border || 'transparent' },
-    children: [
-      jsxs('div', {
-        className: 'flex items-center gap-2',
-        children: [
-          jsx('span', { className: 'text-base font-semibold', style: { color: text }, children: 'Aa' }),
-          jsx('span', { className: 'text-xs', style: { color: secondary }, children: 'Aa' }),
-          jsx('span', { className: 'text-xs', style: { color: accent }, children: 'Aa' }),
-          accent ? jsx('span', { className: 'ml-auto h-3 w-10 rounded-full', style: { backgroundColor: accent } }) : null
-        ]
-      }),
-      jsxs('div', {
-        className: 'mt-2 flex items-center gap-1.5',
-        children: [
-          swatch(bg, 'background'),
-          swatch(accent, 'accent'),
-          swatch(colors.tool, 'tool'),
-          swatch(text, 'text'),
-          swatch(secondary, 'secondary'),
-          swatch(border, 'border')
-        ]
-      })
-    ]
-  })
-}
-
 function ThemeCard({ theme, active, onApply, applying }) {
   const isActive = theme.name === active
+  const c = theme.colors || {}
+  const accent = c.accent || c.tool || c.background
 
   return jsxs('button', {
     type: 'button',
     onClick: () => onApply(theme.name),
     disabled: applying,
+    title: theme.description || theme.name,
     className: cn(
-      'flex flex-col items-start gap-1 rounded-lg border p-4 text-left transition-colors',
+      'flex flex-col gap-1.5 rounded-lg border p-2.5 text-left transition-colors',
       isActive
         ? 'border-(--ui-accent) bg-(--ui-bg-tertiary)'
         : 'border-(--ui-stroke-secondary) bg-(--ui-bg-secondary) hover:border-(--ui-stroke-strong)'
     ),
     children: [
+      accent ? jsx('div', { className: 'h-1 w-full rounded-full', style: { backgroundColor: accent } }) : null,
       jsxs('div', {
-        className: 'flex w-full items-center justify-between gap-2',
+        className: 'flex w-full items-center justify-between gap-1',
         children: [
-          jsx('span', { className: 'truncate text-sm font-medium', children: theme.name }),
+          jsx('span', { className: 'truncate text-xs font-medium', children: theme.name }),
           isActive
             ? jsx(Badge, {
                 variant: 'outline',
-                className: 'shrink-0 text-[0.6875rem] text-(--ui-accent)',
+                className: 'shrink-0 text-[0.625rem] text-(--ui-accent)',
                 children: 'Active'
               })
             : null
         ]
       }),
-      jsx(PalettePreview, { colors: theme.colors }),
+      jsxs('div', {
+        className: 'flex items-center gap-1',
+        children: [
+          swatch(c.background, 'background'),
+          swatch(accent, 'accent'),
+          swatch(c.tool, 'tool'),
+          swatch(c.text, 'text'),
+          swatch(c.secondary, 'secondary'),
+          swatch(c.border, 'border')
+        ]
+      }),
       jsx('span', {
-        className: 'line-clamp-2 text-xs leading-relaxed text-(--ui-text-tertiary)',
-        children: theme.description || 'No description'
+        className: 'truncate text-[0.6875rem] text-(--ui-text-tertiary)',
+        children: theme.description || ''
       })
     ]
   })
@@ -170,15 +148,15 @@ function ThemesPage() {
     className: 'flex h-full min-h-0 flex-col overflow-y-auto',
     children: [
       jsxs('div', {
-        className: 'border-b border-(--ui-stroke-secondary) px-6 py-5',
+        className: 'border-b border-(--ui-stroke-secondary) px-4 py-3',
         children: [
           jsx('div', {
-            className: 'text-base font-semibold',
+            className: 'text-sm font-semibold',
             children: 'Theme Switcher'
           }),
           jsx('div', {
-            className: 'mt-1 text-xs text-(--ui-text-tertiary)',
-            children: `Active: ${active} · ${skins.length} skins installed. Click any card to apply it, every surface repaints live.`
+            className: 'mt-0.5 text-xs text-(--ui-text-tertiary)',
+            children: `Active: ${active} · ${skins.length} skins installed · click any card to apply, every surface repaints live`
           })
         ]
       }),
@@ -192,11 +170,11 @@ function ThemesPage() {
               key: cat,
               children: [
                 jsx('h2', {
-                  className: 'px-6 pb-2 pt-5 text-[0.6875rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)',
+                  className: 'px-4 pb-1 pt-3 text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)',
                   children: `${cat} (${items.length})`
                 }),
                 jsx('div', {
-                  className: 'grid grid-cols-1 gap-3 px-6 pb-4 sm:grid-cols-2 lg:grid-cols-3',
+                  className: 'grid grid-cols-2 gap-2 px-4 pb-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7',
                   children: items.map(t =>
                     jsx(ThemeCard, {
                       key: t.name,
