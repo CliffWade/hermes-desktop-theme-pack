@@ -509,7 +509,8 @@ function ThemesPage() {
                   : null,
                 filtered.some(t => !isLightTheme(t))
                   ? jsxs('div', {
-                      className: 'mb-2 border-t border-(--ui-stroke-secondary) pt-3',
+                      className: 'mb-2 mt-3 border-t pt-4',
+                      style: { borderTopWidth: 2, borderTopColor: 'var(--ui-stroke-strong)' },
                       children: [
                       jsx('div', {
                         className: 'mb-1 text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)',
