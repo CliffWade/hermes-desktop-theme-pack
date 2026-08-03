@@ -37,6 +37,19 @@ let rest
 
 // ── Theme card ──────────────────────────────────────────────────────────────
 
+function polarityOf(colors) {
+  // Luminance of the background decides light vs dark; fall back to the text
+  // color when a skin doesn't declare a background (bright text = dark theme).
+  const hex = colors && (colors.background || colors.text || colors.secondary || colors.accent)
+  if (!hex || !/^#([0-9a-f]{6})$/i.test(hex)) return 'dark'
+  const n = parseInt(hex.slice(1), 16)
+  const r = (n >> 16) & 255
+  const g = (n >> 8) & 255
+  const b = n & 255
+  const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255
+  return lum > 0.5 ? 'light' : 'dark'
+}
+
 function swatch(color, label) {
   if (!color) return null
   return jsx('span', {
@@ -50,12 +63,13 @@ function ThemeCard({ theme, active, onApply, applying }) {
   const isActive = theme.name === active
   const c = theme.colors || {}
   const accent = c.accent || c.tool || c.background
+  const isLight = polarityOf(c) === 'light'
 
   return jsxs('button', {
     type: 'button',
     onClick: () => onApply(theme.name),
     disabled: applying,
-    title: theme.description || theme.name,
+    title: `${theme.description || theme.name} (${isLight ? 'light' : 'dark'})`,
     // Inline width (7 per row at 8px gap) because the app's Tailwind build
     // only ships grid-cols-1/2/4/6 — plugin grid classes get purged.
     style: { width: 'calc((100% - 48px) / 7)' },
@@ -70,7 +84,17 @@ function ThemeCard({ theme, active, onApply, applying }) {
       jsxs('div', {
         className: 'flex w-full items-center justify-between gap-1',
         children: [
-          jsx('span', { className: 'truncate text-xs font-medium', children: theme.name }),
+          jsxs('span', {
+            className: 'flex min-w-0 items-center gap-1',
+            children: [
+              jsx('span', {
+                title: isLight ? 'Light theme' : 'Dark theme',
+                className: isLight ? 'shrink-0 text-[0.75rem] leading-none text-(--ui-warn)' : 'shrink-0 text-[0.75rem] leading-none text-(--ui-accent)',
+                children: isLight ? '☀' : '☾'
+              }),
+              jsx('span', { className: 'truncate text-xs font-medium', children: theme.name })
+            ]
+          }),
           isActive
             ? jsx(Badge, {
                 variant: 'outline',
@@ -165,7 +189,7 @@ function ThemesPage() {
           }),
           jsx('div', {
             className: 'mt-0.5 text-xs text-(--ui-text-tertiary)',
-            children: `Active: ${active} · ${skins.length} skins installed · click any card to apply, every surface repaints live`
+            children: `Active: ${active} · ${skins.length} skins installed · click any card to apply · ☀ light ☾ dark`
           })
         ]
       }),
