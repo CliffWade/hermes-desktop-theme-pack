@@ -2,9 +2,15 @@
 
 18 curated color themes for Hermes Agent, organized into 6 categories, every one contrast-checked to WCAG AA. Drop them in and they appear across the CLI, the TUI, and the desktop app at once, because a Hermes skin themes every surface.
 
-In the desktop app, the Theme Switcher page lists every installed skin in a single view, with its real palette, one click to apply:
+In the desktop app, the Theme Switcher page lists every installed skin in a single view, with its real palette, one click to apply. It follows your active skin, so the same page looks like this in light and dark mode:
 
-![Theme Switcher in the desktop app](docs/themes-page.png)
+Light mode (default theme):
+
+![Theme Switcher in the desktop app, light mode](docs/themes-page.png)
+
+Dark mode (dark-charcoal):
+
+![Theme Switcher in the desktop app, dark mode](docs/themes-page-dark.png)
 
 ## Themes
 
