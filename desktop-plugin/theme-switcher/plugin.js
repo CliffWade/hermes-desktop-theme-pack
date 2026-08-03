@@ -57,7 +57,7 @@ function ThemeCard({ theme, active, onApply, applying }) {
     disabled: applying,
     title: theme.description || theme.name,
     className: cn(
-      'flex flex-col gap-1.5 rounded-lg border p-2.5 text-left transition-colors',
+      'flex flex-col gap-1 rounded-lg border p-2 text-left transition-colors',
       isActive
         ? 'border-(--ui-accent) bg-(--ui-bg-tertiary)'
         : 'border-(--ui-stroke-secondary) bg-(--ui-bg-secondary) hover:border-(--ui-stroke-strong)'
@@ -71,10 +71,15 @@ function ThemeCard({ theme, active, onApply, applying }) {
           isActive
             ? jsx(Badge, {
                 variant: 'outline',
-                className: 'shrink-0 text-[0.625rem] text-(--ui-accent)',
+                className: 'shrink-0 text-[0.5625rem] text-(--ui-accent)',
                 children: 'Active'
               })
-            : null
+            : theme.category
+              ? jsx('span', {
+                  className: 'shrink-0 text-[0.5625rem] uppercase tracking-wide text-(--ui-text-tertiary)',
+                  children: theme.category
+                })
+              : null
         ]
       }),
       jsxs('div', {
@@ -89,7 +94,7 @@ function ThemeCard({ theme, active, onApply, applying }) {
         ]
       }),
       jsx('span', {
-        className: 'truncate text-[0.6875rem] text-(--ui-text-tertiary)',
+        className: 'truncate text-[0.625rem] text-(--ui-text-tertiary)',
         children: theme.description || ''
       })
     ]
@@ -138,11 +143,12 @@ function ThemesPage() {
 
   const skins = data.skins || []
   const active = data.active || ''
-  const groups = {}
-  for (const s of skins) {
-    const key = s.category || 'Other'
-    ;(groups[key] = groups[key] || []).push(s)
-  }
+  const CATEGORY_ORDER = ['Dark', 'Light', 'Vibrant', 'Nature', 'Minimal', 'Retro', 'Built-in', 'Other']
+  const ordered = [...skins].sort((a, b) => {
+    const ia = CATEGORY_ORDER.indexOf(a.category)
+    const ib = CATEGORY_ORDER.indexOf(b.category)
+    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib) || a.name.localeCompare(b.name)
+  })
 
   return jsxs('div', {
     className: 'flex h-full min-h-0 flex-col overflow-y-auto',
@@ -165,29 +171,18 @@ function ThemesPage() {
             title: 'No skins found',
             description: 'Drop YAML skins into your Hermes skins folder and they will appear here.'
           })
-        : Object.entries(groups).map(([cat, items]) =>
-            jsxs('section', {
-              key: cat,
-              children: [
-                jsx('h2', {
-                  className: 'px-4 pb-1 pt-3 text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)',
-                  children: `${cat} (${items.length})`
-                }),
-                jsx('div', {
-                  className: 'grid grid-cols-2 gap-2 px-4 pb-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7',
-                  children: items.map(t =>
-                    jsx(ThemeCard, {
-                      key: t.name,
-                      theme: t,
-                      active,
-                      onApply: apply,
-                      applying: applying === t.name
-                    })
-                  )
-                })
-              ]
-            })
-          )
+        : jsx('div', {
+            className: 'grid grid-cols-2 gap-2 px-4 py-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7',
+            children: ordered.map(t =>
+              jsx(ThemeCard, {
+                key: t.name,
+                theme: t,
+                active,
+                onApply: apply,
+                applying: applying === t.name
+              })
+            )
+          })
     ]
   })
 }
