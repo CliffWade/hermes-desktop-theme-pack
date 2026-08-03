@@ -1,0 +1,48 @@
+# Hermes skin — light-mint.
+# Fresh white with soft mint green.
+name: light-mint
+description: Fresh white with soft mint green
+
+colors:
+  background: "#f2faf5"
+  ui_accent: "#267e58"
+  banner_accent: "#267e58"
+  banner_title: "#1e2b25"
+  banner_text: "#1e2b25"
+  ui_text: "#1e2b25"
+  banner_dim: "#5b7569"
+  banner_border: "#d3e8dd"
+  ui_border: "#d3e8dd"
+  ui_ok: "#2f8e52"
+  ui_warn: "#a17a17"
+  ui_error: "#d05f5f"
+  prompt: "#1e2b25"
+  input_rule: "#267e58"
+  response_border: "#2f9e6e"
+  status_bar_bg: "#f3faf6"
+  status_bar_text: "#1e2b25"
+  status_bar_good: "#2f8e52"
+  status_bar_warn: "#a17a17"
+  status_bar_critical: "#d05f5f"
+  session_label: "#267e58"
+  session_border: "#d3e8dd"
+  ui_tool: "#2f9e6e"
+  ui_thinking: "#5b7569"
+  diff_added: "#2f8e52"
+  diff_removed: "#d05f5f"
+  diff_added_word: "#4b815f"
+  diff_removed_word: "#a76767"
+  syntax_string: "#42865b"
+  syntax_number: "#8f7127"
+  syntax_keyword: "#378865"
+  syntax_comment: "#5b7569"
+  completion_menu_bg: "#e5eee9"
+  completion_menu_current_bg: "#c7e6d7"
+  completion_menu_meta_bg: "#dde5e0"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

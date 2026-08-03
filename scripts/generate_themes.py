@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate the Hermes theme pack.
 
-Turns 18 curated seed palettes into complete Hermes skins (themes/*.yaml),
+Turns 24 curated seed palettes into complete Hermes skins (themes/*.yaml),
 each with the full color key set and WCAG contrast guarantees, plus a
 browser preview gallery (docs/preview.html) for screenshots.
 
@@ -69,7 +69,7 @@ def ensure_contrast(fg, bg, target):
     return fg
 
 
-# ── Seed palettes: 18 themes across 6 categories ─────────────────────────
+# ── Seed palettes: 24 themes across 6 categories ─────────────────────────
 
 # Each entry: name, category, description, bg, accent, accent_text (optional
 # readable accent), text, secondary, border, plus optional ok/warn/error.
@@ -88,6 +88,18 @@ THEMES = [
          bg="#f7f4ec", accent="#9a6b3f", text="#2b2620", secondary="#6f675c", border="#ded7c9"),
     dict(name="light-frost", category="Light", description="Cool frost white with slate blue",
          bg="#eef4f8", accent="#2f6f9f", text="#22303b", secondary="#5f7485", border="#d3e0ea"),
+    dict(name="light-cloud", category="Light", description="Bright neutral white with steel blue",
+         bg="#f5f7fa", accent="#3b6ea8", text="#1c2430", secondary="#5c6b7d", border="#d9e0e8"),
+    dict(name="light-cream", category="Light", description="Warm cream with terracotta",
+         bg="#faf6ef", accent="#c05b3a", text="#33291f", secondary="#7d6f5e", border="#e5dccb"),
+    dict(name="light-mint", category="Light", description="Fresh white with soft mint green",
+         bg="#f2faf5", accent="#2f9e6e", text="#1e2b25", secondary="#5f7a6d", border="#d3e8dd"),
+    dict(name="light-rose", category="Light", description="Blush white with dusty rose",
+         bg="#faf4f5", accent="#b05c77", text="#33262b", secondary="#7d646d", border="#ead7dc"),
+    dict(name="light-sand", category="Light", description="Warm sand with olive green",
+         bg="#f6f1e4", accent="#7a8a3d", text="#2e2a1e", secondary="#766f58", border="#e0d8bf"),
+    dict(name="light-lavender", category="Light", description="Pale lavender with violet",
+         bg="#f6f3fb", accent="#7a5fc0", text="#2a2438", secondary="#6f6590", border="#ddd5ec"),
     # Vibrant
     dict(name="vibrant-synthwave", category="Vibrant", description="Retro synthwave, hot pink on violet",
          bg="#1a0b2e", accent="#ff2e88", accent_text="#ff8ac0", text="#f5e9ff", secondary="#b78fd4", border="#3c1f5c"),
@@ -242,7 +254,7 @@ def _write_preview(cards):
 <body style="margin:0;background:#0e0e12;color:#eee;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
 <div style="padding:28px 32px 8px">
   <div style="font-size:24px;font-weight:800">Hermes Theme Pack</div>
-  <div style="color:#9aa;font-size:13px;margin-top:4px">18 curated skins · 6 categories · WCAG contrast checked</div>
+  <div style="color:#9aa;font-size:13px;margin-top:4px">24 curated skins · 6 categories · WCAG contrast checked</div>
 </div>
 <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;padding:20px 32px 32px">
 {''.join(cards)}

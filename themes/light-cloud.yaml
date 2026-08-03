@@ -1,0 +1,48 @@
+# Hermes skin — light-cloud.
+# Bright neutral white with steel blue.
+name: light-cloud
+description: Bright neutral white with steel blue
+
+colors:
+  background: "#f5f7fa"
+  ui_accent: "#3b6ea8"
+  banner_accent: "#3b6ea8"
+  banner_title: "#1c2430"
+  banner_text: "#1c2430"
+  ui_text: "#1c2430"
+  banner_dim: "#5c6b7d"
+  banner_border: "#d9e0e8"
+  ui_border: "#d9e0e8"
+  ui_ok: "#2f8e52"
+  ui_warn: "#a17a17"
+  ui_error: "#d05f5f"
+  prompt: "#1c2430"
+  input_rule: "#3b6ea8"
+  response_border: "#3b6ea8"
+  status_bar_bg: "#f6f8fa"
+  status_bar_text: "#1c2430"
+  status_bar_good: "#2f8e52"
+  status_bar_warn: "#a17a17"
+  status_bar_critical: "#d05f5f"
+  session_label: "#3b6ea8"
+  session_border: "#d9e0e8"
+  ui_tool: "#3b6ea8"
+  ui_thinking: "#5c6b7d"
+  diff_added: "#2f8e52"
+  diff_removed: "#d05f5f"
+  diff_added_word: "#4b815f"
+  diff_removed_word: "#a76767"
+  syntax_string: "#42865b"
+  syntax_number: "#8f7127"
+  syntax_keyword: "#4b7aaf"
+  syntax_comment: "#5c6b7d"
+  completion_menu_bg: "#e8eaee"
+  completion_menu_current_bg: "#ccd9e8"
+  completion_menu_meta_bg: "#dfe2e6"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

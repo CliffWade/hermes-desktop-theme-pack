@@ -1,0 +1,48 @@
+# Hermes skin — light-sand.
+# Warm sand with olive green.
+name: light-sand
+description: Warm sand with olive green
+
+colors:
+  background: "#f6f1e4"
+  ui_accent: "#667433"
+  banner_accent: "#667433"
+  banner_title: "#2e2a1e"
+  banner_text: "#2e2a1e"
+  ui_text: "#2e2a1e"
+  banner_dim: "#716b54"
+  banner_border: "#e0d8bf"
+  ui_border: "#e0d8bf"
+  ui_ok: "#2f8e52"
+  ui_warn: "#a17a17"
+  ui_error: "#c65a5a"
+  prompt: "#2e2a1e"
+  input_rule: "#667433"
+  response_border: "#7a8a3d"
+  status_bar_bg: "#f7f2e6"
+  status_bar_text: "#2e2a1e"
+  status_bar_good: "#2f8e52"
+  status_bar_warn: "#a17a17"
+  status_bar_critical: "#c65a5a"
+  session_label: "#667433"
+  session_border: "#e0d8bf"
+  ui_tool: "#7a8a3d"
+  ui_thinking: "#716b54"
+  diff_added: "#2f8e52"
+  diff_removed: "#c65a5a"
+  diff_added_word: "#4b815f"
+  diff_removed_word: "#a16464"
+  syntax_string: "#3e7f56"
+  syntax_number: "#8f7127"
+  syntax_keyword: "#6d7a40"
+  syntax_comment: "#716b54"
+  completion_menu_bg: "#eae5d8"
+  completion_menu_current_bg: "#dbdabf"
+  completion_menu_meta_bg: "#e2ddd0"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

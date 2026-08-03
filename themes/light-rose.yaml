@@ -1,0 +1,48 @@
+# Hermes skin — light-rose.
+# Blush white with dusty rose.
+name: light-rose
+description: Blush white with dusty rose
+
+colors:
+  background: "#faf4f5"
+  ui_accent: "#a2556d"
+  banner_accent: "#a2556d"
+  banner_title: "#33262b"
+  banner_text: "#33262b"
+  ui_text: "#33262b"
+  banner_dim: "#7d646d"
+  banner_border: "#ead7dc"
+  ui_border: "#ead7dc"
+  ui_ok: "#2f8e52"
+  ui_warn: "#a17a17"
+  ui_error: "#d05f5f"
+  prompt: "#33262b"
+  input_rule: "#a2556d"
+  response_border: "#b05c77"
+  status_bar_bg: "#faf5f6"
+  status_bar_text: "#33262b"
+  status_bar_good: "#2f8e52"
+  status_bar_warn: "#a17a17"
+  status_bar_critical: "#d05f5f"
+  session_label: "#a2556d"
+  session_border: "#ead7dc"
+  ui_tool: "#b05c77"
+  ui_thinking: "#7d646d"
+  diff_added: "#2f8e52"
+  diff_removed: "#d05f5f"
+  diff_added_word: "#4b815f"
+  diff_removed_word: "#a76767"
+  syntax_string: "#42865b"
+  syntax_number: "#8f7127"
+  syntax_keyword: "#a96379"
+  syntax_comment: "#7d646d"
+  completion_menu_bg: "#eee8e9"
+  completion_menu_current_bg: "#ead3d9"
+  completion_menu_meta_bg: "#e6dfe1"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

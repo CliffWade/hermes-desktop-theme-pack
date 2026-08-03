@@ -1,0 +1,48 @@
+# Hermes skin — light-cream.
+# Warm cream with terracotta.
+name: light-cream
+description: Warm cream with terracotta
+
+colors:
+  background: "#faf6ef"
+  ui_accent: "#b15435"
+  banner_accent: "#b15435"
+  banner_title: "#33291f"
+  banner_text: "#33291f"
+  ui_text: "#33291f"
+  banner_dim: "#7d6f5e"
+  banner_border: "#e5dccb"
+  ui_border: "#e5dccb"
+  ui_ok: "#2f8e52"
+  ui_warn: "#a17a17"
+  ui_error: "#d05f5f"
+  prompt: "#33291f"
+  input_rule: "#b15435"
+  response_border: "#c05b3a"
+  status_bar_bg: "#faf7f0"
+  status_bar_text: "#33291f"
+  status_bar_good: "#2f8e52"
+  status_bar_warn: "#a17a17"
+  status_bar_critical: "#d05f5f"
+  session_label: "#b15435"
+  session_border: "#e5dccb"
+  ui_tool: "#c05b3a"
+  ui_thinking: "#7d6f5e"
+  diff_added: "#2f8e52"
+  diff_removed: "#d05f5f"
+  diff_added_word: "#4b815f"
+  diff_removed_word: "#a76767"
+  syntax_string: "#42865b"
+  syntax_number: "#8f7127"
+  syntax_keyword: "#b76245"
+  syntax_comment: "#7d6f5e"
+  completion_menu_bg: "#eeeae3"
+  completion_menu_current_bg: "#edd4c7"
+  completion_menu_meta_bg: "#e6e2da"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

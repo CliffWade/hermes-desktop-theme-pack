@@ -1,0 +1,48 @@
+# Hermes skin — light-lavender.
+# Pale lavender with violet.
+name: light-lavender
+description: Pale lavender with violet
+
+colors:
+  background: "#f6f3fb"
+  ui_accent: "#7a5fc0"
+  banner_accent: "#7a5fc0"
+  banner_title: "#2a2438"
+  banner_text: "#2a2438"
+  ui_text: "#2a2438"
+  banner_dim: "#6f6590"
+  banner_border: "#ddd5ec"
+  ui_border: "#ddd5ec"
+  ui_ok: "#2f8e52"
+  ui_warn: "#a17a17"
+  ui_error: "#c65a5a"
+  prompt: "#2a2438"
+  input_rule: "#7a5fc0"
+  response_border: "#7a5fc0"
+  status_bar_bg: "#f7f4fb"
+  status_bar_text: "#2a2438"
+  status_bar_good: "#2f8e52"
+  status_bar_warn: "#a17a17"
+  status_bar_critical: "#c65a5a"
+  session_label: "#7a5fc0"
+  session_border: "#ddd5ec"
+  ui_tool: "#7a5fc0"
+  ui_thinking: "#6f6590"
+  diff_added: "#2f8e52"
+  diff_removed: "#c65a5a"
+  diff_added_word: "#4b815f"
+  diff_removed_word: "#a16464"
+  syntax_string: "#3e7f56"
+  syntax_number: "#8f7127"
+  syntax_keyword: "#8068bd"
+  syntax_comment: "#6f6590"
+  completion_menu_bg: "#eae7ef"
+  completion_menu_current_bg: "#dbd2ee"
+  completion_menu_meta_bg: "#e2dee8"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
