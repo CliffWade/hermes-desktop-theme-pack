@@ -60,6 +60,7 @@ Features:
 
 - **Every skin in one view** — all installed skins in a compact grid, grouped by category, each card showing the real palette (accent line, name, swatches, description)
 - **Light / dark symbols** — ☀ marks light-based themes, ☾ marks dark-based, computed from the background luminance
+- **Light and dark groups** — themes are sorted into a ☀ Light group and a ☾ Dark group with counts, so the first decision is the polarity one
 - **Search and filters** — type to find a theme, filter by ☀ light / ☾ dark, or by category
 - **Hover preview** — hover any card to see a mockup of the app rendered in that theme's real colors before you apply it
 - **One-click apply** — every surface repaints live through the canonical config writer
