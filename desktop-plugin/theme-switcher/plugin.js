@@ -56,6 +56,9 @@ function ThemeCard({ theme, active, onApply, applying }) {
     onClick: () => onApply(theme.name),
     disabled: applying,
     title: theme.description || theme.name,
+    // Inline width (7 per row at 8px gap) because the app's Tailwind build
+    // only ships grid-cols-1/2/4/6 — plugin grid classes get purged.
+    style: { width: 'calc((100% - 48px) / 7)' },
     className: cn(
       'flex flex-col gap-1 rounded-lg border p-2 text-left transition-colors',
       isActive
@@ -172,7 +175,7 @@ function ThemesPage() {
             description: 'Drop YAML skins into your Hermes skins folder and they will appear here.'
           })
         : jsx('div', {
-            className: 'grid grid-cols-2 gap-2 px-4 py-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7',
+            className: 'flex flex-wrap gap-2 px-4 py-3',
             children: ordered.map(t =>
               jsx(ThemeCard, {
                 key: t.name,
