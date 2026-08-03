@@ -44,6 +44,25 @@ Every theme is generated from a seed palette by `scripts/generate_themes.py`, wh
 
 Re-run the generator to regenerate all skins and the preview gallery, or edit any `.yaml` by hand and reload.
 
+## Theme Switcher (desktop browser)
+
+The pack also ships a **Theme Switcher** desktop plugin: a "Themes" entry in the app's left sidebar (like Achievements) that lists every installed skin grouped by category, marks the active one, and applies a new one with one click. No terminal needed to flip themes.
+
+Install the backend and desktop plugin:
+
+```bash
+# backend plugin
+mkdir -p ~/.hermes/plugins/theme-switcher
+cp -R plugins/theme-switcher/* ~/.hermes/plugins/theme-switcher/
+hermes plugins enable theme-switcher
+
+# desktop plugin
+mkdir -p ~/.hermes/desktop-plugins/theme-switcher
+cp desktop-plugin/theme-switcher/plugin.js ~/.hermes/desktop-plugins/theme-switcher/
+```
+
+Restart the app once so the backend mounts, then open **Themes** from the sidebar.
+
 ## Development
 
 ```bash

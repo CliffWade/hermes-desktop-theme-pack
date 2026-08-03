@@ -1,0 +1,5 @@
+name: theme-switcher
+version: 1.0.0
+description: "Theme Switcher backend: list, inspect, and apply Hermes skins from the desktop app."
+author: "Cliff"
+kind: backend
