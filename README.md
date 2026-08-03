@@ -54,7 +54,20 @@ Re-run the generator to regenerate all skins and the preview gallery, or edit an
 
 ## Theme Switcher (desktop browser)
 
-The pack also ships a **Theme Switcher** desktop plugin: a "Themes" entry in the app's left sidebar (like Achievements) that lists every installed skin grouped by category, marks the active one, and applies a new one with one click. No terminal needed to flip themes.
+The pack also ships a **Theme Switcher** desktop plugin: a "Themes" entry in the app's left sidebar (like Achievements) that lists every installed skin, marks the active one, and applies a new one with one click. No terminal needed to flip themes.
+
+Features:
+
+- **Every skin in one view** — all installed skins in a compact grid, grouped by category, each card showing the real palette (accent line, name, swatches, description)
+- **Light / dark symbols** — ☀ marks light-based themes, ☾ marks dark-based, computed from the background luminance
+- **Search and filters** — type to find a theme, filter by ☀ light / ☾ dark, or by category
+- **Hover preview** — hover any card to see a mockup of the app rendered in that theme's real colors before you apply it
+- **One-click apply** — every surface repaints live through the canonical config writer
+- **Undo** — a banner appears after every apply; click Undo to snap back to the previous theme
+- **Random** — the 🎲 button applies a random theme from the current filter
+- **Add a theme** — paste a skin YAML and it installs into your skins folder and appears on the page instantly (bad YAML, duplicates, and unsafe names are rejected)
+- **Statusbar chip** — the bottom bar shows the active theme with its color dot; click to open the Themes page
+- **Command palette** — ⌘K → "Themes: Open"
 
 Install the backend and desktop plugin:
 
