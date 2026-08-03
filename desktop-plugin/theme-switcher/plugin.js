@@ -37,6 +37,51 @@ let rest
 
 // ── Theme card ──────────────────────────────────────────────────────────────
 
+function swatch(color, label) {
+  if (!color) return null
+  return jsx('span', {
+    title: `${label}: ${color}`,
+    className: 'h-3.5 w-3.5 rounded-[4px] ring-1 ring-black/20',
+    style: { backgroundColor: color }
+  })
+}
+
+function PalettePreview({ colors }) {
+  if (!colors || !colors.background) return null
+  const bg = colors.background
+  const accent = colors.accent || colors.tool
+  const text = colors.text
+  const secondary = colors.secondary
+  const border = colors.border
+
+  return jsxs('div', {
+    className: 'mb-2 w-full rounded-md border px-3 py-2.5',
+    style: { backgroundColor: bg, borderColor: border || 'transparent' },
+    children: [
+      jsxs('div', {
+        className: 'flex items-center gap-2',
+        children: [
+          jsx('span', { className: 'text-base font-semibold', style: { color: text }, children: 'Aa' }),
+          jsx('span', { className: 'text-xs', style: { color: secondary }, children: 'Aa' }),
+          jsx('span', { className: 'text-xs', style: { color: accent }, children: 'Aa' }),
+          accent ? jsx('span', { className: 'ml-auto h-3 w-10 rounded-full', style: { backgroundColor: accent } }) : null
+        ]
+      }),
+      jsxs('div', {
+        className: 'mt-2 flex items-center gap-1.5',
+        children: [
+          swatch(bg, 'background'),
+          swatch(accent, 'accent'),
+          swatch(colors.tool, 'tool'),
+          swatch(text, 'text'),
+          swatch(secondary, 'secondary'),
+          swatch(border, 'border')
+        ]
+      })
+    ]
+  })
+}
+
 function ThemeCard({ theme, active, onApply, applying }) {
   const isActive = theme.name === active
 
@@ -64,6 +109,7 @@ function ThemeCard({ theme, active, onApply, applying }) {
             : null
         ]
       }),
+      jsx(PalettePreview, { colors: theme.colors }),
       jsx('span', {
         className: 'line-clamp-2 text-xs leading-relaxed text-(--ui-text-tertiary)',
         children: theme.description || 'No description'

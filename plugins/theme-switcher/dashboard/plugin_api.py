@@ -24,6 +24,31 @@ CATEGORY_PREFIXES = [
 ]
 
 
+def _skin_preview(name: str) -> Dict[str, str]:
+    """Return the representative palette colors for a skin, or {} on failure."""
+    try:
+        from hermes_cli.skin_engine import load_skin
+
+        c = load_skin(name).colors
+    except Exception:
+        return {}
+
+    def pick(*keys: str) -> str:
+        for k in keys:
+            if c.get(k):
+                return c[k]
+        return ""
+
+    return {
+        "background": pick("background"),
+        "accent": pick("ui_accent", "banner_accent"),
+        "tool": pick("ui_tool", "banner_accent"),
+        "text": pick("banner_text", "ui_text"),
+        "secondary": pick("banner_dim"),
+        "border": pick("banner_border", "ui_border"),
+    }
+
+
 def _skins() -> List[Dict[str, str]]:
     from hermes_cli.skin_engine import list_skins
 
@@ -41,6 +66,7 @@ def _skins() -> List[Dict[str, str]]:
                 "description": s.get("description", ""),
                 "source": s.get("source", "user"),
                 "category": cat,
+                "colors": _skin_preview(name),
             }
         )
     return out
