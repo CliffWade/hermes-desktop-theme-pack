@@ -508,7 +508,9 @@ function ThemesPage() {
                     ]})
                   : null,
                 filtered.some(t => !isLightTheme(t))
-                  ? jsxs('div', { className: 'mb-2', children: [
+                  ? jsxs('div', {
+                      className: 'mb-2 border-t border-(--ui-stroke-secondary) pt-3',
+                      children: [
                       jsx('div', {
                         className: 'mb-1 text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)',
                         children: `☾ Dark (${filtered.filter(t => !isLightTheme(t)).length})`
