@@ -48,7 +48,7 @@ def _skin_preview(name: str) -> Dict[str, str]:
         return ""
 
     return {
-        "background": pick("background"),
+        "background": pick("background", "status_bar_bg"),
         "accent": pick("ui_accent", "banner_accent"),
         "tool": pick("ui_tool", "banner_accent"),
         "text": pick("banner_text", "ui_text"),

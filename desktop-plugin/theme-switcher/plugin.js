@@ -44,16 +44,36 @@ const CATEGORY_ORDER = ['Dark', 'Light', 'Vibrant', 'Nature', 'Minimal', 'Retro'
 // ── Color helpers ───────────────────────────────────────────────────────────
 
 function polarityOf(colors) {
-  // Luminance of the background decides light vs dark; fall back to the text
-  // color when a skin doesn't declare a background (bright text = dark theme).
-  const hex = colors && (colors.background || colors.text || colors.secondary || colors.accent)
-  if (!hex || !/^#([0-9a-f]{6})$/i.test(hex)) return 'dark'
+  // Mirrors the desktop's own skin converter: a declared background (or the
+  // skin's status_bar_bg, the closest thing to an app surface) decides light
+  // vs dark by luminance. With no background at all, infer from the text
+  // color: bright text means a dark theme (light-on-dark), dark text light.
+  const c = colors || {}
+  const isHex = h => /^#([0-9a-f]{6})$/i.test(h)
+  if (c.background && isHex(c.background)) {
+    return lumOf(c.background) > 0.5 ? 'light' : 'dark'
+  }
+  const hex = c.text || c.secondary || c.accent
+  if (hex && isHex(hex)) {
+    return lumOf(hex) > 0.5 ? 'dark' : 'light'
+  }
+  return 'dark'
+}
+
+// The desktop special-cases the `default` skin: it keeps its own (light)
+// theme rather than applying the skin's dark gold palette, so it renders
+// light even though the skin itself is dark-authored.
+function isLightTheme(t) {
+  if (t && t.name === 'default') return true
+  return polarityOf(t && t.colors) === 'light'
+}
+
+function lumOf(hex) {
   const n = parseInt(hex.slice(1), 16)
   const r = (n >> 16) & 255
   const g = (n >> 8) & 255
   const b = n & 255
-  const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255
-  return lum > 0.5 ? 'light' : 'dark'
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255
 }
 
 function swatch(color, label) {
@@ -121,7 +141,7 @@ function ThemeMockup({ colors }) {
 function PreviewPanel({ theme }) {
   if (!theme) return null
   const c = theme.colors || {}
-  const isLight = polarityOf(c) === 'light'
+  const isLight = isLightTheme(theme)
   return jsxs('div', {
     className: 'pointer-events-none fixed right-6 top-24 z-30 w-72 rounded-xl border border-(--ui-stroke-secondary) bg-(--ui-bg-primary) p-3 shadow-2xl',
     children: [
@@ -140,7 +160,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
   const isActive = theme.name === active
   const c = theme.colors || {}
   const accent = c.accent || c.tool || c.background
-  const isLight = polarityOf(c) === 'light'
+  const isLight = isLightTheme(theme)
 
   return jsxs('button', {
     type: 'button',
@@ -360,7 +380,10 @@ function ThemesPage() {
   const cats = ['All', ...CATEGORY_ORDER.filter(c => skins.some(s => s.category === c))]
   const ql = q.trim().toLowerCase()
   const filtered = ordered.filter(t => {
-    if (pol !== 'all' && polarityOf(t.colors) !== pol) return false
+    if (pol !== 'all') {
+      const isLight = isLightTheme(t)
+      if (pol === 'light' ? !isLight : isLight) return false
+    }
     if (cat !== 'All' && (t.category || 'Other') !== cat) return false
     if (ql && !`${t.name} ${t.description || ''}`.toLowerCase().includes(ql)) return false
     return true
