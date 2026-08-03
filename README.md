@@ -4,6 +4,10 @@
 
 ![All 18 themes](docs/themes-preview.png)
 
+In the desktop app, the Theme Switcher page lists every installed skin in a single view, with its real palette, one click to apply:
+
+![Theme Switcher in the desktop app](docs/themes-page.png)
+
 ## Themes
 
 | Category | Themes |
