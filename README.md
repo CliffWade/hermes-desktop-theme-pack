@@ -112,7 +112,7 @@ Restart the app once so the backend mounts, then open **Themes** from the sideba
 
 ```bash
 python3 scripts/generate_themes.py   # regenerates themes/*.yaml + docs/preview.html
-python3 -m pytest tests/ -q          # invariant checks: structure, WCAG gate, idempotency, installer
+uv run pytest tests/ -q               # invariant checks: structure, WCAG gate, idempotency, installer (installs pytest + pyyaml)
 open docs/preview.html               # browse the gallery
 ```
 
