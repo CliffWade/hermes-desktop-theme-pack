@@ -87,14 +87,40 @@ function swatch(color, label) {
 
 // ── Hover preview mockup ────────────────────────────────────────────────────
 
-function ThemeMockup({ colors }) {
-  const c = colors || {}
-  const bg = c.background || '#111114'
-  const text = c.text || '#e8e8e8'
-  const secondary = c.secondary || '#9a9a9a'
-  const accent = c.accent || c.tool || '#8888aa'
-  const border = c.border || '#333338'
-  const isLight = polarityOf(c) === 'light'
+function mockupPalette(theme) {
+  const c = (theme && theme.colors) || {}
+  const isLight = isLightTheme(theme)
+  const bg = c.background || (isLight ? '#f7f7f8' : '#111114')
+  const darkBg = !/^#([0-9a-f]{6})$/i.test(bg) || lumOf(bg) <= 0.5
+  if (isLight && darkBg) {
+    // Marked light but declared a dark background (the `default` skin keeps
+    // the desktop's own light theme): render the mockup light to match what
+    // applying it actually shows.
+    return {
+      background: '#f7f7f8',
+      text: '#161616',
+      secondary: '#6b7280',
+      accent: c.accent || c.tool || '#d4a017',
+      border: '#d4d4d8'
+    }
+  }
+  return {
+    background: bg,
+    text: c.text || (isLight ? '#161616' : '#e8e8e8'),
+    secondary: c.secondary || (isLight ? '#6b7280' : '#9a9a9a'),
+    accent: c.accent || c.tool || '#8888aa',
+    border: c.border || (isLight ? '#d4d4d8' : '#333338')
+  }
+}
+
+function ThemeMockup({ theme }) {
+  const p = mockupPalette(theme)
+  const bg = p.background
+  const text = p.text
+  const secondary = p.secondary
+  const accent = p.accent
+  const border = p.border
+  const isLight = lumOf(bg) > 0.5
   const overlay = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'
   const overlayStrong = isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.10)'
 
@@ -140,7 +166,6 @@ function ThemeMockup({ colors }) {
 
 function PreviewPanel({ theme }) {
   if (!theme) return null
-  const c = theme.colors || {}
   const isLight = isLightTheme(theme)
   return jsxs('div', {
     className: 'pointer-events-none fixed right-6 top-24 z-30 w-72 rounded-xl border border-(--ui-stroke-secondary) bg-(--ui-bg-primary) p-3 shadow-2xl',
@@ -149,7 +174,7 @@ function PreviewPanel({ theme }) {
         jsx('span', { className: 'truncate text-xs font-semibold', children: theme.name }),
         jsx('span', { className: 'shrink-0 text-[0.625rem] text-(--ui-text-tertiary)', children: `${theme.category || ''} ${isLight ? '☀ light' : '☾ dark'}` })
       ]}),
-      jsx('div', { className: 'mt-2 h-40', children: jsx(ThemeMockup, { colors: c }) })
+      jsx('div', { className: 'mt-2 h-40', children: jsx(ThemeMockup, { theme }) })
     ]
   })
 }
