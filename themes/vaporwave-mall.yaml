@@ -1,0 +1,46 @@
+# Hermes skin — vaporwave-mall.
+# Abandoned 90s shopping mall — seafoam, mauve, and chrome on checkerboard dark.
+# Ported from BeardedChop/hermes-skins-pack.
+name: vaporwave-mall
+description: Abandoned 90s shopping mall — seafoam, mauve, and chrome on checkerboard dark
+colors:
+  background: "#1a1a28"
+  ui_accent: "#ff6ac1"
+  banner_accent: "#ff6ac1"
+  banner_title: "#66d9ef"
+  banner_text: "#d8d8f0"
+  ui_text: "#d8d8f0"
+  banner_dim: "#9686b6"
+  banner_border: "#ff6ac1"
+  ui_border: "#ff6ac1"
+  ui_ok: "#a6e22e"
+  ui_warn: "#e6db74"
+  ui_error: "#f92672"
+  prompt: "#d8d8f0"
+  input_rule: "#ff6ac1"
+  response_border: "#66d9ef"
+  status_bar_bg: "#101018"
+  status_bar_text: "#9898b0"
+  status_bar_good: "#a6e22e"
+  status_bar_warn: "#e6db74"
+  status_bar_critical: "#f92672"
+  session_label: "#66d9ef"
+  session_border: "#5a4a7a"
+  ui_tool: "#66d9ef"
+  ui_thinking: "#5a4a7a"
+  diff_added: "#1a2828"
+  diff_removed: "#281a2a"
+  diff_added_word: "#a6e22e"
+  diff_removed_word: "#f92672"
+  syntax_string: "#ff6ac1"
+  syntax_number: "#d8d8f0"
+  syntax_keyword: "#ff6ac1"
+  syntax_comment: "#5a4a7a"
+  completion_menu_bg: "#1a1a28"
+  completion_menu_current_bg: "#2a2a40"
+  completion_menu_meta_bg: "#101018"
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ░
+  help_header: (^_^)? Commands
+tool_prefix: ▌

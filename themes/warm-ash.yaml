@@ -1,0 +1,46 @@
+# Hermes skin — warm-ash.
+# Fireplace embers gone cold — a warm gray monochrome with the faintest amber memory.
+# Ported from BeardedChop/hermes-skins-pack.
+name: warm-ash
+description: Fireplace embers gone cold — a warm gray monochrome with the faintest amber memory
+colors:
+  background: "#1e1c18"
+  ui_accent: "#9c8c7c"
+  banner_accent: "#786858"
+  banner_title: "#b0a898"
+  banner_text: "#c8c0b8"
+  ui_text: "#c8c0b8"
+  banner_dim: "#8e8884"
+  banner_border: "#504840"
+  ui_border: "#504840"
+  ui_ok: "#809868"
+  ui_warn: "#988850"
+  ui_error: "#987060"
+  prompt: "#c8c0b8"
+  input_rule: "#786858"
+  response_border: "#b0a898"
+  status_bar_bg: "#141210"
+  status_bar_text: "#888070"
+  status_bar_good: "#809868"
+  status_bar_warn: "#988850"
+  status_bar_critical: "#987060"
+  session_label: "#b0a898"
+  session_border: "#3a3430"
+  ui_tool: "#7098a0"
+  ui_thinking: "#3a3430"
+  diff_added: "#182218"
+  diff_removed: "#221410"
+  diff_added_word: "#809868"
+  diff_removed_word: "#987060"
+  syntax_string: "#786858"
+  syntax_number: "#c8c0b8"
+  syntax_keyword: "#504840"
+  syntax_comment: "#3a3430"
+  completion_menu_bg: "#1e1c18"
+  completion_menu_current_bg: "#2a2820"
+  completion_menu_meta_bg: "#141210"
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ·
+  help_header: (^_^)? Commands
+tool_prefix: │

@@ -1,0 +1,46 @@
+# Hermes skin — steel-thread.
+# Machined metal — cool, precise silver on dark gunmetal with zero warmth.
+# Ported from BeardedChop/hermes-skins-pack.
+name: steel-thread
+description: Machined metal — cool, precise silver on dark gunmetal with zero warmth
+colors:
+  background: "#18181a"
+  ui_accent: "#888890"
+  banner_accent: "#707078"
+  banner_title: "#a0a0a8"
+  banner_text: "#c0c0c8"
+  ui_text: "#c0c0c8"
+  banner_dim: "#88888c"
+  banner_border: "#4a4a50"
+  ui_border: "#4a4a50"
+  ui_ok: "#78a078"
+  ui_warn: "#a09860"
+  ui_error: "#a07070"
+  prompt: "#c0c0c8"
+  input_rule: "#707078"
+  response_border: "#a0a0a8"
+  status_bar_bg: "#0e0e10"
+  status_bar_text: "#808088"
+  status_bar_good: "#78a078"
+  status_bar_warn: "#a09860"
+  status_bar_critical: "#a07070"
+  session_label: "#a0a0a8"
+  session_border: "#343438"
+  ui_tool: "#7088a0"
+  ui_thinking: "#343438"
+  diff_added: "#182218"
+  diff_removed: "#221414"
+  diff_added_word: "#78a078"
+  diff_removed_word: "#a07070"
+  syntax_string: "#707078"
+  syntax_number: "#c0c0c8"
+  syntax_keyword: "#4a4a50"
+  syntax_comment: "#343438"
+  completion_menu_bg: "#18181a"
+  completion_menu_current_bg: "#262630"
+  completion_menu_meta_bg: "#0e0e10"
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ⟩
+  help_header: (^_^)? Commands
+tool_prefix: ┃

@@ -1,0 +1,46 @@
+# Hermes skin — void-sunset.
+# Neon sunset bleeding into a dead channel — violet, tangerine, and seafoam on bruised plum.
+# Ported from BeardedChop/hermes-skins-pack.
+name: void-sunset
+description: Neon sunset bleeding into a dead channel — violet, tangerine, and seafoam on bruised plum
+colors:
+  background: "#1a1030"
+  ui_accent: "#ff5fd2"
+  banner_accent: "#ff5fd2"
+  banner_title: "#ffb870"
+  banner_text: "#e6d8f0"
+  ui_text: "#e6d8f0"
+  banner_dim: "#9277b8"
+  banner_border: "#ff5fd2"
+  ui_border: "#ffb870"
+  ui_ok: "#5af7b0"
+  ui_warn: "#ffb870"
+  ui_error: "#ff5fd2"
+  prompt: "#e6d8f0"
+  input_rule: "#ff5fd2"
+  response_border: "#ffb870"
+  status_bar_bg: "#0f0820"
+  status_bar_text: "#c8b8d8"
+  status_bar_good: "#5af7b0"
+  status_bar_warn: "#ffb870"
+  status_bar_critical: "#ff3366"
+  session_label: "#5af7b0"
+  session_border: "#7a5fa0"
+  ui_tool: "#5af7b0"
+  ui_thinking: "#7a5fa0"
+  diff_added: "#2a2040"
+  diff_removed: "#3a1a30"
+  diff_added_word: "#5af7b0"
+  diff_removed_word: "#ff5fd2"
+  syntax_string: "#ff5fd2"
+  syntax_number: "#e6d8f0"
+  syntax_keyword: "#ffb870"
+  syntax_comment: "#7a5fa0"
+  completion_menu_bg: "#1a1030"
+  completion_menu_current_bg: "#2a1a40"
+  completion_menu_meta_bg: "#0f0820"
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ◆
+  help_header: (^_^)? Commands
+tool_prefix: ┊

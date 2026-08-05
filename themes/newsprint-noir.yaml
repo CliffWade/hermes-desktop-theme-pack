@@ -1,0 +1,46 @@
+# Hermes skin — newsprint-noir.
+# 1940s detective film — stark off-white text on ink-black, with muted navy and rust accents.
+# Ported from BeardedChop/hermes-skins-pack.
+name: newsprint-noir
+description: 1940s detective film — stark off-white text on ink-black, with muted navy and rust accents
+colors:
+  background: "#101012"
+  ui_accent: "#84849c"
+  banner_accent: "#787890"
+  banner_title: "#d0d0d8"
+  banner_text: "#d8d8e0"
+  ui_text: "#d8d8e0"
+  banner_dim: "#808090"
+  banner_border: "#505870"
+  ui_border: "#505870"
+  ui_ok: "#60a070"
+  ui_warn: "#c0a860"
+  ui_error: "#b05850"
+  prompt: "#d8d8e0"
+  input_rule: "#787890"
+  response_border: "#d0d0d8"
+  status_bar_bg: "#08080a"
+  status_bar_text: "#888898"
+  status_bar_good: "#60a070"
+  status_bar_warn: "#c0a860"
+  status_bar_critical: "#b05850"
+  session_label: "#d0d0d8"
+  session_border: "#383848"
+  ui_tool: "#6090a0"
+  ui_thinking: "#383848"
+  diff_added: "#102020"
+  diff_removed: "#201010"
+  diff_added_word: "#60a070"
+  diff_removed_word: "#b05850"
+  syntax_string: "#787890"
+  syntax_number: "#d8d8e0"
+  syntax_keyword: "#505870"
+  syntax_comment: "#383848"
+  completion_menu_bg: "#101012"
+  completion_menu_current_bg: "#202028"
+  completion_menu_meta_bg: "#08080a"
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ■
+  help_header: (^_^)? Commands
+tool_prefix: │

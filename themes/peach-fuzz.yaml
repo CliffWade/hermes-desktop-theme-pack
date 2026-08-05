@@ -1,0 +1,46 @@
+# Hermes skin — peach-fuzz.
+# Pantone Color of the Year 2024 — soft peach, warm coral, and gentle cream on dark taupe.
+# Ported from BeardedChop/hermes-skins-pack.
+name: peach-fuzz
+description: Pantone Color of the Year 2024 — soft peach, warm coral, and gentle cream on dark taupe
+colors:
+  background: "#201c18"
+  ui_accent: "#e0a080"
+  banner_accent: "#e0a080"
+  banner_title: "#f0c8a8"
+  banner_text: "#e8d8c8"
+  ui_text: "#e8d8c8"
+  banner_dim: "#948474"
+  banner_border: "#d89070"
+  ui_border: "#d89070"
+  ui_ok: "#90c090"
+  ui_warn: "#e0b870"
+  ui_error: "#d07068"
+  prompt: "#e8d8c8"
+  input_rule: "#e0a080"
+  response_border: "#f0c8a8"
+  status_bar_bg: "#141210"
+  status_bar_text: "#a89080"
+  status_bar_good: "#90c090"
+  status_bar_warn: "#e0b870"
+  status_bar_critical: "#d07068"
+  session_label: "#f0c8a8"
+  session_border: "#584838"
+  ui_tool: "#90b8c0"
+  ui_thinking: "#584838"
+  diff_added: "#182818"
+  diff_removed: "#281818"
+  diff_added_word: "#90c090"
+  diff_removed_word: "#d07068"
+  syntax_string: "#e0a080"
+  syntax_number: "#e8d8c8"
+  syntax_keyword: "#d89070"
+  syntax_comment: "#584838"
+  completion_menu_bg: "#201c18"
+  completion_menu_current_bg: "#2a2218"
+  completion_menu_meta_bg: "#141210"
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ◈
+  help_header: (^_^)? Commands
+tool_prefix: ┊
