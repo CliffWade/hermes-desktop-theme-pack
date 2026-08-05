@@ -99,7 +99,8 @@ def ensure_contrast(fg, bg, target):
     return fg
 
 
-# ── Seed palettes: 24 themes across 6 categories ─────────────────────────
+# ── Seed palettes: 24 curated themes across 6 categories ──────────────────
+# (The pack also ships community drop-in themes; see COMMUNITY_THEMES above.)
 
 # Each entry: name, category, description, bg, accent, accent_text (optional
 # readable accent), text, secondary, border, plus optional ok/warn/error.
