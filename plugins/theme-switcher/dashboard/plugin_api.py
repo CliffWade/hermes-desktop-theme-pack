@@ -31,6 +31,21 @@ CATEGORY_PREFIXES = [
     ("retro-", "Retro"),
 ]
 
+# Community-contributed themes (from PRs) have arbitrary names, so they are
+# mapped by exact name rather than by prefix. Kept in sync with the README.
+COMMUNITY_THEMES = {
+    "vaporwave-mall",
+    "stained-glass",
+    "shadow-thief",
+    "void-sunset",
+    "redwood",
+    "newsprint-noir",
+    "peach-fuzz",
+    "slate-mist",
+    "steel-thread",
+    "warm-ash",
+}
+
 
 def _skin_preview(name: str) -> Dict[str, str]:
     """Return the representative palette colors for a skin, or {} on failure."""
@@ -68,6 +83,8 @@ def _skins() -> List[Dict[str, str]]:
             if name.startswith(prefix):
                 cat = label
                 break
+        if name in COMMUNITY_THEMES:
+            cat = "Community"
         installed_at = None
         if s.get("source") != "builtin":
             try:

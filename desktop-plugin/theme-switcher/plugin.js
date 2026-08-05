@@ -39,7 +39,7 @@ const ID = 'theme-switcher'
 // Assigned in register(ctx) — components can't see ctx directly.
 let rest
 
-const CATEGORY_ORDER = ['Dark', 'Light', 'Vibrant', 'Nature', 'Minimal', 'Retro', 'Built-in', 'Other']
+const CATEGORY_ORDER = ['Dark', 'Light', 'Vibrant', 'Nature', 'Minimal', 'Retro', 'Community', 'Built-in', 'Other']
 
 // ── Color helpers ───────────────────────────────────────────────────────────
 

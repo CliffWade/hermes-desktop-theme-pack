@@ -1,17 +1,47 @@
 #!/usr/bin/env python3
 """Generate the Hermes theme pack.
 
-Turns 24 curated seed palettes into complete Hermes skins (themes/*.yaml),
+Turns the curated seed palettes into complete Hermes skins (themes/*.yaml),
 each with the full color key set and WCAG contrast guarantees, plus a
 browser preview gallery (docs/preview.html) for screenshots.
+
+Community-contributed themes (drop-in YAML files not in THEMES) are preserved
+and included in the preview gallery. Keep COMMUNITY_THEMES in sync with
+plugins/theme-switcher/dashboard/plugin_api.py and the README.
 
 Usage: python3 scripts/generate_themes.py
 """
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parent.parent
 THEMES_DIR = ROOT / "themes"
 DOCS_DIR = ROOT / "docs"
+
+# Mirrors plugins/theme-switcher/dashboard/plugin_api.py. Community themes
+# have arbitrary names, so they are matched exactly rather than by prefix.
+CATEGORY_PREFIXES = [
+    ("dark-", "Dark"),
+    ("light-", "Light"),
+    ("vibrant-", "Vibrant"),
+    ("nature-", "Nature"),
+    ("minimal-", "Minimal"),
+    ("retro-", "Retro"),
+]
+
+COMMUNITY_THEMES = {
+    "vaporwave-mall",
+    "stained-glass",
+    "shadow-thief",
+    "void-sunset",
+    "redwood",
+    "newsprint-noir",
+    "peach-fuzz",
+    "slate-mist",
+    "steel-thread",
+    "warm-ash",
+}
 
 # ── Color math ────────────────────────────────────────────────────────────
 
@@ -207,7 +237,6 @@ def main():
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
     report = []
-    cards = []
     for t in THEMES:
         skin = build_skin(t)
         path = THEMES_DIR / f"{t['name']}.yaml"
@@ -220,12 +249,34 @@ def main():
             contrast(skin["colors"]["ui_accent"], bg),
         )
         report.append(f"{t['name']:<20} {t['category']:<8} min contrast {min_contrast:.2f}:1")
+
+    # Preview gallery shows every theme on disk — the curated seeds plus any
+    # community drop-in YAML files (which are never rewritten here).
+    cards = []
+    categories = set()
+    for path in sorted(THEMES_DIR.glob("*.yaml")):
+        t = yaml.safe_load(path.read_text(encoding="utf-8"))
+        if t is None:
+            continue
+        skin = {"colors": t.get("colors", {}), "branding": t.get("branding", {}),
+                "tool_prefix": t.get("tool_prefix", "")}
+        t["category"] = _category_of(t["name"])
+        categories.add(t["category"])
         cards.append(_card_html(t, skin))
 
-    _write_preview(cards)
+    _write_preview(cards, len(cards), len(categories))
     print("\n".join(report))
-    print(f"\nGenerated {len(THEMES)} skins → {THEMES_DIR}")
+    print(f"\nGenerated {len(THEMES)} curated skins + {len(cards) - len(THEMES)} community skins → {THEMES_DIR}")
     print(f"Preview gallery → {DOCS_DIR / 'preview.html'}")
+
+
+def _category_of(name: str) -> str:
+    for prefix, label in CATEGORY_PREFIXES:
+        if name.startswith(prefix):
+            return label
+    if name in COMMUNITY_THEMES:
+        return "Community"
+    return "Other"
 
 
 def _card_html(t, skin):
@@ -249,12 +300,14 @@ def _card_html(t, skin):
     </div>"""
 
 
-def _write_preview(cards):
+def _write_preview(cards, total=None, cat_count=None):
+    total = len(cards) if total is None else total
+    cat_count = len({_category_of(getattr(c, "name", "")) for c in cards}) if cat_count is None else cat_count
     html = f"""<!doctype html><html><head><meta charset="utf-8"><title>Hermes Theme Pack</title></head>
 <body style="margin:0;background:#0e0e12;color:#eee;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
 <div style="padding:28px 32px 8px">
   <div style="font-size:24px;font-weight:800">Hermes Theme Pack</div>
-  <div style="color:#9aa;font-size:13px;margin-top:4px">24 curated skins · 6 categories · WCAG contrast checked</div>
+  <div style="color:#9aa;font-size:13px;margin-top:4px">{total} skins · {cat_count} categories · WCAG contrast checked</div>
 </div>
 <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;padding:20px 32px 32px">
 {''.join(cards)}
