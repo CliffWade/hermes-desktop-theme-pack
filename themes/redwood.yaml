@@ -1,0 +1,46 @@
+# Hermes skin — redwood.
+# Ancient forest floor — deep bark brown, moss green, and dappled amber light.
+# Ported from BeardedChop/hermes-skins-pack.
+name: redwood
+description: Ancient forest floor — deep bark brown, moss green, and dappled amber light
+colors:
+  background: "#1e1814"
+  ui_accent: "#a28868"
+  banner_accent: "#8a7050"
+  banner_title: "#a0c080"
+  banner_text: "#d8d0c0"
+  ui_text: "#d8d0c0"
+  banner_dim: "#928070"
+  banner_border: "#6b8a5a"
+  ui_border: "#6b8a5a"
+  ui_ok: "#90b870"
+  ui_warn: "#c8a050"
+  ui_error: "#b87050"
+  prompt: "#d8d0c0"
+  input_rule: "#6b8a5a"
+  response_border: "#a0c080"
+  status_bar_bg: "#14100c"
+  status_bar_text: "#a09880"
+  status_bar_good: "#90b870"
+  status_bar_warn: "#c8a050"
+  status_bar_critical: "#b85030"
+  session_label: "#90b870"
+  session_border: "#4a3828"
+  ui_tool: "#80a868"
+  ui_thinking: "#4a3828"
+  diff_added: "#1a2818"
+  diff_removed: "#2a1814"
+  diff_added_word: "#90b870"
+  diff_removed_word: "#b87050"
+  syntax_string: "#8a7050"
+  syntax_number: "#d8d0c0"
+  syntax_keyword: "#6b8a5a"
+  syntax_comment: "#4a3828"
+  completion_menu_bg: "#1e1814"
+  completion_menu_current_bg: "#2a201a"
+  completion_menu_meta_bg: "#14100c"
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: 🌲
+  help_header: (^_^)? Commands
+tool_prefix: ┃

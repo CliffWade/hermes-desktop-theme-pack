@@ -1,0 +1,46 @@
+# Hermes skin — slate-mist.
+# Fogged window — soft blue-gray monochrome with barely-there contrast, calm and quiet.
+# Ported from BeardedChop/hermes-skins-pack.
+name: slate-mist
+description: Fogged window — soft blue-gray monochrome with barely-there contrast, calm and quiet
+colors:
+  background: "#1c1e22"
+  ui_accent: "#808ca0"
+  banner_accent: "#687488"
+  banner_title: "#a0a8b4"
+  banner_text: "#c0c4cc"
+  ui_text: "#c0c4cc"
+  banner_dim: "#888e98"
+  banner_border: "#444a54"
+  ui_border: "#444a54"
+  ui_ok: "#7a907a"
+  ui_warn: "#908a70"
+  ui_error: "#907a7a"
+  prompt: "#c0c4cc"
+  input_rule: "#687488"
+  response_border: "#a0a8b4"
+  status_bar_bg: "#121418"
+  status_bar_text: "#808488"
+  status_bar_good: "#7a907a"
+  status_bar_warn: "#908a70"
+  status_bar_critical: "#907a7a"
+  session_label: "#a0a8b4"
+  session_border: "#343a44"
+  ui_tool: "#687488"
+  ui_thinking: "#343a44"
+  diff_added: "#182220"
+  diff_removed: "#221a18"
+  diff_added_word: "#7a907a"
+  diff_removed_word: "#907a7a"
+  syntax_string: "#687488"
+  syntax_number: "#c0c4cc"
+  syntax_keyword: "#444a54"
+  syntax_comment: "#343a44"
+  completion_menu_bg: "#1c1e22"
+  completion_menu_current_bg: "#282a30"
+  completion_menu_meta_bg: "#121418"
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ◦
+  help_header: (^_^)? Commands
+tool_prefix: ┆

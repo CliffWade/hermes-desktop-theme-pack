@@ -1,0 +1,46 @@
+# Hermes skin — stained-glass.
+# Cathedral window — jewel tones of sapphire, ruby, emerald, and amber on dark lead.
+# Ported from BeardedChop/hermes-skins-pack.
+name: stained-glass
+description: Cathedral window — jewel tones of sapphire, ruby, emerald, and amber on dark lead
+colors:
+  background: "#141420"
+  ui_accent: "#50a0d0"
+  banner_accent: "#50a0d0"
+  banner_title: "#e07050"
+  banner_text: "#d8d0c8"
+  ui_text: "#d8d0c8"
+  banner_dim: "#808090"
+  banner_border: "#c0a050"
+  ui_border: "#c0a050"
+  ui_ok: "#60b870"
+  ui_warn: "#c0a050"
+  ui_error: "#c05050"
+  prompt: "#d8d0c8"
+  input_rule: "#c0a050"
+  response_border: "#e07050"
+  status_bar_bg: "#0a0a14"
+  status_bar_text: "#908878"
+  status_bar_good: "#60b870"
+  status_bar_warn: "#c0a050"
+  status_bar_critical: "#c05050"
+  session_label: "#e07050"
+  session_border: "#383848"
+  ui_tool: "#50a0d0"
+  ui_thinking: "#383848"
+  diff_added: "#142828"
+  diff_removed: "#281418"
+  diff_added_word: "#60b870"
+  diff_removed_word: "#c05050"
+  syntax_string: "#50a0d0"
+  syntax_number: "#d8d0c8"
+  syntax_keyword: "#c0a050"
+  syntax_comment: "#383848"
+  completion_menu_bg: "#141420"
+  completion_menu_current_bg: "#202038"
+  completion_menu_meta_bg: "#0a0a14"
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❖
+  help_header: (^_^)? Commands
+tool_prefix: ┊
