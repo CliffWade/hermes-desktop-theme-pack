@@ -18,7 +18,17 @@ try:
 except Exception:  # pragma: no cover - hermes ships pyyaml
     _yaml = None
 
-from .theme_data import CATEGORY_PREFIXES, COMMUNITY_THEMES, twin as _twin
+# The plugin backend is loaded standalone via spec_from_file_location (no
+# package context, dashboard dir not on sys.path), so a relative import
+# would fail. Add the dashboard dir and use an absolute import instead.
+import os
+import sys
+
+_DASH_DIR = os.path.dirname(os.path.abspath(__file__))
+if _DASH_DIR not in sys.path:
+    sys.path.insert(0, _DASH_DIR)
+
+from theme_data import CATEGORY_PREFIXES, COMMUNITY_THEMES, twin as _twin
 
 router = APIRouter()
 
