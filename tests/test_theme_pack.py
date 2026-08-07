@@ -163,7 +163,7 @@ def test_readme_claims_match_actual_themes():
 def test_twin_pairs_resolve_to_real_opposite_polarity_themes():
     """Every light/dark twin pair names existing themes of opposite polarity.
 
-    The backend plugin (plugins/theme-switcher/dashboard/plugin_api.py) exposes
+    The backend plugin (plugins/theme-switcher/dashboard/theme_data.py) exposes
     THEME_PAIRS to drive the Theme Switcher's flip button. This test keeps that
     map honest: each entry must be (dark, light), both names must exist on
     disk, no theme may appear in more than one pair.
@@ -171,10 +171,10 @@ def test_twin_pairs_resolve_to_real_opposite_polarity_themes():
     import importlib.util
 
     spec = importlib.util.spec_from_file_location(
-        "plugin_api",
-        REPO / "plugins/theme-switcher/dashboard/plugin_api.py",
+        "theme_data",
+        REPO / "plugins/theme-switcher/dashboard/theme_data.py",
     )
-    assert spec and spec.loader, "could not load plugin_api.py"
+    assert spec and spec.loader, "could not load theme_data.py"
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
 
@@ -200,8 +200,8 @@ def test_twin_pairs_resolve_to_real_opposite_polarity_themes():
 
     # Bidirectional lookup must agree.
     for dark, light in pairs:
-        assert mod._twin(dark) == light, f"_twin({dark}) != {light}"
-        assert mod._twin(light) == dark, f"_twin({light}) != {dark}"
+        assert mod.twin(dark) == light, f"twin({dark}) != {light}"
+        assert mod.twin(light) == dark, f"twin({light}) != {dark}"
     # Unpaired themes must return ''.
     unpaired = next(n for n in by_name if n not in seen)
-    assert mod._twin(unpaired) == "", f"_twin({unpaired}) should be empty"
+    assert mod.twin(unpaired) == "", f"twin({unpaired}) should be empty"
