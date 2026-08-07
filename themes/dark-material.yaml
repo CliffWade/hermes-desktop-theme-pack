@@ -1,0 +1,48 @@
+# Hermes skin — dark-material.
+# Material, blue-gray developer dark.
+name: dark-material
+description: Material, blue-gray developer dark
+
+colors:
+  background: "#263238"
+  ui_accent: "#82aaff"
+  banner_accent: "#82aaff"
+  banner_title: "#eceff1"
+  banner_text: "#eceff1"
+  ui_text: "#eceff1"
+  banner_dim: "#b0bec5"
+  banner_border: "#37474f"
+  ui_border: "#37474f"
+  ui_ok: "#a5d6a7"
+  ui_warn: "#ffe082"
+  ui_error: "#ef9a9a"
+  prompt: "#eceff1"
+  input_rule: "#82aaff"
+  response_border: "#82aaff"
+  status_bar_bg: "#232e34"
+  status_bar_text: "#eceff1"
+  status_bar_good: "#a5d6a7"
+  status_bar_warn: "#ffe082"
+  status_bar_critical: "#ef9a9a"
+  session_label: "#a9c4ff"
+  session_border: "#37474f"
+  ui_tool: "#a9c4ff"
+  ui_thinking: "#b0bec5"
+  diff_added: "#a5d6a7"
+  diff_removed: "#ef9a9a"
+  diff_added_word: "#bce0bd"
+  diff_removed_word: "#f3b3b3"
+  syntax_string: "#a5d6a7"
+  syntax_number: "#a9c4ff"
+  syntax_keyword: "#a9c4ff"
+  syntax_comment: "#b0bec5"
+  completion_menu_bg: "#232e34"
+  completion_menu_current_bg: "#37474f"
+  completion_menu_meta_bg: "#2b383f"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

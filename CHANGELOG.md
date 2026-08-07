@@ -7,6 +7,12 @@ All notable changes to the Hermes Theme Pack. This project follows
 
 ### Added
 
+- **8 iconic theme pairs (16 themes) — the pack hits 100** — One Dark /
+  One Light, Everforest, Kanagawa Wave/Lotus, Ayu, GitHub, Material,
+  VSCode Dark+/Light+, and Cozy Paper, each with canonical light and dark
+  variants paired as twins. The pack is 100 themes, 50 light / 50 dark,
+  fully paired. (Note: light-cozy-paper avoids a name collision with the
+  existing light-paper.)
 - **6 iconic theme pairs (12 themes)** — Solarized, Gruvbox, Tokyo Night,
   Catppuccin, Nord, and Rosé Pine, each with canonical light and dark
   variants paired as twins. Canonical palettes adjusted where needed to

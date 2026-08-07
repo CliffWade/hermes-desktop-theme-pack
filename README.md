@@ -8,11 +8,11 @@
 >
 > The first stable release is out — 34 themes, the Theme Switcher plugin, built-in Appearance integration, and CI-enforced quality. See the [release notes](https://github.com/CliffWade/hermes-desktop-theme-pack/releases/tag/v1.0.0) and the [full changelog](CHANGELOG.md).
 
-84 curated color themes for Hermes Agent, organized into 7 categories, every one contrast-checked to WCAG AA. Drop them in and they appear across the CLI, the TUI, and the desktop app at once, because a Hermes skin themes every surface.
+100 curated color themes for Hermes Agent, organized into 7 categories, every one contrast-checked to WCAG AA. Drop them in and they appear across the CLI, the TUI, and the desktop app at once, because a Hermes skin themes every surface.
 
 ## Features
 
-- **84 themes, 7 categories** — Dark, Light, Vibrant, Nature, Minimal, Retro, and Community (10 themes ported from [BeardedChop/hermes-skins-pack](https://github.com/BeardedChop/hermes-skins-pack))
+- **100 themes, 7 categories** — Dark, Light, Vibrant, Nature, Minimal, Retro, and Community (10 themes ported from [BeardedChop/hermes-skins-pack](https://github.com/BeardedChop/hermes-skins-pack))
 - **WCAG AA contrast gate** — every theme passes primary text at 6:1, accents and secondary text at 4.5:1 against its background, enforced by an independent test suite
 - **Themes every surface** — one YAML skin repaints the CLI, the TUI, and the desktop app at once
 - **Theme Switcher desktop plugin** — a Themes page in the app sidebar: every skin in one grid, light/dark grouping, search (including palette colors like "purple" or #7b2d8e), hover preview, one-click apply, undo, random, install-from-YAML, statusbar chip, ⌘K palette entry
@@ -36,8 +36,8 @@ Dark mode (dark-charcoal):
 
 | Category | Themes |
 |---|---|
-| **Dark** | dark-aubergine, dark-obsidian, dark-charcoal, dark-navy, dark-crimson, dark-dracula, dark-lcars, dark-plum, dark-bone, dark-mac, dark-lemon, dark-sage, dark-vanilla, dark-solarized, dark-gruvbox, dark-tokyo-night, dark-catppuccin, dark-nord, dark-rosepine |
-| **Light** | light-paper, light-frost, light-cloud, light-cream, light-mint, light-rose, light-sand, light-lavender, light-honey, light-sky, light-peach, light-sage, light-aqua, light-lilac, light-porcelain, light-denim, light-blush, light-grape, light-fern, light-vanilla, light-lemon, light-oat, light-melon, light-tide, light-mist, light-ash, light-dracula, light-lcars, light-stained-glass, light-neon, light-pacific, light-synthwave, light-sunset, light-solarized, light-gruvbox, light-tokyo-day, light-catppuccin, light-nord, light-rosepine |
+| **Dark** | dark-aubergine, dark-obsidian, dark-charcoal, dark-navy, dark-crimson, dark-dracula, dark-lcars, dark-plum, dark-bone, dark-mac, dark-lemon, dark-sage, dark-vanilla, dark-solarized, dark-gruvbox, dark-tokyo-night, dark-catppuccin, dark-nord, dark-rosepine, dark-one, dark-everforest, dark-kanagawa, dark-ayu, dark-github, dark-material, dark-vscode, dark-cozy-paper |
+| **Light** | light-paper, light-frost, light-cloud, light-cream, light-mint, light-rose, light-sand, light-lavender, light-honey, light-sky, light-peach, light-sage, light-aqua, light-lilac, light-porcelain, light-denim, light-blush, light-grape, light-fern, light-vanilla, light-lemon, light-oat, light-melon, light-tide, light-mist, light-ash, light-dracula, light-lcars, light-stained-glass, light-neon, light-pacific, light-synthwave, light-sunset, light-solarized, light-gruvbox, light-tokyo-day, light-catppuccin, light-nord, light-rosepine, light-one, light-everforest, light-kanagawa, light-ayu, light-github, light-material, light-vscode, light-cozy-paper |
 | **Vibrant** | vibrant-synthwave, vibrant-neon, vibrant-sunset, vibrant-pacific |
 | **Nature** | nature-forest, nature-nordic, nature-desert, nature-ocean, nature-autumn |
 | **Minimal** | minimal-graphite, minimal-bone, minimal-pearl |
@@ -49,30 +49,38 @@ Dark mode (dark-charcoal):
 Every theme with a light/dark counterpart is paired to the same vibe in the
 opposite polarity. In the Theme Switcher, paired themes show `⇄ paired with
 <name>` on the card, a ⇄ button applies the twin in one click, and the hover
-preview shows both polarities side by side. The pack is 42 light / 42 dark;
-every theme is paired — 42 pairs cover all 84 themes.
+preview shows both polarities side by side. The pack is 50 light / 50 dark;
+every theme is paired — 50 pairs cover all 100 themes.
 
 | Dark | Light |
 |---|---|
 | dark-aubergine | light-lavender |
 | dark-bone | minimal-bone |
+| dark-ayu | light-ayu |
 | dark-catppuccin | light-catppuccin |
 | dark-charcoal | light-cloud |
+| dark-cozy-paper | light-cozy-paper |
 | dark-crimson | light-rose |
 | dark-dracula | light-dracula |
+| dark-everforest | light-everforest |
+| dark-github | light-github |
 | dark-gruvbox | light-gruvbox |
+| dark-kanagawa | light-kanagawa |
 | dark-lcars | light-lcars |
 | dark-lemon | light-lemon |
 | dark-mac | retro-mac |
+| dark-material | light-material |
 | dark-navy | light-sky |
 | dark-nord | light-nord |
 | dark-obsidian | light-porcelain |
+| dark-one | light-one |
 | dark-plum | light-grape |
 | dark-rosepine | light-rosepine |
 | dark-sage | light-sage |
 | dark-solarized | light-solarized |
 | dark-tokyo-night | light-tokyo-day |
 | dark-vanilla | light-vanilla |
+| dark-vscode | light-vscode |
 | minimal-graphite | minimal-pearl |
 | warm-ash | light-oat |
 | nature-autumn | light-melon |

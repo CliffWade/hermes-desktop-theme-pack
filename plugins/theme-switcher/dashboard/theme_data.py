@@ -78,6 +78,14 @@ THEME_PAIRS = [
     ("dark-catppuccin", "light-catppuccin"),
     ("dark-nord", "light-nord"),
     ("dark-rosepine", "light-rosepine"),
+    ("dark-one", "light-one"),
+    ("dark-everforest", "light-everforest"),
+    ("dark-kanagawa", "light-kanagawa"),
+    ("dark-ayu", "light-ayu"),
+    ("dark-github", "light-github"),
+    ("dark-material", "light-material"),
+    ("dark-vscode", "light-vscode"),
+    ("dark-cozy-paper", "light-cozy-paper"),
 ]
 
 _TWIN_LOOKUP = {}

@@ -1,0 +1,48 @@
+# Hermes skin — dark-github.
+# GitHub Dark, official GitHub theme.
+name: dark-github
+description: GitHub Dark, official GitHub theme
+
+colors:
+  background: "#0d1117"
+  ui_accent: "#2f81f7"
+  banner_accent: "#2f81f7"
+  banner_title: "#e6edf3"
+  banner_text: "#e6edf3"
+  ui_text: "#e6edf3"
+  banner_dim: "#9198a1"
+  banner_border: "#30363d"
+  ui_border: "#30363d"
+  ui_ok: "#3fb950"
+  ui_warn: "#d29922"
+  ui_error: "#f85149"
+  prompt: "#e6edf3"
+  input_rule: "#2f81f7"
+  response_border: "#2f81f7"
+  status_bar_bg: "#0c1015"
+  status_bar_text: "#e6edf3"
+  status_bar_good: "#3fb950"
+  status_bar_warn: "#d29922"
+  status_bar_critical: "#f85149"
+  session_label: "#6cb0fa"
+  session_border: "#30363d"
+  ui_tool: "#6cb0fa"
+  ui_thinking: "#9198a1"
+  diff_added: "#3fb950"
+  diff_removed: "#f85149"
+  diff_added_word: "#6fca7c"
+  diff_removed_word: "#fa7c76"
+  syntax_string: "#3fb950"
+  syntax_number: "#6cb0fa"
+  syntax_keyword: "#6cb0fa"
+  syntax_comment: "#9198a1"
+  completion_menu_bg: "#0c1015"
+  completion_menu_current_bg: "#30363d"
+  completion_menu_meta_bg: "#181c22"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

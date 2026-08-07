@@ -1,0 +1,48 @@
+# Hermes skin — dark-kanagawa.
+# Kanagawa Wave, Japanese ink-wash dark.
+name: dark-kanagawa
+description: Kanagawa Wave, Japanese ink-wash dark
+
+colors:
+  background: "#1f1f28"
+  ui_accent: "#7e9cd8"
+  banner_accent: "#7e9cd8"
+  banner_title: "#dcd7ba"
+  banner_text: "#dcd7ba"
+  ui_text: "#dcd7ba"
+  banner_dim: "#898881"
+  banner_border: "#363646"
+  ui_border: "#363646"
+  ui_ok: "#98bb6c"
+  ui_warn: "#e6c384"
+  ui_error: "#e46876"
+  prompt: "#dcd7ba"
+  input_rule: "#7e9cd8"
+  response_border: "#7e9cd8"
+  status_bar_bg: "#1d1d25"
+  status_bar_text: "#dcd7ba"
+  status_bar_good: "#98bb6c"
+  status_bar_warn: "#e6c384"
+  status_bar_critical: "#e46876"
+  session_label: "#a3c0e8"
+  session_border: "#363646"
+  ui_tool: "#a3c0e8"
+  ui_thinking: "#898881"
+  diff_added: "#98bb6c"
+  diff_removed: "#e46876"
+  diff_added_word: "#b2cc91"
+  diff_removed_word: "#eb8e98"
+  syntax_string: "#98bb6c"
+  syntax_number: "#a3c0e8"
+  syntax_keyword: "#a3c0e8"
+  syntax_comment: "#898881"
+  completion_menu_bg: "#1d1d25"
+  completion_menu_current_bg: "#363646"
+  completion_menu_meta_bg: "#262631"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

@@ -1,0 +1,48 @@
+# Hermes skin — dark-everforest.
+# Everforest, green-tinted forest dark.
+name: dark-everforest
+description: Everforest, green-tinted forest dark
+
+colors:
+  background: "#2f383e"
+  ui_accent: "#a7c080"
+  banner_accent: "#a7c080"
+  banner_title: "#d3c6aa"
+  banner_text: "#d3c6aa"
+  ui_text: "#d3c6aa"
+  banner_dim: "#99a39c"
+  banner_border: "#475258"
+  ui_border: "#475258"
+  ui_ok: "#a7c080"
+  ui_warn: "#dbbc7f"
+  ui_error: "#e67e80"
+  prompt: "#d3c6aa"
+  input_rule: "#a7c080"
+  response_border: "#a7c080"
+  status_bar_bg: "#2b3439"
+  status_bar_text: "#d3c6aa"
+  status_bar_good: "#a7c080"
+  status_bar_warn: "#dbbc7f"
+  status_bar_critical: "#e67e80"
+  session_label: "#c0d0a0"
+  session_border: "#475258"
+  ui_tool: "#c0d0a0"
+  ui_thinking: "#99a39c"
+  diff_added: "#a7c080"
+  diff_removed: "#e67e80"
+  diff_added_word: "#bdd0a0"
+  diff_removed_word: "#ec9ea0"
+  syntax_string: "#a7c080"
+  syntax_number: "#c0d0a0"
+  syntax_keyword: "#c0d0a0"
+  syntax_comment: "#99a39c"
+  completion_menu_bg: "#2b3439"
+  completion_menu_current_bg: "#475258"
+  completion_menu_meta_bg: "#364046"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

@@ -1,0 +1,48 @@
+# Hermes skin — light-kanagawa.
+# Kanagawa Lotus, Japanese ink-wash light.
+name: light-kanagawa
+description: Kanagawa Lotus, Japanese ink-wash light
+
+colors:
+  background: "#f2ecbc"
+  ui_accent: "#47688f"
+  banner_accent: "#47688f"
+  banner_title: "#545464"
+  banner_text: "#545464"
+  ui_text: "#545464"
+  banner_dim: "#6e6a5e"
+  banner_border: "#d8d0b0"
+  ui_border: "#d8d0b0"
+  ui_ok: "#647b46"
+  ui_warn: "#7d6230"
+  ui_error: "#ad354a"
+  prompt: "#545464"
+  input_rule: "#47688f"
+  response_border: "#47688f"
+  status_bar_bg: "#e8e3b4"
+  status_bar_text: "#545464"
+  status_bar_good: "#647b46"
+  status_bar_warn: "#7d6230"
+  status_bar_critical: "#ad354a"
+  session_label: "#3b5878"
+  session_border: "#d8d0b0"
+  ui_tool: "#3b5878"
+  ui_thinking: "#6e6a5e"
+  diff_added: "#647b46"
+  diff_removed: "#ad354a"
+  diff_added_word: "#8b9c74"
+  diff_removed_word: "#c26877"
+  syntax_string: "#647b46"
+  syntax_number: "#3b5878"
+  syntax_keyword: "#3b5878"
+  syntax_comment: "#6e6a5e"
+  completion_menu_bg: "#e8e3b4"
+  completion_menu_current_bg: "#d8d0b0"
+  completion_menu_meta_bg: "#eae4b8"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

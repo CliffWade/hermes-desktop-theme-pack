@@ -1,0 +1,48 @@
+# Hermes skin — dark-ayu.
+# Ayu Dark, soft blue-charcoal.
+name: dark-ayu
+description: Ayu Dark, soft blue-charcoal
+
+colors:
+  background: "#0b0e14"
+  ui_accent: "#59c2ff"
+  banner_accent: "#59c2ff"
+  banner_title: "#b3b1ad"
+  banner_text: "#b3b1ad"
+  ui_text: "#b3b1ad"
+  banner_dim: "#787b77"
+  banner_border: "#1f2430"
+  ui_border: "#1f2430"
+  ui_ok: "#a6cc70"
+  ui_warn: "#e6b450"
+  ui_error: "#f07178"
+  prompt: "#b3b1ad"
+  input_rule: "#59c2ff"
+  response_border: "#59c2ff"
+  status_bar_bg: "#0a0d12"
+  status_bar_text: "#b3b1ad"
+  status_bar_good: "#a6cc70"
+  status_bar_warn: "#e6b450"
+  status_bar_critical: "#f07178"
+  session_label: "#8ad6ff"
+  session_border: "#1f2430"
+  ui_tool: "#8ad6ff"
+  ui_thinking: "#787b77"
+  diff_added: "#a6cc70"
+  diff_removed: "#f07178"
+  diff_added_word: "#bcd994"
+  diff_removed_word: "#f4949a"
+  syntax_string: "#a6cc70"
+  syntax_number: "#8ad6ff"
+  syntax_keyword: "#8ad6ff"
+  syntax_comment: "#787b77"
+  completion_menu_bg: "#0a0d12"
+  completion_menu_current_bg: "#1f2430"
+  completion_menu_meta_bg: "#11151c"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

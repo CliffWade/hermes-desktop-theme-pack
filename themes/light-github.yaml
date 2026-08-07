@@ -1,0 +1,48 @@
+# Hermes skin — light-github.
+# GitHub Light, official GitHub theme.
+name: light-github
+description: GitHub Light, official GitHub theme
+
+colors:
+  background: "#ffffff"
+  ui_accent: "#0969da"
+  banner_accent: "#0969da"
+  banner_title: "#1f2328"
+  banner_text: "#1f2328"
+  ui_text: "#1f2328"
+  banner_dim: "#59636e"
+  banner_border: "#d1d9e0"
+  ui_border: "#d1d9e0"
+  ui_ok: "#177232"
+  ui_warn: "#7b5200"
+  ui_error: "#ba1f29"
+  prompt: "#1f2328"
+  input_rule: "#0969da"
+  response_border: "#0969da"
+  status_bar_bg: "#f5f5f5"
+  status_bar_text: "#1f2328"
+  status_bar_good: "#177232"
+  status_bar_warn: "#7b5200"
+  status_bar_critical: "#ba1f29"
+  session_label: "#0756b0"
+  session_border: "#d1d9e0"
+  ui_tool: "#0756b0"
+  ui_thinking: "#59636e"
+  diff_added: "#177232"
+  diff_removed: "#ba1f29"
+  diff_added_word: "#519565"
+  diff_removed_word: "#cb575e"
+  syntax_string: "#177232"
+  syntax_number: "#0756b0"
+  syntax_keyword: "#0756b0"
+  syntax_comment: "#59636e"
+  completion_menu_bg: "#f5f5f5"
+  completion_menu_current_bg: "#d1d9e0"
+  completion_menu_meta_bg: "#f1f4f6"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

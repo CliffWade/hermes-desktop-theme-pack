@@ -1,0 +1,48 @@
+# Hermes skin — dark-cozy-paper.
+# Cozy Paper, warm dark.
+name: dark-cozy-paper
+description: Cozy Paper, warm dark
+
+colors:
+  background: "#232323"
+  ui_accent: "#c9a87c"
+  banner_accent: "#c9a87c"
+  banner_title: "#ddd7c9"
+  banner_text: "#ddd7c9"
+  ui_text: "#ddd7c9"
+  banner_dim: "#9a948a"
+  banner_border: "#3a3a3a"
+  ui_border: "#3a3a3a"
+  ui_ok: "#a8b57a"
+  ui_warn: "#d8b26a"
+  ui_error: "#c97b7b"
+  prompt: "#ddd7c9"
+  input_rule: "#c9a87c"
+  response_border: "#c9a87c"
+  status_bar_bg: "#202020"
+  status_bar_text: "#ddd7c9"
+  status_bar_good: "#a8b57a"
+  status_bar_warn: "#d8b26a"
+  status_bar_critical: "#c97b7b"
+  session_label: "#dcbc92"
+  session_border: "#3a3a3a"
+  ui_tool: "#dcbc92"
+  ui_thinking: "#9a948a"
+  diff_added: "#a8b57a"
+  diff_removed: "#c97b7b"
+  diff_added_word: "#bec89b"
+  diff_removed_word: "#d69c9c"
+  syntax_string: "#a8b57a"
+  syntax_number: "#dcbc92"
+  syntax_keyword: "#dcbc92"
+  syntax_comment: "#9a948a"
+  completion_menu_bg: "#202020"
+  completion_menu_current_bg: "#3a3a3a"
+  completion_menu_meta_bg: "#2a2a2a"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

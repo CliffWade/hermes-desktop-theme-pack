@@ -1,0 +1,48 @@
+# Hermes skin — light-material.
+# Material Light, blue-gray developer light.
+name: light-material
+description: Material Light, blue-gray developer light
+
+colors:
+  background: "#fafafa"
+  ui_accent: "#007e71"
+  banner_accent: "#007e71"
+  banner_title: "#263238"
+  banner_text: "#263238"
+  ui_text: "#263238"
+  banner_dim: "#60737d"
+  banner_border: "#e0e0e0"
+  ui_border: "#e0e0e0"
+  ui_ok: "#29702d"
+  ui_warn: "#936b09"
+  ui_error: "#b22424"
+  prompt: "#263238"
+  input_rule: "#007e71"
+  response_border: "#007e71"
+  status_bar_bg: "#f0f0f0"
+  status_bar_text: "#263238"
+  status_bar_good: "#29702d"
+  status_bar_warn: "#936b09"
+  status_bar_critical: "#b22424"
+  session_label: "#00685e"
+  session_border: "#e0e0e0"
+  ui_tool: "#00685e"
+  ui_thinking: "#60737d"
+  diff_added: "#29702d"
+  diff_removed: "#b22424"
+  diff_added_word: "#5e9462"
+  diff_removed_word: "#c55b5b"
+  syntax_string: "#29702d"
+  syntax_number: "#00685e"
+  syntax_keyword: "#00685e"
+  syntax_comment: "#60737d"
+  completion_menu_bg: "#f0f0f0"
+  completion_menu_current_bg: "#e0e0e0"
+  completion_menu_meta_bg: "#f2f2f2"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

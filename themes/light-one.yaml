@@ -1,0 +1,48 @@
+# Hermes skin — light-one.
+# One Light, Atom's light default.
+name: light-one
+description: One Light, Atom's light default
+
+colors:
+  background: "#fafafa"
+  ui_accent: "#386ad5"
+  banner_accent: "#386ad5"
+  banner_title: "#383a42"
+  banner_text: "#383a42"
+  ui_text: "#383a42"
+  banner_dim: "#6d6d72"
+  banner_border: "#e5e5e6"
+  ui_border: "#e5e5e6"
+  ui_ok: "#489147"
+  ui_warn: "#9a6a01"
+  ui_error: "#cd4d42"
+  prompt: "#383a42"
+  input_rule: "#386ad5"
+  response_border: "#386ad5"
+  status_bar_bg: "#f0f0f0"
+  status_bar_text: "#383a42"
+  status_bar_good: "#489147"
+  status_bar_warn: "#9a6a01"
+  status_bar_critical: "#cd4d42"
+  session_label: "#2f5ab3"
+  session_border: "#e5e5e6"
+  ui_tool: "#2f5ab3"
+  ui_thinking: "#6d6d72"
+  diff_added: "#489147"
+  diff_removed: "#cd4d42"
+  diff_added_word: "#76ac75"
+  diff_removed_word: "#da7a71"
+  syntax_string: "#489147"
+  syntax_number: "#2f5ab3"
+  syntax_keyword: "#2f5ab3"
+  syntax_comment: "#6d6d72"
+  completion_menu_bg: "#f0f0f0"
+  completion_menu_current_bg: "#e5e5e6"
+  completion_menu_meta_bg: "#f4f4f4"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

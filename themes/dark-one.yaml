@@ -1,0 +1,48 @@
+# Hermes skin — dark-one.
+# One Dark, Atom's default editor theme.
+name: dark-one
+description: One Dark, Atom's default editor theme
+
+colors:
+  background: "#282c34"
+  ui_accent: "#61afef"
+  banner_accent: "#61afef"
+  banner_title: "#abb2bf"
+  banner_text: "#abb2bf"
+  ui_text: "#abb2bf"
+  banner_dim: "#90959e"
+  banner_border: "#3e4451"
+  ui_border: "#3e4451"
+  ui_ok: "#98c379"
+  ui_warn: "#e5c07b"
+  ui_error: "#e06c75"
+  prompt: "#abb2bf"
+  input_rule: "#61afef"
+  response_border: "#61afef"
+  status_bar_bg: "#252830"
+  status_bar_text: "#abb2bf"
+  status_bar_good: "#98c379"
+  status_bar_warn: "#e5c07b"
+  status_bar_critical: "#e06c75"
+  session_label: "#8ec7f5"
+  session_border: "#3e4451"
+  ui_tool: "#8ec7f5"
+  ui_thinking: "#90959e"
+  diff_added: "#98c379"
+  diff_removed: "#e06c75"
+  diff_added_word: "#b2d29a"
+  diff_removed_word: "#e89198"
+  syntax_string: "#98c379"
+  syntax_number: "#8ec7f5"
+  syntax_keyword: "#8ec7f5"
+  syntax_comment: "#90959e"
+  completion_menu_bg: "#252830"
+  completion_menu_current_bg: "#3e4451"
+  completion_menu_meta_bg: "#2f333d"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

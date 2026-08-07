@@ -1,0 +1,48 @@
+# Hermes skin — light-ayu.
+# Ayu Light, warm paper-light.
+name: light-ayu
+description: Ayu Light, warm paper-light
+
+colors:
+  background: "#fafafa"
+  ui_accent: "#a36229"
+  banner_accent: "#a36229"
+  banner_title: "#555f6a"
+  banner_text: "#555f6a"
+  ui_text: "#555f6a"
+  banner_dim: "#6f737a"
+  banner_border: "#e8e8e8"
+  ui_border: "#e8e8e8"
+  ui_ok: "#6e8e39"
+  ui_warn: "#936b09"
+  ui_error: "#bc453b"
+  prompt: "#555f6a"
+  input_rule: "#a36229"
+  response_border: "#a36229"
+  status_bar_bg: "#f0f0f0"
+  status_bar_text: "#555f6a"
+  status_bar_good: "#6e8e39"
+  status_bar_warn: "#936b09"
+  status_bar_critical: "#bc453b"
+  session_label: "#8a521f"
+  session_border: "#e8e8e8"
+  ui_tool: "#8a521f"
+  ui_thinking: "#6f737a"
+  diff_added: "#6e8e39"
+  diff_removed: "#bc453b"
+  diff_added_word: "#92aa6a"
+  diff_removed_word: "#cd746c"
+  syntax_string: "#6e8e39"
+  syntax_number: "#8a521f"
+  syntax_keyword: "#8a521f"
+  syntax_comment: "#6f737a"
+  completion_menu_bg: "#f0f0f0"
+  completion_menu_current_bg: "#e8e8e8"
+  completion_menu_meta_bg: "#f5f5f5"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

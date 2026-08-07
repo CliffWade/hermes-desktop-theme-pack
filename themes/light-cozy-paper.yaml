@@ -1,0 +1,48 @@
+# Hermes skin — light-cozy-paper.
+# Warm paper with soft leather brown.
+name: light-cozy-paper
+description: Warm paper with soft leather brown
+
+colors:
+  background: "#f7f4ec"
+  ui_accent: "#8e623a"
+  banner_accent: "#8e623a"
+  banner_title: "#2b2620"
+  banner_text: "#2b2620"
+  ui_text: "#2b2620"
+  banner_dim: "#6f675c"
+  banner_border: "#ded7c9"
+  ui_border: "#ded7c9"
+  ui_ok: "#2f8e52"
+  ui_warn: "#a17a17"
+  ui_error: "#c65a5a"
+  prompt: "#2b2620"
+  input_rule: "#8e623a"
+  response_border: "#9a6b3f"
+  status_bar_bg: "#f8f5ee"
+  status_bar_text: "#2b2620"
+  status_bar_good: "#2f8e52"
+  status_bar_warn: "#a17a17"
+  status_bar_critical: "#c65a5a"
+  session_label: "#8e623a"
+  session_border: "#ded7c9"
+  ui_tool: "#9a6b3f"
+  ui_thinking: "#6f675c"
+  diff_added: "#2f8e52"
+  diff_removed: "#c65a5a"
+  diff_added_word: "#4b815f"
+  diff_removed_word: "#a16464"
+  syntax_string: "#3e7f56"
+  syntax_number: "#8f7127"
+  syntax_keyword: "#976f4a"
+  syntax_comment: "#6f675c"
+  completion_menu_bg: "#ebe8e0"
+  completion_menu_current_bg: "#e3d6c6"
+  completion_menu_meta_bg: "#e3dfd8"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
