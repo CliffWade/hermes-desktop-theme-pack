@@ -1,0 +1,48 @@
+# Hermes skin — dark-solarized.
+# Solarized dark, teal-black with cyan blue.
+name: dark-solarized
+description: Solarized dark, teal-black with cyan blue
+
+colors:
+  background: "#002b36"
+  ui_accent: "#3794d6"
+  banner_accent: "#3794d6"
+  banner_title: "#9ca9a9"
+  banner_text: "#9ca9a9"
+  ui_text: "#9ca9a9"
+  banner_dim: "#7e9097"
+  banner_border: "#073642"
+  ui_border: "#073642"
+  ui_ok: "#859900"
+  ui_warn: "#b58900"
+  ui_error: "#dc322f"
+  prompt: "#9ca9a9"
+  input_rule: "#3794d6"
+  response_border: "#3794d6"
+  status_bar_bg: "#002832"
+  status_bar_text: "#9ca9a9"
+  status_bar_good: "#859900"
+  status_bar_warn: "#b58900"
+  status_bar_critical: "#dc322f"
+  session_label: "#6db3e8"
+  session_border: "#073642"
+  ui_tool: "#6db3e8"
+  ui_thinking: "#7e9097"
+  diff_added: "#859900"
+  diff_removed: "#dc322f"
+  diff_added_word: "#a4b240"
+  diff_removed_word: "#e56563"
+  syntax_string: "#859900"
+  syntax_number: "#6db3e8"
+  syntax_keyword: "#6db3e8"
+  syntax_comment: "#7e9097"
+  completion_menu_bg: "#002832"
+  completion_menu_current_bg: "#073642"
+  completion_menu_meta_bg: "#022e3a"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

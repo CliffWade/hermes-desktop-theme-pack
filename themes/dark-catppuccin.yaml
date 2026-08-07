@@ -1,0 +1,48 @@
+# Hermes skin — dark-catppuccin.
+# Catppuccin Mocha, creamy pastel dark.
+name: dark-catppuccin
+description: Catppuccin Mocha, creamy pastel dark
+
+colors:
+  background: "#1e1e2e"
+  ui_accent: "#89b4fa"
+  banner_accent: "#89b4fa"
+  banner_title: "#cdd6f4"
+  banner_text: "#cdd6f4"
+  ui_text: "#cdd6f4"
+  banner_dim: "#8489a0"
+  banner_border: "#313244"
+  ui_border: "#313244"
+  ui_ok: "#a6e3a1"
+  ui_warn: "#f9e2af"
+  ui_error: "#f38ba8"
+  prompt: "#cdd6f4"
+  input_rule: "#89b4fa"
+  response_border: "#89b4fa"
+  status_bar_bg: "#1c1c2a"
+  status_bar_text: "#cdd6f4"
+  status_bar_good: "#a6e3a1"
+  status_bar_warn: "#f9e2af"
+  status_bar_critical: "#f38ba8"
+  session_label: "#a9c4f8"
+  session_border: "#313244"
+  ui_tool: "#a9c4f8"
+  ui_thinking: "#8489a0"
+  diff_added: "#a6e3a1"
+  diff_removed: "#f38ba8"
+  diff_added_word: "#bceab8"
+  diff_removed_word: "#f6a8be"
+  syntax_string: "#a6e3a1"
+  syntax_number: "#a9c4f8"
+  syntax_keyword: "#a9c4f8"
+  syntax_comment: "#8489a0"
+  completion_menu_bg: "#1c1c2a"
+  completion_menu_current_bg: "#313244"
+  completion_menu_meta_bg: "#242435"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

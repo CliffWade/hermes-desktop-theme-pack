@@ -72,6 +72,12 @@ THEME_PAIRS = [
     ("stained-glass", "light-stained-glass"),
     ("vibrant-synthwave", "light-synthwave"),
     ("void-sunset", "light-sunset"),
+    ("dark-solarized", "light-solarized"),
+    ("dark-gruvbox", "light-gruvbox"),
+    ("dark-tokyo-night", "light-tokyo-day"),
+    ("dark-catppuccin", "light-catppuccin"),
+    ("dark-nord", "light-nord"),
+    ("dark-rosepine", "light-rosepine"),
 ]
 
 _TWIN_LOOKUP = {}

@@ -1,0 +1,48 @@
+# Hermes skin — light-nord.
+# Nord light, arctic snow.
+name: light-nord
+description: Nord light, arctic snow
+
+colors:
+  background: "#eceff4"
+  ui_accent: "#4f6c90"
+  banner_accent: "#4f6c90"
+  banner_title: "#2e3440"
+  banner_text: "#2e3440"
+  ui_text: "#2e3440"
+  banner_dim: "#4c566a"
+  banner_border: "#d8dee9"
+  ui_border: "#d8dee9"
+  ui_ok: "#547356"
+  ui_warn: "#7b6632"
+  ui_error: "#934646"
+  prompt: "#2e3440"
+  input_rule: "#4f6c90"
+  response_border: "#4f6c90"
+  status_bar_bg: "#e3e5ea"
+  status_bar_text: "#2e3440"
+  status_bar_good: "#547356"
+  status_bar_warn: "#7b6632"
+  status_bar_critical: "#934646"
+  session_label: "#405a78"
+  session_border: "#d8dee9"
+  ui_tool: "#405a78"
+  ui_thinking: "#4c566a"
+  diff_added: "#547356"
+  diff_removed: "#934646"
+  diff_added_word: "#7f9680"
+  diff_removed_word: "#ae7474"
+  syntax_string: "#547356"
+  syntax_number: "#405a78"
+  syntax_keyword: "#405a78"
+  syntax_comment: "#4c566a"
+  completion_menu_bg: "#e3e5ea"
+  completion_menu_current_bg: "#d8dee9"
+  completion_menu_meta_bg: "#e6eaf1"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

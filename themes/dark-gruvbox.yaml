@@ -1,0 +1,48 @@
+# Hermes skin — dark-gruvbox.
+# Gruvbox dark, retro warm groove.
+name: dark-gruvbox
+description: Gruvbox dark, retro warm groove
+
+colors:
+  background: "#282828"
+  ui_accent: "#fabd2f"
+  banner_accent: "#fabd2f"
+  banner_title: "#ebdbb2"
+  banner_text: "#ebdbb2"
+  ui_text: "#ebdbb2"
+  banner_dim: "#9b8d7f"
+  banner_border: "#504945"
+  ui_border: "#504945"
+  ui_ok: "#b8bb26"
+  ui_warn: "#fabd2f"
+  ui_error: "#fb4934"
+  prompt: "#ebdbb2"
+  input_rule: "#fabd2f"
+  response_border: "#fabd2f"
+  status_bar_bg: "#252525"
+  status_bar_text: "#ebdbb2"
+  status_bar_good: "#b8bb26"
+  status_bar_warn: "#fabd2f"
+  status_bar_critical: "#fb4934"
+  session_label: "#f4c856"
+  session_border: "#504945"
+  ui_tool: "#f4c856"
+  ui_thinking: "#9b8d7f"
+  diff_added: "#b8bb26"
+  diff_removed: "#fb4934"
+  diff_added_word: "#cacc5c"
+  diff_removed_word: "#fc7667"
+  syntax_string: "#b8bb26"
+  syntax_number: "#f4c856"
+  syntax_keyword: "#f4c856"
+  syntax_comment: "#9b8d7f"
+  completion_menu_bg: "#252525"
+  completion_menu_current_bg: "#504945"
+  completion_menu_meta_bg: "#343231"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

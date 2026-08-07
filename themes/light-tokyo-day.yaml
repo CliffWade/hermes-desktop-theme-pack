@@ -1,0 +1,48 @@
+# Hermes skin — light-tokyo-day.
+# Tokyo Day, bright morning blue.
+name: light-tokyo-day
+description: Tokyo Day, bright morning blue
+
+colors:
+  background: "#e1e2e7"
+  ui_accent: "#235fb1"
+  banner_accent: "#235fb1"
+  banner_title: "#343b58"
+  banner_text: "#343b58"
+  ui_text: "#343b58"
+  banner_dim: "#565a6e"
+  banner_border: "#c4c8da"
+  ui_border: "#c4c8da"
+  ui_ok: "#2a6334"
+  ui_warn: "#7b5519"
+  ui_error: "#af3a46"
+  prompt: "#343b58"
+  input_rule: "#235fb1"
+  response_border: "#235fb1"
+  status_bar_bg: "#d8d9de"
+  status_bar_text: "#343b58"
+  status_bar_good: "#2a6334"
+  status_bar_warn: "#7b5519"
+  status_bar_critical: "#af3a46"
+  session_label: "#1c4f8f"
+  session_border: "#c4c8da"
+  ui_tool: "#1c4f8f"
+  ui_thinking: "#565a6e"
+  diff_added: "#2a6334"
+  diff_removed: "#af3a46"
+  diff_added_word: "#5f8a67"
+  diff_removed_word: "#c36b74"
+  syntax_string: "#2a6334"
+  syntax_number: "#1c4f8f"
+  syntax_keyword: "#1c4f8f"
+  syntax_comment: "#565a6e"
+  completion_menu_bg: "#d8d9de"
+  completion_menu_current_bg: "#c4c8da"
+  completion_menu_meta_bg: "#d8dae3"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

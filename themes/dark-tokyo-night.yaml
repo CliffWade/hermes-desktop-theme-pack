@@ -1,0 +1,48 @@
+# Hermes skin — dark-tokyo-night.
+# Tokyo Night, blue-purple dusk.
+name: dark-tokyo-night
+description: Tokyo Night, blue-purple dusk
+
+colors:
+  background: "#1a1b26"
+  ui_accent: "#7aa2f7"
+  banner_accent: "#7aa2f7"
+  banner_title: "#c0caf5"
+  banner_text: "#c0caf5"
+  ui_text: "#c0caf5"
+  banner_dim: "#7f85a5"
+  banner_border: "#2f334d"
+  ui_border: "#2f334d"
+  ui_ok: "#9ece6a"
+  ui_warn: "#e0af68"
+  ui_error: "#f7768e"
+  prompt: "#c0caf5"
+  input_rule: "#7aa2f7"
+  response_border: "#7aa2f7"
+  status_bar_bg: "#181923"
+  status_bar_text: "#c0caf5"
+  status_bar_good: "#9ece6a"
+  status_bar_warn: "#e0af68"
+  status_bar_critical: "#f7768e"
+  session_label: "#a9c2fb"
+  session_border: "#2f334d"
+  ui_tool: "#a9c2fb"
+  ui_thinking: "#7f85a5"
+  diff_added: "#9ece6a"
+  diff_removed: "#f7768e"
+  diff_added_word: "#b6da8f"
+  diff_removed_word: "#f998aa"
+  syntax_string: "#9ece6a"
+  syntax_number: "#a9c2fb"
+  syntax_keyword: "#a9c2fb"
+  syntax_comment: "#7f85a5"
+  completion_menu_bg: "#181923"
+  completion_menu_current_bg: "#2f334d"
+  completion_menu_meta_bg: "#202232"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

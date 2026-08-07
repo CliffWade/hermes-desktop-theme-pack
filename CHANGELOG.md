@@ -7,6 +7,12 @@ All notable changes to the Hermes Theme Pack. This project follows
 
 ### Added
 
+- **6 iconic theme pairs (12 themes)** — Solarized, Gruvbox, Tokyo Night,
+  Catppuccin, Nord, and Rosé Pine, each with canonical light and dark
+  variants paired as twins. Canonical palettes adjusted where needed to
+  pass the WCAG gate (Solarized's famously low-contrast blue lightened to
+  #3794d6, light-theme accents darkened). The pack is 84 themes,
+  42 light / 42 dark, fully paired.
 - **10 new twin themes — every theme is now paired** — light-stained-glass,
   light-neon, light-pacific, light-synthwave, light-sunset (twins of the
   community darks) and dark-bone, dark-mac, dark-lemon, dark-sage,

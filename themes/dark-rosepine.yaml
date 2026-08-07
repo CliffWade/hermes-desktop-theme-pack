@@ -1,0 +1,48 @@
+# Hermes skin — dark-rosepine.
+# Rosé Pine, rose-tinted dusk.
+name: dark-rosepine
+description: Rosé Pine, rose-tinted dusk
+
+colors:
+  background: "#191724"
+  ui_accent: "#ebbcba"
+  banner_accent: "#ebbcba"
+  banner_title: "#e0def4"
+  banner_text: "#e0def4"
+  ui_text: "#e0def4"
+  banner_dim: "#908caa"
+  banner_border: "#26233a"
+  ui_border: "#26233a"
+  ui_ok: "#9ccfd8"
+  ui_warn: "#f6c177"
+  ui_error: "#eb6f92"
+  prompt: "#e0def4"
+  input_rule: "#ebbcba"
+  response_border: "#ebbcba"
+  status_bar_bg: "#171521"
+  status_bar_text: "#e0def4"
+  status_bar_good: "#9ccfd8"
+  status_bar_warn: "#f6c177"
+  status_bar_critical: "#eb6f92"
+  session_label: "#f2cfcd"
+  session_border: "#26233a"
+  ui_tool: "#f2cfcd"
+  ui_thinking: "#908caa"
+  diff_added: "#9ccfd8"
+  diff_removed: "#eb6f92"
+  diff_added_word: "#b5dbe2"
+  diff_removed_word: "#f093ad"
+  syntax_string: "#9ccfd8"
+  syntax_number: "#f2cfcd"
+  syntax_keyword: "#f2cfcd"
+  syntax_comment: "#908caa"
+  completion_menu_bg: "#171521"
+  completion_menu_current_bg: "#26233a"
+  completion_menu_meta_bg: "#1d1b2b"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
