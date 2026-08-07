@@ -3,7 +3,7 @@
 All notable changes to the Hermes Theme Pack. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.1.0] - 2026-08-07
 
 ### Added
 
@@ -40,6 +40,14 @@ All notable changes to the Hermes Theme Pack. This project follows
   light-aqua, light-lilac, light-porcelain, light-denim, light-blush,
   light-grape, light-fern, light-vanilla, light-lemon, light-oat, light-melon,
   light-tide, light-mist, light-ash (pack now 59 themes across 7 categories)
+
+### Changed
+
+- **Every theme now has a light/dark twin** — the pack grew from 34 to 100
+  themes and every single one is paired with its counterpart, so the ⇄
+  flip button and Follow system light/dark work on every card.
+- **Follow system light/dark** — a toggle in the Theme Switcher that
+  auto-applies the active theme's twin when macOS switches appearance.
 
 ## [1.0.0] - 2026-08-07
 

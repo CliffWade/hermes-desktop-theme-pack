@@ -4,9 +4,13 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/CliffWade/hermes-desktop-theme-pack/ci.yml?style=for-the-badge&label=CI)](https://github.com/CliffWade/hermes-desktop-theme-pack/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/CliffWade/hermes-desktop-theme-pack?style=for-the-badge&label=License)](https://github.com/CliffWade/hermes-desktop-theme-pack/blob/main/LICENSE)
 
-> ## 🚀 v1.0.0 is live
+> ## 🚀 100 themes — v1.1.0 is live
 >
-> The first stable release is out — 34 themes, the Theme Switcher plugin, built-in Appearance integration, and CI-enforced quality. See the [release notes](https://github.com/CliffWade/hermes-desktop-theme-pack/releases/tag/v1.0.0) and the [full changelog](CHANGELOG.md).
+> One hundred curated color themes, perfectly balanced 50 light / 50 dark,
+> and **every single theme has a light/dark twin** — click ⇄ to flip the
+> same vibe to the other polarity, or turn on Follow system to have the
+> active theme flip automatically when macOS switches appearance. See the
+> [release notes](https://github.com/CliffWade/hermes-desktop-theme-pack/releases/tag/v1.1.0) and the [full changelog](CHANGELOG.md).
 
 100 curated color themes for Hermes Agent, organized into 7 categories, every one contrast-checked to WCAG AA. Drop them in and they appear across the CLI, the TUI, and the desktop app at once, because a Hermes skin themes every surface.
 
