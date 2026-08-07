@@ -1,0 +1,48 @@
+# Hermes skin — dark-dracula.
+# Dracula dark theme, purple on near-black with neon accents.
+name: dark-dracula
+description: Dracula dark, purple on near-black
+
+colors:
+  background: "#282a36"
+  ui_accent: "#bd93f9"
+  banner_accent: "#bd93f9"
+  banner_title: "#f8f8f2"
+  banner_text: "#f8f8f2"
+  ui_text: "#f8f8f2"
+  banner_dim: "#8b99c9"
+  banner_border: "#44475a"
+  ui_border: "#44475a"
+  ui_ok: "#50fa7b"
+  ui_warn: "#f1fa8c"
+  ui_error: "#ff5555"
+  prompt: "#f8f8f2"
+  input_rule: "#ff79c6"
+  response_border: "#bd93f9"
+  status_bar_bg: "#21222c"
+  status_bar_text: "#f8f8f2"
+  status_bar_good: "#50fa7b"
+  status_bar_warn: "#f1fa8c"
+  status_bar_critical: "#ff5555"
+  session_label: "#ff79c6"
+  session_border: "#44475a"
+  ui_tool: "#8be9fd"
+  ui_thinking: "#6272a4"
+  diff_added: "#50fa7b"
+  diff_removed: "#ff5555"
+  diff_added_word: "#69ff94"
+  diff_removed_word: "#ff6e6e"
+  syntax_string: "#f1fa8c"
+  syntax_number: "#bd93f9"
+  syntax_keyword: "#ff79c6"
+  syntax_comment: "#6272a4"
+  completion_menu_bg: "#21222c"
+  completion_menu_current_bg: "#44475a"
+  completion_menu_meta_bg: "#191a21"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
