@@ -127,6 +127,10 @@ def _skin_preview(name: str) -> Dict[str, str]:
 def _skins() -> List[Dict[str, str]]:
     from hermes_cli.skin_engine import list_skins
 
+    # Load the persisted first-seen records so the list reflects real install
+    # history; without this the in-memory dict is empty and no theme shows NEW.
+    _load_install_times()
+
     out = []
     for s in list_skins():
         name = s["name"]
