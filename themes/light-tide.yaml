@@ -1,0 +1,48 @@
+# Hermes skin — light-tide.
+# Deep coastal teal on pale seafoam.
+name: light-tide
+description: Deep coastal teal on seafoam
+
+colors:
+  background: "#e9f5f2"
+  ui_accent: "#127a7a"
+  banner_accent: "#127a7a"
+  banner_title: "#143838"
+  banner_text: "#143838"
+  ui_text: "#143838"
+  banner_dim: "#3f6666"
+  banner_border: "#bcd8d4"
+  ui_border: "#bcd8d4"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#143838"
+  input_rule: "#127a7a"
+  response_border: "#3ea0a0"
+  status_bar_bg: "#d4e8e4"
+  status_bar_text: "#143838"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#127a7a"
+  session_border: "#bcd8d4"
+  ui_tool: "#106666"
+  ui_thinking: "#6a9090"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#127a7a"
+  syntax_comment: "#6a9090"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#c8e2dc"
+  completion_menu_meta_bg: "#ecf8f5"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

@@ -1,0 +1,48 @@
+# Hermes skin — light-grape.
+# Fruity grape purple with rich violet.
+name: light-grape
+description: Fruity grape purple with violet
+
+colors:
+  background: "#f6eff7"
+  ui_accent: "#7d4a96"
+  banner_accent: "#7d4a96"
+  banner_title: "#33203f"
+  banner_text: "#33203f"
+  ui_text: "#33203f"
+  banner_dim: "#6d5280"
+  banner_border: "#dccce2"
+  ui_border: "#dccce2"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#33203f"
+  input_rule: "#7d4a96"
+  response_border: "#a06ab8"
+  status_bar_bg: "#eae0ee"
+  status_bar_text: "#33203f"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#7d4a96"
+  session_border: "#dccce2"
+  ui_tool: "#6a3f82"
+  ui_thinking: "#a08ca8"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#7d4a96"
+  syntax_comment: "#a08ca8"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#e4d2ea"
+  completion_menu_meta_bg: "#f8f2f9"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

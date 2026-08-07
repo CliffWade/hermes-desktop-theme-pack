@@ -1,0 +1,48 @@
+# Hermes skin — light-ash.
+# Cool ash gray, quiet and neutral.
+name: light-ash
+description: Cool ash gray
+
+colors:
+  background: "#f2f2f0"
+  ui_accent: "#6e6e68"
+  banner_accent: "#6e6e68"
+  banner_title: "#2c2c2a"
+  banner_text: "#2c2c2a"
+  ui_text: "#2c2c2a"
+  banner_dim: "#5f5f5a"
+  banner_border: "#d2d2cc"
+  ui_border: "#d2d2cc"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#2c2c2a"
+  input_rule: "#6e6e68"
+  response_border: "#94948e"
+  status_bar_bg: "#e2e2dc"
+  status_bar_text: "#2c2c2a"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#6e6e68"
+  session_border: "#d2d2cc"
+  ui_tool: "#5e5e58"
+  ui_thinking: "#9a9a94"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#6e6e68"
+  syntax_comment: "#9a9a94"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#dcdcd4"
+  completion_menu_meta_bg: "#f4f4f0"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

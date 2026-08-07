@@ -1,0 +1,48 @@
+# Hermes skin — light-fern.
+# True medium green with warm cream.
+name: light-fern
+description: True medium green with cream
+
+colors:
+  background: "#eff5ec"
+  ui_accent: "#3f7a45"
+  banner_accent: "#3f7a45"
+  banner_title: "#233a26"
+  banner_text: "#233a26"
+  ui_text: "#233a26"
+  banner_dim: "#5f745f"
+  banner_border: "#d0dcc8"
+  ui_border: "#d0dcc8"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#233a26"
+  input_rule: "#3f7a45"
+  response_border: "#6a9a68"
+  status_bar_bg: "#dfe8d8"
+  status_bar_text: "#233a26"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#3f7a45"
+  session_border: "#d0dcc8"
+  ui_tool: "#356a3a"
+  ui_thinking: "#8a9c88"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#3f7a45"
+  syntax_comment: "#8a9c88"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#d6e4cf"
+  completion_menu_meta_bg: "#f1f6ee"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

@@ -1,0 +1,48 @@
+# Hermes skin — light-oat.
+# Oatmeal gray-beige, neutral and muted.
+name: light-oat
+description: Oatmeal gray-beige, neutral
+
+colors:
+  background: "#f4f1ea"
+  ui_accent: "#6e6250"
+  banner_accent: "#6e6250"
+  banner_title: "#332f28"
+  banner_text: "#332f28"
+  ui_text: "#332f28"
+  banner_dim: "#6d675c"
+  banner_border: "#d8d2c2"
+  ui_border: "#d8d2c2"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#332f28"
+  input_rule: "#6e6250"
+  response_border: "#988e76"
+  status_bar_bg: "#e6e0d2"
+  status_bar_text: "#332f28"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#6e6250"
+  session_border: "#d8d2c2"
+  ui_tool: "#5e5544"
+  ui_thinking: "#a89f8e"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#6e6250"
+  syntax_comment: "#a89f8e"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#e0d9c6"
+  completion_menu_meta_bg: "#f6f3ec"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

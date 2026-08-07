@@ -1,0 +1,48 @@
+# Hermes skin — light-denim.
+# Soft mid denim blue with white.
+name: light-denim
+description: Soft mid denim blue with white
+
+colors:
+  background: "#e7edf5"
+  ui_accent: "#3a5f8a"
+  banner_accent: "#3a5f8a"
+  banner_title: "#1e2f47"
+  banner_text: "#1e2f47"
+  ui_text: "#1e2f47"
+  banner_dim: "#52637a"
+  banner_border: "#c2d0de"
+  ui_border: "#c2d0de"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#1e2f47"
+  input_rule: "#3a5f8a"
+  response_border: "#6a88a8"
+  status_bar_bg: "#d6e0ec"
+  status_bar_text: "#1e2f47"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#3a5f8a"
+  session_border: "#c2d0de"
+  ui_tool: "#2f5078"
+  ui_thinking: "#7c8fa6"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#3a5f8a"
+  syntax_comment: "#7c8fa6"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#d2ddea"
+  completion_menu_meta_bg: "#eef3f8"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

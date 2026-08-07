@@ -1,0 +1,48 @@
+# Hermes skin — light-lemon.
+# Bright fresh yellow with olive tint.
+name: light-lemon
+description: Bright fresh yellow with olive
+
+colors:
+  background: "#fbf6e2"
+  ui_accent: "#826d14"
+  banner_accent: "#826d14"
+  banner_title: "#3a3313"
+  banner_text: "#3a3313"
+  ui_text: "#3a3313"
+  banner_dim: "#77703f"
+  banner_border: "#e4dca8"
+  ui_border: "#e4dca8"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#3a3313"
+  input_rule: "#826d14"
+  response_border: "#ab9434"
+  status_bar_bg: "#f0e8c0"
+  status_bar_text: "#3a3313"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#826d14"
+  session_border: "#e4dca8"
+  ui_tool: "#726012"
+  ui_thinking: "#a89e68"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#826d14"
+  syntax_comment: "#a89e68"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#eae0a8"
+  completion_menu_meta_bg: "#fcf8ea"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

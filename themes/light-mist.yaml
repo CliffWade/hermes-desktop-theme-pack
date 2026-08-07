@@ -1,0 +1,48 @@
+# Hermes skin — light-mist.
+# Cool fog blue-gray, soft and quiet.
+name: light-mist
+description: Cool fog blue-gray
+
+colors:
+  background: "#eef2f6"
+  ui_accent: "#4a6a85"
+  banner_accent: "#4a6a85"
+  banner_title: "#24313d"
+  banner_text: "#24313d"
+  ui_text: "#24313d"
+  banner_dim: "#5a6a7a"
+  banner_border: "#ccd6de"
+  ui_border: "#ccd6de"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#24313d"
+  input_rule: "#4a6a85"
+  response_border: "#7890a5"
+  status_bar_bg: "#dbe2e8"
+  status_bar_text: "#24313d"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#4a6a85"
+  session_border: "#ccd6de"
+  ui_tool: "#3e5a72"
+  ui_thinking: "#8494a4"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#4a6a85"
+  syntax_comment: "#8494a4"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#d8e2ea"
+  completion_menu_meta_bg: "#f0f4f8"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

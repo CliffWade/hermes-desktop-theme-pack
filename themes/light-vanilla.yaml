@@ -1,0 +1,48 @@
+# Hermes skin — light-vanilla.
+# Warm sweet cream with soft honey.
+name: light-vanilla
+description: Warm sweet cream with honey
+
+colors:
+  background: "#faf5ea"
+  ui_accent: "#8a6a2f"
+  banner_accent: "#8a6a2f"
+  banner_title: "#3c3323"
+  banner_text: "#3c3323"
+  ui_text: "#3c3323"
+  banner_dim: "#7a6f58"
+  banner_border: "#e3d9c2"
+  ui_border: "#e3d9c2"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#3c3323"
+  input_rule: "#8a6a2f"
+  response_border: "#b0925a"
+  status_bar_bg: "#f0e8d2"
+  status_bar_text: "#3c3323"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#8a6a2f"
+  session_border: "#e3d9c2"
+  ui_tool: "#785e2a"
+  ui_thinking: "#a89c80"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#8a6a2f"
+  syntax_comment: "#a89c80"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#ece1c6"
+  completion_menu_meta_bg: "#fbf7ee"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
