@@ -485,7 +485,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
                     className: isLight ? 'shrink-0 text-[0.75rem] leading-none text-(--ui-warn)' : 'shrink-0 text-[0.75rem] leading-none text-(--ui-accent)',
                     children: isLight ? '☀' : '☾'
                   }),
-                  jsx('span', { className: 'truncate text-xs font-medium', children: theme.name })
+                  jsx('span', { className: 'truncate text-[0.8125rem] font-medium', children: theme.name })
                 ]
               }),
               isActive
@@ -523,14 +523,14 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
             className: 'flex w-full flex-1 flex-col px-6',
             // Reserve two lines (description + pairing) so every card is the
             // same height whether or not it has a twin.
-            style: { minHeight: '1.9rem' },
+            style: { minHeight: '2.1rem' },
             children: [
               jsx('span', {
-                className: 'truncate text-[0.75rem] leading-tight text-(--ui-text-tertiary)',
+                className: 'truncate text-[0.8125rem] leading-tight text-(--ui-text-tertiary)',
                 children: theme.description || ''
               }),
               jsx('span', {
-                className: 'mt-auto truncate text-[0.6875rem] font-medium leading-tight',
+                className: 'mt-auto truncate text-[0.75rem] font-medium leading-tight',
                 style: { color: theme.twin ? 'var(--ui-accent)' : 'transparent' },
                 children: theme.twin ? `⇄ paired with ${theme.twin}` : '⇄'
               })
