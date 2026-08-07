@@ -46,7 +46,7 @@ Or in the app: `/skin` in the CLI, or Appearance → theme in the desktop app. E
 
 ## Adding your own theme
 
-Three ways:
+Three ways — and if you want to contribute your theme back to the pack, see [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough:
 
 1. **In the app**: open **Themes**, click **+ Add theme**, paste a skin YAML, and it installs instantly. The backend validates the shape and rejects malformed input, duplicates, and unsafe names.
 2. **By hand**: drop a `.yaml` file into `~/.hermes/skins/` (profile-aware: `$HERMES_HOME/skins/`) and it appears everywhere, CLI, TUI, and desktop.
