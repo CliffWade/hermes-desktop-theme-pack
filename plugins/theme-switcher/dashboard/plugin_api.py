@@ -80,6 +80,40 @@ def _first_install_time(name: str) -> int:
     return _install_times.get(name, 0)
 
 
+def _settings_path():
+    from hermes_constants import get_hermes_home
+
+    return get_hermes_home() / "data" / "theme-switcher-settings.json"
+
+
+def _load_settings() -> Dict[str, Any]:
+    """Persisted UI settings (follow-system flag etc.)."""
+    try:
+        import json
+
+        p = _settings_path()
+        if p.is_file():
+            return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+    return {}
+
+
+def _save_settings(settings: Dict[str, Any]) -> None:
+    try:
+        import json
+
+        p = _settings_path()
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(settings), encoding="utf-8")
+    except Exception:
+        pass
+
+
+def _follow_system() -> bool:
+    return bool(_load_settings().get("follow_system", False))
+
+
 def _skin_colors(name: str) -> Dict[str, str]:
     """Return the full color key map for a skin, or {} on failure."""
     try:
@@ -183,6 +217,21 @@ def _apply_skin(name: str) -> None:
 @router.get("/list")
 def list_themes() -> Dict[str, Any]:
     return {"skins": _skins(), "active": _active()}
+
+
+@router.get("/settings")
+def get_settings() -> Dict[str, Any]:
+    """UI settings: follow_system drives auto light/dark twin switching."""
+    return {"ok": True, "follow_system": _follow_system()}
+
+
+@router.post("/settings")
+def set_settings(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
+    settings = _load_settings()
+    if "follow_system" in payload:
+        settings["follow_system"] = bool(payload.get("follow_system"))
+    _save_settings(settings)
+    return {"ok": True, "follow_system": bool(settings.get("follow_system", False))}
 
 
 @router.post("/apply")

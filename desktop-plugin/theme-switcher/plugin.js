@@ -631,11 +631,40 @@ function ThemeChip() {
     queryFn: () => rest('/list'),
     refetchInterval: 30_000
   })
+  const { data: settingsData } = useQuery({
+    queryKey: ['theme-switcher', 'settings'],
+    queryFn: () => rest('/settings'),
+    refetchInterval: 30_000
+  })
   const skins = (data && data.skins) || []
   const active = (data && data.active) || ''
   const t = skins.find(s => s.name === active)
   const c = (t && t.colors) || {}
   const dot = c.accent || c.tool || c.background
+  const follow = !!(settingsData && settingsData.follow_system)
+
+  // Auto light/dark: when follow-system is on and the OS scheme flips, apply
+  // the active theme's twin so the vibe stays but the polarity matches.
+  useEffect(() => {
+    if (!follow) return
+    const mql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')
+    if (!mql) return
+    const sync = () => {
+      const cur = skins.find(s => s.name === active)
+      if (!cur || !cur.twin) return // unpaired themes stay as-is
+      const systemDark = mql.matches
+      const wantDark = !isLightTheme(cur)
+      if (systemDark === wantDark) return // already matching
+      const twin = skins.find(s => s.name === cur.twin)
+      if (!twin) return
+      rest('/apply', { method: 'POST', body: { name: cur.twin }, timeoutMs: 8000 })
+        .then(() => queryClient.invalidateQueries({ queryKey: ['theme-switcher'] }))
+        .catch(() => {})
+    }
+    sync()
+    mql.addEventListener('change', sync)
+    return () => mql.removeEventListener('change', sync)
+  }, [follow, active, skins])
 
   return jsx('button', {
     type: 'button',
@@ -643,11 +672,12 @@ function ThemeChip() {
       haptic('tap')
       host.navigate('/themes')
     },
-    title: 'Open Theme Switcher',
+    title: follow ? `Open Theme Switcher (following system light/dark: ${active})` : 'Open Theme Switcher',
     className: 'flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[0.6875rem] text-(--ui-text-secondary) hover:bg-(--ui-bg-tertiary) hover:text-(--ui-text-primary)',
     children: [
       dot ? jsx('span', { className: 'h-2 w-2 shrink-0 rounded-full', style: { backgroundColor: dot } }) : null,
-      jsx('span', { className: 'truncate', children: active || 'default' })
+      jsx('span', { className: 'truncate', children: active || 'default' }),
+      follow ? jsx('span', { className: 'shrink-0 text-[0.5625rem] text-(--ui-text-tertiary)', children: '⇅' }) : null
     ]
   })
 }
@@ -662,6 +692,27 @@ function ThemesPage() {
   const [pol, setPol] = useState('all')
   const [cat, setCat] = useState('All')
   const [installOpen, setInstallOpen] = useState(false)
+
+  const { data: settingsData } = useQuery({
+    queryKey: ['theme-switcher', 'settings'],
+    queryFn: () => rest('/settings'),
+    refetchInterval: 30_000
+  })
+  const follow = !!(settingsData && settingsData.follow_system)
+  const toggleFollow = async () => {
+    try {
+      const res = await rest('/settings', { method: 'POST', body: { follow_system: !follow }, timeoutMs: 8000 })
+      if (res && res.ok) {
+        haptic('tap')
+        await queryClient.invalidateQueries({ queryKey: ['theme-switcher', 'settings'] })
+        await queryClient.invalidateQueries({ queryKey: ['theme-switcher', 'list'] })
+      } else {
+        host.notify({ kind: 'error', message: (res && res.error) || 'Could not change follow setting' })
+      }
+    } catch (e) {
+      host.notify({ kind: 'error', message: `Could not change follow setting: ${e?.message ?? e}` })
+    }
+  }
 
   useEffect(() => {
     if (!last) return
@@ -783,6 +834,15 @@ function ThemesPage() {
               children: label
             })
           ),
+          jsx('button', {
+            type: 'button',
+            onClick: () => void toggleFollow(),
+            title: follow
+              ? 'Following system light/dark: active theme flips to its paired twin when macOS switches'
+              : 'Follow system light/dark: auto-switch to the paired twin theme when macOS switches',
+            className: cn(chipCls, follow && 'border-(--ui-accent) bg-(--ui-bg-tertiary) text-(--ui-accent)'),
+            children: follow ? '⇅ Follow system: on' : '⇅ Follow system'
+          }),
           jsx('select', {
             value: cat,
             onChange: e => setCat(e.target.value),
