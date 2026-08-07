@@ -158,3 +158,50 @@ def test_readme_claims_match_actual_themes():
                 assert theme not in mentioned, f"{theme} appears in multiple category rows"
                 mentioned.add(theme)
     assert mentioned == names, f"README table missing themes: {sorted(names - mentioned)}"
+
+
+def test_twin_pairs_resolve_to_real_opposite_polarity_themes():
+    """Every light/dark twin pair names existing themes of opposite polarity.
+
+    The backend plugin (plugins/theme-switcher/dashboard/plugin_api.py) exposes
+    THEME_PAIRS to drive the Theme Switcher's flip button. This test keeps that
+    map honest: each entry must be (dark, light), both names must exist on
+    disk, no theme may appear in more than one pair.
+    """
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "plugin_api",
+        REPO / "plugins/theme-switcher/dashboard/plugin_api.py",
+    )
+    assert spec and spec.loader, "could not load plugin_api.py"
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    pairs = mod.THEME_PAIRS
+    assert pairs, "no twin pairs defined"
+    assert isinstance(pairs, list)
+
+    by_name = {}
+    for p in THEMES_DIR.glob("*.yaml"):
+        doc = yaml.safe_load(p.read_text())
+        by_name[doc["name"]] = doc
+
+    seen = set()
+    for dark, light in pairs:
+        assert dark in by_name, f"pair names unknown dark theme: {dark}"
+        assert light in by_name, f"pair names unknown light theme: {light}"
+        assert _lum(by_name[dark]["colors"]["background"].lstrip("#")) <= 0.5, f"{dark} is not dark"
+        assert _lum(by_name[light]["colors"]["background"].lstrip("#")) > 0.5, f"{light} is not light"
+        assert dark not in seen, f"{dark} appears in multiple pairs"
+        assert light not in seen, f"{light} appears in multiple pairs"
+        seen.add(dark)
+        seen.add(light)
+
+    # Bidirectional lookup must agree.
+    for dark, light in pairs:
+        assert mod._twin(dark) == light, f"_twin({dark}) != {light}"
+        assert mod._twin(light) == dark, f"_twin({light}) != {dark}"
+    # Unpaired themes must return ''.
+    unpaired = next(n for n in by_name if n not in seen)
+    assert mod._twin(unpaired) == "", f"_twin({unpaired}) should be empty"

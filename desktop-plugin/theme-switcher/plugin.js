@@ -503,7 +503,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
             ]
           }),
           jsx('span', {
-            className: 'truncate pr-6 text-[0.625rem] text-(--ui-text-tertiary)',
+            className: 'truncate px-6 text-[0.625rem] text-(--ui-text-tertiary)',
             children: theme.description || ''
           })
         ]
@@ -521,6 +521,18 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
                 : 'border-(--ui-stroke-secondary) text-(--ui-text-tertiary) hover:border-(--ui-accent) hover:text-(--ui-accent)'
             ),
             children: copied ? '✓' : '⧉'
+          })
+        : null,
+      theme.twin
+        ? jsx('button', {
+            type: 'button',
+            onClick: () => onApply(theme.twin),
+            title: `Switch to paired theme: ${theme.twin}`,
+            className: cn(
+              'absolute bottom-1.5 left-1.5 rounded border px-1 py-0.5 text-[0.5625rem] transition-colors',
+              'bg-(--ui-bg-primary) border-(--ui-stroke-secondary) text-(--ui-text-tertiary) hover:border-(--ui-accent) hover:text-(--ui-accent)'
+            ),
+            children: '⇄'
           })
         : null
     ]

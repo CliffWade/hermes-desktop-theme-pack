@@ -91,6 +91,47 @@ COMMUNITY_THEMES = {
     "warm-ash",
 }
 
+# Light/dark twin pairs: the same vibe in both polarities. Used by the Theme
+# Switcher's flip button — a card with a twin gets a one-click switch to the
+# matching theme on the other side. Each entry is (dark, light); the lookup
+# below exposes both directions.
+THEME_PAIRS = [
+    ("dark-aubergine", "light-lavender"),
+    ("dark-charcoal", "light-cloud"),
+    ("dark-crimson", "light-rose"),
+    ("dark-navy", "light-sky"),
+    ("dark-obsidian", "light-porcelain"),
+    ("dark-plum", "light-grape"),
+    ("minimal-graphite", "minimal-pearl"),
+    ("warm-ash", "light-oat"),
+    ("nature-autumn", "light-melon"),
+    ("nature-desert", "light-sand"),
+    ("nature-forest", "light-fern"),
+    ("nature-nordic", "light-frost"),
+    ("nature-ocean", "light-tide"),
+    ("newsprint-noir", "light-paper"),
+    ("peach-fuzz", "light-peach"),
+    ("redwood", "light-cream"),
+    ("retro-amber", "light-honey"),
+    ("retro-blue", "light-denim"),
+    ("retro-terminal", "light-mint"),
+    ("shadow-thief", "light-lilac"),
+    ("slate-mist", "light-mist"),
+    ("steel-thread", "light-ash"),
+    ("vaporwave-mall", "light-aqua"),
+    ("vibrant-sunset", "light-blush"),
+]
+
+_TWIN_LOOKUP = {}
+for _dark, _light in THEME_PAIRS:
+    _TWIN_LOOKUP[_dark] = _light
+    _TWIN_LOOKUP[_light] = _dark
+
+
+def _twin(name: str) -> str:
+    """The paired theme of the opposite polarity, or '' if none."""
+    return _TWIN_LOOKUP.get(name, "")
+
 
 def _skin_colors(name: str) -> Dict[str, str]:
     """Return the full color key map for a skin, or {} on failure."""
@@ -158,6 +199,7 @@ def _skins() -> List[Dict[str, str]]:
                 "colors": _skin_preview(name),
                 "full_colors": _skin_colors(name),
                 "installed_at": installed_at,
+                "twin": _twin(name) or None,
             }
         )
     return out
