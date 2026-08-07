@@ -59,19 +59,13 @@ def _save_install_times() -> None:
 
 
 def _first_install_time(name: str) -> int:
-    """When the theme was first installed (epoch seconds), or the file mtime
-    if we have no record (pre-existing skins and back-compat)."""
-    if name in _install_times:
-        return _install_times[name]
-    try:
-        from hermes_constants import get_hermes_home
+    """When the theme was first installed (epoch seconds), or 0 if unknown.
 
-        p = get_hermes_home() / "skins" / f"{name}.yaml"
-        if p.is_file():
-            return int(p.stat().st_mtime)
-    except Exception:
-        pass
-    return 0
+    Only records written by the install flow count. File mtime is deliberately
+    NOT used: install.sh copies every skin file (fresh mtime) and would make
+    every theme look freshly installed on every re-run.
+    """
+    return _install_times.get(name, 0)
 
 CATEGORY_PREFIXES = [
     ("dark-", "Dark"),
@@ -146,12 +140,11 @@ def _skins() -> List[Dict[str, str]]:
         installed_at = None
         if s.get("source") != "builtin":
             t = _first_install_time(name)
+            # Only install-flow records count. Unknown themes (installed by
+            # install.sh, copied by hand, etc.) get no NEW badge until the
+            # user installs them through the app, which records first-seen.
             if t:
                 installed_at = t
-                # Record first-seen for pre-existing skins (back-compat).
-                if name not in _install_times:
-                    _install_times[name] = t
-                    _save_install_times()
         out.append(
             {
                 "name": name,
