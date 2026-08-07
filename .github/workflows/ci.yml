@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86  # v5
+        with:
+          version: "0.5.18"
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.6.0
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: uv sync --group dev
+
+      - name: Validate theme YAML structure
+        run: |
+          python - <<'EOF'
+          import pathlib
+          import re
+          import yaml
+
+          themes_dir = pathlib.Path("themes")
+          files = sorted(themes_dir.glob("*.yaml"))
+          assert files, "no themes found"
+          for f in files:
+              doc = yaml.safe_load(f.read_text())
+              assert isinstance(doc, dict), f"{f.name}: not a mapping"
+              assert doc.get("name"), f"{f.name}: missing name"
+              assert doc.get("description"), f"{f.name}: missing description"
+              colors = doc.get("colors")
+              assert isinstance(colors, dict) and colors, f"{f.name}: missing colors"
+              assert re.fullmatch(r"[a-z0-9][a-z0-9-]*", doc["name"]), f"{f.name}: unsafe slug"
+              for key, val in colors.items():
+                  if isinstance(val, str) and val.startswith("#"):
+                      assert re.fullmatch(r"#[0-9a-fA-F]{6}", val), f"{f.name}: bad hex {key}={val}"
+          print(f"OK: {len(files)} themes valid")
+          EOF
+
+      - name: Run theme pack test suite
+        run: uv run pytest tests/ -q
+
+      - name: Syntax-check desktop plugin
+        run: |
+          uv run python -c "import ast; ast.parse(open('scripts/generate_themes.py').read())"
+          if command -v node >/dev/null 2>&1; then node --check desktop-plugin/theme-switcher/plugin.js; else echo "node not present, skipping plugin syntax check"; fi

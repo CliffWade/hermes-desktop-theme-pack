@@ -77,6 +77,78 @@ function lumOf(hex) {
   return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255
 }
 
+// ── Palette color search ─────────────────────────────────────────────────────
+// Lets the search box find themes by their actual colors: a hex like "#7b2d8e"
+// or a loose color name like "purple" / "teal". Hexes match by Euclidean
+// distance in RGB (within ~48 per channel is clearly the same family); names
+// map to a hue bucket and match palettes containing a hex in that bucket.
+
+const COLOR_BUCKETS = [
+  ['red', 0, 15], ['orange', 15, 40], ['yellow', 40, 70], ['green', 70, 165],
+  ['teal', 165, 195], ['blue', 195, 250], ['purple', 250, 300], ['pink', 300, 340],
+  ['red', 340, 360]
+]
+
+function hueOf(hex) {
+  const n = parseInt(hex.slice(1), 16)
+  const r = ((n >> 16) & 255) / 255
+  const g = ((n >> 8) & 255) / 255
+  const b = (n & 255) / 255
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const d = max - min
+  if (d === 0) return -1
+  let h
+  if (max === r) h = ((g - b) / d) % 6
+  else if (max === g) h = (b - r) / d + 2
+  else h = (r - g) / d + 4
+  return (h * 60 + 360) % 360
+}
+
+function colorNameMatches(hex, name) {
+  const h = hueOf(hex)
+  // Near-neutral (low saturation) has no meaningful hue: match the literal
+  // name against luminance buckets instead of hue buckets. Real palettes
+  // rarely have perfectly equal RGB, so use the saturation spread, not ==.
+  if (h < 0 || saturationOf(hex) < 0.12) {
+    const l = lumOf(hex)
+    if (name === 'gray' || name === 'grey') return l > 0.05 && l < 0.95
+    if (name === 'black') return l <= 0.05
+    if (name === 'white') return l >= 0.95
+    return false
+  }
+  return COLOR_BUCKETS.some(([label, lo, hi]) => label === name && h >= lo && h < hi)
+}
+
+function saturationOf(hex) {
+  const n = parseInt(hex.slice(1), 16)
+  const r = ((n >> 16) & 255) / 255
+  const g = ((n >> 8) & 255) / 255
+  const b = (n & 255) / 255
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  return max === 0 ? 0 : (max - min) / max
+}
+
+function themeMatchesColor(theme, query) {
+  const hex = /^#?([0-9a-f]{6})$/i.test(query) ? `#${query.replace('#', '').toLowerCase()}` : null
+  const name = /^[a-z]+$/.test(query) ? query : null
+  if (!hex && !name) return false
+  // Scan the full palette when the backend sends it (42 keys) and fall back
+  // to the 6-key preview — the search should match colors that actually render.
+  const palettes = [theme && theme.full_colors, theme && theme.colors].filter(p => p && typeof p === 'object')
+  const palette = [].concat(...palettes.map(p => Object.values(p)))
+  if (hex) {
+    const target = [0, 2, 4].map(i => parseInt(hex.slice(1).slice(i, i + 2), 16))
+    return palette.some(c => {
+      if (typeof c !== 'string' || !/^#[0-9a-f]{6}$/i.test(c)) return false
+      const rgb = [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16))
+      return rgb.every((v, i) => Math.abs(v - target[i]) <= 48)
+    })
+  }
+  return palette.some(c => typeof c === 'string' && /^#[0-9a-f]{6}$/i.test(c) && colorNameMatches(c, name))
+}
+
 function swatch(color, label) {
   if (!color) return null
   return jsx('span', {
@@ -577,7 +649,11 @@ function ThemesPage() {
       if (pol === 'light' ? !isLight : isLight) return false
     }
     if (cat !== 'All' && (t.category || 'Other') !== cat) return false
-    if (ql && !`${t.name} ${t.description || ''}`.toLowerCase().includes(ql)) return false
+    if (ql && !`${t.name} ${t.description || ''}`.toLowerCase().includes(ql)) {
+      // Fall back to palette-color search: a hex (#7b2d8e) or a color word
+      // (purple, teal, gray) matches themes whose palette contains that color.
+      if (!themeMatchesColor(t, ql)) return false
+    }
     return true
   })
 
