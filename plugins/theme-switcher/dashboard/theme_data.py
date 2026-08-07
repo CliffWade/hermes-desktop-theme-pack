@@ -40,6 +40,7 @@ THEME_PAIRS = [
     ("dark-charcoal", "light-cloud"),
     ("dark-crimson", "light-rose"),
     ("dark-dracula", "light-dracula"),
+    ("dark-lcars", "light-lcars"),
     ("dark-navy", "light-sky"),
     ("dark-obsidian", "light-porcelain"),
     ("dark-plum", "light-grape"),

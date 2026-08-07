@@ -1,0 +1,48 @@
+# Hermes skin — dark-lcars.
+# LCARS, the Star Trek: TNG interface — black with orange/blue/pink/green accents.
+name: dark-lcars
+description: LCARS, Star Trek black with orange accents
+
+colors:
+  background: "#050510"
+  ui_accent: "#FF9C00"
+  banner_accent: "#FF9C00"
+  banner_title: "#FFFFFF"
+  banner_text: "#FFFFFF"
+  ui_text: "#FFFFFF"
+  banner_dim: "#999999"
+  banner_border: "#3366FF"
+  ui_border: "#3366FF"
+  ui_ok: "#66FF99"
+  ui_warn: "#FFCC66"
+  ui_error: "#FF5555"
+  prompt: "#FFFFFF"
+  input_rule: "#FF9C00"
+  response_border: "#FF9C00"
+  status_bar_bg: "#0A0A1A"
+  status_bar_text: "#FFFFFF"
+  status_bar_good: "#66FF99"
+  status_bar_warn: "#FFCC66"
+  status_bar_critical: "#FF5555"
+  session_label: "#FF66CC"
+  session_border: "#3366FF"
+  ui_tool: "#66CCFF"
+  ui_thinking: "#CC99FF"
+  diff_added: "#66FF99"
+  diff_removed: "#FF5555"
+  diff_added_word: "#8BFFB5"
+  diff_removed_word: "#FF7777"
+  syntax_string: "#66FF99"
+  syntax_number: "#FF9C00"
+  syntax_keyword: "#FF66CC"
+  syntax_comment: "#999999"
+  completion_menu_bg: "#0A0A1A"
+  completion_menu_current_bg: "#1A1A3A"
+  completion_menu_meta_bg: "#10102A"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

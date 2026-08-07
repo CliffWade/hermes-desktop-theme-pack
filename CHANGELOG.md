@@ -7,6 +7,10 @@ All notable changes to the Hermes Theme Pack. This project follows
 
 ### Added
 
+- **dark-lcars / light-lcars** — LCARS, the Star Trek: TNG interface:
+  dark is the classic near-black with signature orange #FF9C00 and marine
+  blue #3366FF accents; light is cream panels with the LCARS palette
+  darkened for WCAG on a light background. Paired twins (26 pairs total).
 - **light-dracula** — Dracula Light: lavender-white background with
   near-black text and the neon accents deepened for contrast on light
   (the twin of dark-dracula; pack back to a perfect 30 light / 30 dark)

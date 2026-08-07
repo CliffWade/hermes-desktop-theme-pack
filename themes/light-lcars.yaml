@@ -1,0 +1,48 @@
+# Hermes skin — light-lcars.
+# LCARS in light mode — cream panels with the classic blue/orange/pink accents darkened for contrast.
+name: light-lcars
+description: LCARS Light, cream with blue and orange
+
+colors:
+  background: "#F2F0EC"
+  ui_accent: "#7a4c00"
+  banner_accent: "#7a4c00"
+  banner_title: "#0A0A14"
+  banner_text: "#0A0A14"
+  ui_text: "#0A0A14"
+  banner_dim: "#5a5a64"
+  banner_border: "#1f4fa8"
+  ui_border: "#1f4fa8"
+  ui_ok: "#1f7f3b"
+  ui_warn: "#8a6d1a"
+  ui_error: "#c22f2f"
+  prompt: "#0A0A14"
+  input_rule: "#7a4c00"
+  response_border: "#1f4fa8"
+  status_bar_bg: "#E6E3DC"
+  status_bar_text: "#0A0A14"
+  status_bar_good: "#1f7f3b"
+  status_bar_warn: "#8a6d1a"
+  status_bar_critical: "#c22f2f"
+  session_label: "#ab3f88"
+  session_border: "#1f4fa8"
+  ui_tool: "#0d6b85"
+  ui_thinking: "#7a4ca5"
+  diff_added: "#1f7f3b"
+  diff_removed: "#c22f2f"
+  diff_added_word: "#1a6b33"
+  diff_removed_word: "#d64545"
+  syntax_string: "#1f7f3b"
+  syntax_number: "#7a4c00"
+  syntax_keyword: "#ab3f88"
+  syntax_comment: "#5a5a64"
+  completion_menu_bg: "#F7F5F1"
+  completion_menu_current_bg: "#E6E3DC"
+  completion_menu_meta_bg: "#EDEAE4"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
