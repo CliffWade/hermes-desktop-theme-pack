@@ -44,6 +44,43 @@ Dark mode (dark-charcoal):
 | **Retro** | retro-terminal, retro-amber, retro-blue, retro-mac |
 | **Community** | vaporwave-mall, stained-glass, shadow-thief, void-sunset, redwood, newsprint-noir, peach-fuzz, slate-mist, steel-thread, warm-ash — ported from [BeardedChop/hermes-skins-pack](https://github.com/BeardedChop/hermes-skins-pack) |
 
+## Theme pairs
+
+Every theme with a light/dark counterpart is paired to the same vibe in the
+opposite polarity. In the Theme Switcher, paired themes show `⇄ paired with
+<name>` on the card, a ⇄ button applies the twin in one click, and the hover
+preview shows both polarities side by side. The pack is 29 light / 29 dark;
+24 pairs cover 48 themes, and 10 one-off themes have no twin (stained-glass,
+vibrant-neon, vibrant-pacific, vibrant-synthwave, void-sunset, minimal-bone,
+retro-mac, light-lemon, light-sage, light-vanilla).
+
+| Dark | Light |
+|---|---|
+| dark-aubergine | light-lavender |
+| dark-charcoal | light-cloud |
+| dark-crimson | light-rose |
+| dark-navy | light-sky |
+| dark-obsidian | light-porcelain |
+| dark-plum | light-grape |
+| minimal-graphite | minimal-pearl |
+| warm-ash | light-oat |
+| nature-autumn | light-melon |
+| nature-desert | light-sand |
+| nature-forest | light-fern |
+| nature-nordic | light-frost |
+| nature-ocean | light-tide |
+| newsprint-noir | light-paper |
+| peach-fuzz | light-peach |
+| redwood | light-cream |
+| retro-amber | light-honey |
+| retro-blue | light-denim |
+| retro-terminal | light-mint |
+| shadow-thief | light-lilac |
+| slate-mist | light-mist |
+| steel-thread | light-ash |
+| vaporwave-mall | light-aqua |
+| vibrant-sunset | light-blush |
+
 ## Install
 
 ```bash

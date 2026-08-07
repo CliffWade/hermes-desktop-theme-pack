@@ -393,9 +393,11 @@ function ThemeMockup({ theme }) {
   })
 }
 
-function PreviewPanel({ theme }) {
+function PreviewPanel({ theme, skins }) {
   if (!theme) return null
   const isLight = isLightTheme(theme)
+  const twinName = theme.twin
+  const twin = twinName && skins ? skins.find(s => s.name === twinName) : null
   return jsxs('div', {
     className: 'pointer-events-none fixed right-6 top-24 z-30 w-72 rounded-xl border border-(--ui-stroke-secondary) bg-(--ui-bg-primary) p-3 shadow-2xl',
     children: [
@@ -403,7 +405,22 @@ function PreviewPanel({ theme }) {
         jsx('span', { className: 'truncate text-xs font-semibold', children: theme.name }),
         jsx('span', { className: 'shrink-0 text-[0.625rem] text-(--ui-text-tertiary)', children: `${theme.category || ''} ${isLight ? '☀ light' : '☾ dark'}` })
       ]}),
-      jsx('div', { className: 'mt-2 h-40', children: jsx(ThemeMockup, { theme }) })
+      jsx('div', { className: 'mt-2 h-40', children: jsx(ThemeMockup, { theme }) }),
+      twin
+        ? jsxs('div', {
+            className: 'mt-3 border-t border-(--ui-stroke-secondary) pt-2',
+            children: [
+              jsxs('div', { className: 'flex items-center justify-between gap-2', children: [
+                jsx('span', { className: 'text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)', children: isLight ? '☾ Dark twin' : '☀ Light twin' }),
+                jsx('span', { className: 'shrink-0 text-[0.625rem] text-(--ui-text-tertiary)', children: `⇄ ${twin.name}` })
+              ]}),
+              jsx('div', { className: 'mt-1 h-24', children: jsx(ThemeMockup, { theme: twin }) }),
+              twin.description
+                ? jsx('div', { className: 'mt-1 truncate text-[0.625rem] text-(--ui-text-tertiary)', children: twin.description })
+                : null
+            ]
+          })
+        : null
     ]
   })
 }
@@ -505,7 +522,14 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
           jsx('span', {
             className: 'truncate px-6 text-[0.625rem] text-(--ui-text-tertiary)',
             children: theme.description || ''
-          })
+          }),
+          theme.twin
+            ? jsx('span', {
+                title: `Switch to paired theme: ${theme.twin}`,
+                className: 'truncate px-6 text-[0.5625rem] text-(--ui-accent)',
+                children: `⇄ paired with ${theme.twin}`
+              })
+            : null
         ]
       }),
       theme.source !== 'builtin'
@@ -842,7 +866,7 @@ function ThemesPage() {
                   : null
               ]
             }),
-      jsx(PreviewPanel, { theme: hoverTheme }),
+      jsx(PreviewPanel, { theme: hoverTheme, skins }),
       installOpen ? jsx(InstallModal, { onClose: () => setInstallOpen(false), onInstalled: () => setInstallOpen(false) }) : null
     ]
   })

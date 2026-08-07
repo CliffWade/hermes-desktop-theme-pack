@@ -147,7 +147,12 @@ def test_readme_claims_match_actual_themes():
     assert int(m.group(2)) == len(cats), f"README says {m.group(2)} categories, themes define {len(cats)}"
 
     # Themes table: every theme appears in exactly one category row.
-    table = readme.split("| Category | Themes |")[1].split("## Install")[0] if "| Category | Themes |" in readme else ""
+    # The table ends at the next heading (the Theme pairs section etc.),
+    # so a second table later in the README can't be mistaken for rows.
+    table = ""
+    if "| Category | Themes |" in readme:
+        after = readme.split("| Category | Themes |", 1)[1]
+        table = after.split("\n## ", 1)[0]
     assert table, "README missing the Themes table"
     mentioned = set()
     for row in table.splitlines():
