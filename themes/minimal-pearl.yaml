@@ -1,0 +1,48 @@
+# Hermes skin — minimal-pearl.
+# Cool ivory monochrome, quiet and precise.
+name: minimal-pearl
+description: Cool ivory monochrome
+
+colors:
+  background: "#f4f5f7"
+  ui_accent: "#5b6572"
+  banner_accent: "#5b6572"
+  banner_title: "#2e3033"
+  banner_text: "#2e3033"
+  ui_text: "#2e3033"
+  banner_dim: "#565d66"
+  banner_border: "#c9cdd3"
+  ui_border: "#c9cdd3"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#2e3033"
+  input_rule: "#5b6572"
+  response_border: "#9aa1aa"
+  status_bar_bg: "#e6e8eb"
+  status_bar_text: "#2e3033"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#5b6572"
+  session_border: "#c9cdd3"
+  ui_tool: "#6b7684"
+  ui_thinking: "#8a9199"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#4a5a8a"
+  syntax_comment: "#8a9199"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#dfe2e6"
+  completion_menu_meta_bg: "#f0f1f3"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

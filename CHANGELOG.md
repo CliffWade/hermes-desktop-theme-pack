@@ -3,6 +3,14 @@
 All notable changes to the Hermes Theme Pack. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- **7 new themes** — dark-crimson, dark-plum, light-honey, minimal-pearl,
+  nature-autumn, nature-ocean, retro-mac (pack now 41 themes across 7
+  categories)
+
 ## [1.0.0] - 2026-08-07
 
 First stable release. 34 themes (24 curated + 10 community) across 7

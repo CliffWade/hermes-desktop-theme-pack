@@ -1,0 +1,48 @@
+# Hermes skin — light-honey.
+# Golden hour — warm honey white with deep amber.
+name: light-honey
+description: Warm golden white with deep amber
+
+colors:
+  background: "#faf5e8"
+  ui_accent: "#8a5f0c"
+  banner_accent: "#8a5f0c"
+  banner_title: "#4a3a1e"
+  banner_text: "#4a3a1e"
+  ui_text: "#4a3a1e"
+  banner_dim: "#7a6a4a"
+  banner_border: "#ddd0b4"
+  ui_border: "#ddd0b4"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#4a3a1e"
+  input_rule: "#8a5f0c"
+  response_border: "#b98d2e"
+  status_bar_bg: "#f0e8d2"
+  status_bar_text: "#4a3a1e"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#8a5f0c"
+  session_border: "#ddd0b4"
+  ui_tool: "#7a5a10"
+  ui_thinking: "#a8986a"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#8a5f0c"
+  syntax_comment: "#a8986a"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#f0e4c4"
+  completion_menu_meta_bg: "#f8f1dd"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

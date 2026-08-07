@@ -1,0 +1,48 @@
+# Hermes skin — retro-mac.
+# 90s platinum Macintosh — warm beige, chunky gray, classic teal.
+name: retro-mac
+description: 90s platinum Macintosh beige
+
+colors:
+  background: "#e8e4da"
+  ui_accent: "#245a8e"
+  banner_accent: "#245a8e"
+  banner_title: "#1f1f24"
+  banner_text: "#1f1f24"
+  ui_text: "#1f1f24"
+  banner_dim: "#656057"
+  banner_border: "#b8b3a8"
+  ui_border: "#b8b3a8"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#1f1f24"
+  input_rule: "#245a8e"
+  response_border: "#4a7fa8"
+  status_bar_bg: "#d8d4c9"
+  status_bar_text: "#1f1f24"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#245a8e"
+  session_border: "#b8b3a8"
+  ui_tool: "#2e5f88"
+  ui_thinking: "#8a857a"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#245a8e"
+  syntax_comment: "#8a857a"
+  completion_menu_bg: "#f4f1e8"
+  completion_menu_current_bg: "#cfe0e8"
+  completion_menu_meta_bg: "#eae6da"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

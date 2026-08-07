@@ -1,0 +1,48 @@
+# Hermes skin — dark-crimson.
+# Deep blood red with warm gold text.
+name: dark-crimson
+description: Deep blood red with warm gold
+
+colors:
+  background: "#200608"
+  ui_accent: "#e8b84a"
+  banner_accent: "#e8b84a"
+  banner_title: "#f5d9d9"
+  banner_text: "#f5d9d9"
+  ui_text: "#f5d9d9"
+  banner_dim: "#c09090"
+  banner_border: "#3d1214"
+  ui_border: "#3d1214"
+  ui_ok: "#4ade80"
+  ui_warn: "#fbbf24"
+  ui_error: "#f87171"
+  prompt: "#f5d9d9"
+  input_rule: "#e8b84a"
+  response_border: "#c03030"
+  status_bar_bg: "#180406"
+  status_bar_text: "#f5d9d9"
+  status_bar_good: "#4ade80"
+  status_bar_warn: "#fbbf24"
+  status_bar_critical: "#f87171"
+  session_label: "#e8b84a"
+  session_border: "#3d1214"
+  ui_tool: "#c03030"
+  ui_thinking: "#c09090"
+  diff_added: "#4ade80"
+  diff_removed: "#f87171"
+  diff_added_word: "#77e6a0"
+  diff_removed_word: "#fa9494"
+  syntax_string: "#65e393"
+  syntax_number: "#fbc53a"
+  syntax_keyword: "#e8b84a"
+  syntax_comment: "#c09090"
+  completion_menu_bg: "#2a0e10"
+  completion_menu_current_bg: "#4a2a10"
+  completion_menu_meta_bg: "#301315"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
