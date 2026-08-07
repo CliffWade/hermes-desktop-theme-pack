@@ -1,0 +1,48 @@
+# Hermes skin — light-neon.
+# Neon light, electric green on white.
+name: light-neon
+description: Neon light, electric green on white
+
+colors:
+  background: "#f0faf6"
+  ui_accent: "#0d7a4e"
+  banner_accent: "#0d7a4e"
+  banner_title: "#141414"
+  banner_text: "#141414"
+  ui_text: "#141414"
+  banner_dim: "#3f6b5c"
+  banner_border: "#cfe8dd"
+  ui_border: "#cfe8dd"
+  ui_ok: "#3fbd6d"
+  ui_warn: "#bc8f1b"
+  ui_error: "#d36060"
+  prompt: "#141414"
+  input_rule: "#0d7a4e"
+  response_border: "#0d7a4e"
+  status_bar_bg: "#e6f0ec"
+  status_bar_text: "#141414"
+  status_bar_good: "#3fbd6d"
+  status_bar_warn: "#bc8f1b"
+  status_bar_critical: "#d36060"
+  session_label: "#0a5c3c"
+  session_border: "#cfe8dd"
+  ui_tool: "#0a5c3c"
+  ui_thinking: "#3f6b5c"
+  diff_added: "#3bb266"
+  diff_removed: "#c65a5a"
+  diff_added_word: "#6cc58c"
+  diff_removed_word: "#d48383"
+  syntax_string: "#3bb266"
+  syntax_number: "#0a5c3c"
+  syntax_keyword: "#0a5c3c"
+  syntax_comment: "#3f6b5c"
+  completion_menu_bg: "#e6f0ec"
+  completion_menu_current_bg: "#cfe8dd"
+  completion_menu_meta_bg: "#e6f5ee"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

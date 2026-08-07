@@ -1,0 +1,48 @@
+# Hermes skin — light-sunset.
+# Sunset light, peach with violet.
+name: light-sunset
+description: Sunset light, peach with violet
+
+colors:
+  background: "#fdf4ee"
+  ui_accent: "#b04f2c"
+  banner_accent: "#b04f2c"
+  banner_title: "#141414"
+  banner_text: "#141414"
+  ui_text: "#141414"
+  banner_dim: "#7d5a5c"
+  banner_border: "#e6d2c8"
+  ui_border: "#e6d2c8"
+  ui_ok: "#3fbd6d"
+  ui_warn: "#bc8f1b"
+  ui_error: "#d36060"
+  prompt: "#141414"
+  input_rule: "#b04f2c"
+  response_border: "#b04f2c"
+  status_bar_bg: "#f3eae4"
+  status_bar_text: "#141414"
+  status_bar_good: "#3fbd6d"
+  status_bar_warn: "#bc8f1b"
+  status_bar_critical: "#d36060"
+  session_label: "#8c3d21"
+  session_border: "#e6d2c8"
+  ui_tool: "#8c3d21"
+  ui_thinking: "#7d5a5c"
+  diff_added: "#3bb266"
+  diff_removed: "#c65a5a"
+  diff_added_word: "#6cc58c"
+  diff_removed_word: "#d48383"
+  syntax_string: "#3bb266"
+  syntax_number: "#8c3d21"
+  syntax_keyword: "#8c3d21"
+  syntax_comment: "#7d5a5c"
+  completion_menu_bg: "#f3eae4"
+  completion_menu_current_bg: "#e6d2c8"
+  completion_menu_meta_bg: "#f6eae3"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

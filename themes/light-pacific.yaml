@@ -1,0 +1,48 @@
+# Hermes skin — light-pacific.
+# Lagoon light, cyan on pale sea.
+name: light-pacific
+description: Lagoon light, cyan on pale sea
+
+colors:
+  background: "#eef9fd"
+  ui_accent: "#0b6e8f"
+  banner_accent: "#0b6e8f"
+  banner_title: "#141414"
+  banner_text: "#141414"
+  ui_text: "#141414"
+  banner_dim: "#40707f"
+  banner_border: "#c9e4ef"
+  ui_border: "#c9e4ef"
+  ui_ok: "#3fbd6d"
+  ui_warn: "#bc8f1b"
+  ui_error: "#d36060"
+  prompt: "#141414"
+  input_rule: "#0b6e8f"
+  response_border: "#0b6e8f"
+  status_bar_bg: "#e4eff3"
+  status_bar_text: "#141414"
+  status_bar_good: "#3fbd6d"
+  status_bar_warn: "#bc8f1b"
+  status_bar_critical: "#d36060"
+  session_label: "#0a5873"
+  session_border: "#c9e4ef"
+  ui_tool: "#0a5873"
+  ui_thinking: "#40707f"
+  diff_added: "#3bb266"
+  diff_removed: "#c65a5a"
+  diff_added_word: "#6cc58c"
+  diff_removed_word: "#d48383"
+  syntax_string: "#3bb266"
+  syntax_number: "#0a5873"
+  syntax_keyword: "#0a5873"
+  syntax_comment: "#40707f"
+  completion_menu_bg: "#e4eff3"
+  completion_menu_current_bg: "#c9e4ef"
+  completion_menu_meta_bg: "#e3f3f9"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

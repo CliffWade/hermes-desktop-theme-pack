@@ -207,6 +207,7 @@ def test_twin_pairs_resolve_to_real_opposite_polarity_themes():
     for dark, light in pairs:
         assert mod.twin(dark) == light, f"twin({dark}) != {light}"
         assert mod.twin(light) == dark, f"twin({light}) != {dark}"
-    # Unpaired themes must return ''.
-    unpaired = next(n for n in by_name if n not in seen)
-    assert mod.twin(unpaired) == "", f"twin({unpaired}) should be empty"
+    # Unpaired themes must return '' (and may be zero — every theme paired).
+    unpaired = [n for n in by_name if n not in seen]
+    for name in unpaired:
+        assert mod.twin(name) == "", f"twin({name}) should be empty"

@@ -1,0 +1,48 @@
+# Hermes skin — dark-sage.
+# Dark sage, olive on near-black.
+name: dark-sage
+description: Dark sage, olive on near-black
+
+colors:
+  background: "#141812"
+  ui_accent: "#8fae6a"
+  banner_accent: "#8fae6a"
+  banner_title: "#f5f2ec"
+  banner_text: "#f5f2ec"
+  ui_text: "#f5f2ec"
+  banner_dim: "#7d8a70"
+  banner_border: "#2a3223"
+  ui_border: "#2a3223"
+  ui_ok: "#4ade80"
+  ui_warn: "#fbbf24"
+  ui_error: "#f87171"
+  prompt: "#f5f2ec"
+  input_rule: "#8fae6a"
+  response_border: "#8fae6a"
+  status_bar_bg: "#121611"
+  status_bar_text: "#f5f2ec"
+  status_bar_good: "#4ade80"
+  status_bar_warn: "#fbbf24"
+  status_bar_critical: "#f87171"
+  session_label: "#b3cc8f"
+  session_border: "#2a3223"
+  ui_tool: "#b3cc8f"
+  ui_thinking: "#7d8a70"
+  diff_added: "#4ade80"
+  diff_removed: "#f87171"
+  diff_added_word: "#77e6a0"
+  diff_removed_word: "#fa9494"
+  syntax_string: "#4ade80"
+  syntax_number: "#b3cc8f"
+  syntax_keyword: "#b3cc8f"
+  syntax_comment: "#7d8a70"
+  completion_menu_bg: "#121611"
+  completion_menu_current_bg: "#2a3223"
+  completion_menu_meta_bg: "#1b2017"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

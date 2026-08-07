@@ -62,6 +62,16 @@ THEME_PAIRS = [
     ("steel-thread", "light-ash"),
     ("vaporwave-mall", "light-aqua"),
     ("vibrant-sunset", "light-blush"),
+    ("dark-bone", "minimal-bone"),
+    ("dark-lemon", "light-lemon"),
+    ("dark-mac", "retro-mac"),
+    ("dark-sage", "light-sage"),
+    ("dark-vanilla", "light-vanilla"),
+    ("vibrant-neon", "light-neon"),
+    ("vibrant-pacific", "light-pacific"),
+    ("stained-glass", "light-stained-glass"),
+    ("vibrant-synthwave", "light-synthwave"),
+    ("void-sunset", "light-sunset"),
 ]
 
 _TWIN_LOOKUP = {}

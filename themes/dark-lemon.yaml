@@ -1,0 +1,48 @@
+# Hermes skin — dark-lemon.
+# Dark lemon, olive-yellow on near-black.
+name: dark-lemon
+description: Dark lemon, olive-yellow on near-black
+
+colors:
+  background: "#1a1810"
+  ui_accent: "#d4c84a"
+  banner_accent: "#d4c84a"
+  banner_title: "#f5f2ec"
+  banner_text: "#f5f2ec"
+  ui_text: "#f5f2ec"
+  banner_dim: "#9a9460"
+  banner_border: "#33311e"
+  ui_border: "#33311e"
+  ui_ok: "#4ade80"
+  ui_warn: "#fbbf24"
+  ui_error: "#f87171"
+  prompt: "#f5f2ec"
+  input_rule: "#d4c84a"
+  response_border: "#d4c84a"
+  status_bar_bg: "#18160f"
+  status_bar_text: "#f5f2ec"
+  status_bar_good: "#4ade80"
+  status_bar_warn: "#fbbf24"
+  status_bar_critical: "#f87171"
+  session_label: "#e8de6e"
+  session_border: "#33311e"
+  ui_tool: "#e8de6e"
+  ui_thinking: "#9a9460"
+  diff_added: "#4ade80"
+  diff_removed: "#f87171"
+  diff_added_word: "#77e6a0"
+  diff_removed_word: "#fa9494"
+  syntax_string: "#4ade80"
+  syntax_number: "#e8de6e"
+  syntax_keyword: "#e8de6e"
+  syntax_comment: "#9a9460"
+  completion_menu_bg: "#18160f"
+  completion_menu_current_bg: "#33311e"
+  completion_menu_meta_bg: "#222014"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

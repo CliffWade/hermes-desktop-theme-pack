@@ -7,6 +7,12 @@ All notable changes to the Hermes Theme Pack. This project follows
 
 ### Added
 
+- **10 new twin themes — every theme is now paired** — light-stained-glass,
+  light-neon, light-pacific, light-synthwave, light-sunset (twins of the
+  community darks) and dark-bone, dark-mac, dark-lemon, dark-sage,
+  dark-vanilla (twins of the unpaired lights). The pack is 72 themes,
+  36 light / 36 dark, fully paired: every card has a ⇄ twin and
+  follow-system works for every theme.
 - **dark-lcars / light-lcars** — LCARS, the Star Trek: TNG interface:
   dark is the classic near-black with signature orange #FF9C00 and marine
   blue #3366FF accents; light is cream panels with the LCARS palette

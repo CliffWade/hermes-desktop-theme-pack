@@ -1,0 +1,48 @@
+# Hermes skin — light-synthwave.
+# Synthwave light, hot pink on pale.
+name: light-synthwave
+description: Synthwave light, hot pink on pale
+
+colors:
+  background: "#fdf2f9"
+  ui_accent: "#b23a7d"
+  banner_accent: "#b23a7d"
+  banner_title: "#141414"
+  banner_text: "#141414"
+  ui_text: "#141414"
+  banner_dim: "#7d5a72"
+  banner_border: "#e8cadd"
+  ui_border: "#e8cadd"
+  ui_ok: "#3fbd6d"
+  ui_warn: "#bc8f1b"
+  ui_error: "#d36060"
+  prompt: "#141414"
+  input_rule: "#b23a7d"
+  response_border: "#b23a7d"
+  status_bar_bg: "#f3e8ef"
+  status_bar_text: "#141414"
+  status_bar_good: "#3fbd6d"
+  status_bar_warn: "#bc8f1b"
+  status_bar_critical: "#d36060"
+  session_label: "#8f2c63"
+  session_border: "#e8cadd"
+  ui_tool: "#8f2c63"
+  ui_thinking: "#7d5a72"
+  diff_added: "#3bb266"
+  diff_removed: "#c65a5a"
+  diff_added_word: "#6cc58c"
+  diff_removed_word: "#d48383"
+  syntax_string: "#3bb266"
+  syntax_number: "#8f2c63"
+  syntax_keyword: "#8f2c63"
+  syntax_comment: "#7d5a72"
+  completion_menu_bg: "#f3e8ef"
+  completion_menu_current_bg: "#e8cadd"
+  completion_menu_meta_bg: "#f7e6f1"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
