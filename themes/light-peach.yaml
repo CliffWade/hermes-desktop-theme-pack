@@ -1,0 +1,48 @@
+# Hermes skin — light-peach.
+# Soft apricot with warm coral.
+name: light-peach
+description: Soft apricot with warm coral
+
+colors:
+  background: "#fdf1ea"
+  ui_accent: "#b84c24"
+  banner_accent: "#b84c24"
+  banner_title: "#4a2418"
+  banner_text: "#4a2418"
+  ui_text: "#4a2418"
+  banner_dim: "#8a5f4e"
+  banner_border: "#e8cdbd"
+  ui_border: "#e8cdbd"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#4a2418"
+  input_rule: "#b84c24"
+  response_border: "#d97a4a"
+  status_bar_bg: "#f7e5d8"
+  status_bar_text: "#4a2418"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#b84c24"
+  session_border: "#e8cdbd"
+  ui_tool: "#a84a2a"
+  ui_thinking: "#b08a76"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#8a6410"
+  syntax_keyword: "#b84c24"
+  syntax_comment: "#b08a76"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#f6dccb"
+  completion_menu_meta_bg: "#fdf4ec"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

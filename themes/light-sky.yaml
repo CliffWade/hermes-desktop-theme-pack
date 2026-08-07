@@ -1,0 +1,48 @@
+# Hermes skin — light-sky.
+# Clear blue sky, white clouds, breezy.
+name: light-sky
+description: Bright azure sky with white
+
+colors:
+  background: "#e8f4fd"
+  ui_accent: "#1a6fb5"
+  banner_accent: "#1a6fb5"
+  banner_title: "#16324a"
+  banner_text: "#16324a"
+  ui_text: "#16324a"
+  banner_dim: "#4a6b85"
+  banner_border: "#b8d4e8"
+  ui_border: "#b8d4e8"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#16324a"
+  input_rule: "#1a6fb5"
+  response_border: "#4a90c4"
+  status_bar_bg: "#d8ebf7"
+  status_bar_text: "#16324a"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#1a6fb5"
+  session_border: "#b8d4e8"
+  ui_tool: "#1f5f8f"
+  ui_thinking: "#7a97ad"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#1a6fb5"
+  syntax_comment: "#7a97ad"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#cfe4f2"
+  completion_menu_meta_bg: "#eef7fc"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

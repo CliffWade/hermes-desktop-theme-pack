@@ -7,8 +7,9 @@ All notable changes to the Hermes Theme Pack. This project follows
 
 ### Added
 
-- **7 new themes** — dark-crimson, dark-plum, light-honey, minimal-pearl,
-  nature-autumn, nature-ocean, retro-mac (pack now 41 themes across 7
+- **13 new themes** — dark-crimson, dark-plum, light-honey, minimal-pearl,
+  nature-autumn, nature-ocean, retro-mac, light-sky, light-peach, light-sage,
+  light-aqua, light-lilac, light-porcelain (pack now 47 themes across 7
   categories)
 
 ## [1.0.0] - 2026-08-07

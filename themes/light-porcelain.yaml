@@ -1,0 +1,48 @@
+# Hermes skin — light-porcelain.
+# Bright clean white with a single slate accent.
+name: light-porcelain
+description: Bright clean white with slate
+
+colors:
+  background: "#f8f9fa"
+  ui_accent: "#3b6ea5"
+  banner_accent: "#3b6ea5"
+  banner_title: "#1f2328"
+  banner_text: "#1f2328"
+  ui_text: "#1f2328"
+  banner_dim: "#5a6270"
+  banner_border: "#c8cdd4"
+  ui_border: "#c8cdd4"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#1f2328"
+  input_rule: "#3b6ea5"
+  response_border: "#7a96b5"
+  status_bar_bg: "#e8eaed"
+  status_bar_text: "#1f2328"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#3b6ea5"
+  session_border: "#c8cdd4"
+  ui_tool: "#2f5f8a"
+  ui_thinking: "#8a93a0"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#3b6ea5"
+  syntax_comment: "#8a93a0"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#dde4ea"
+  completion_menu_meta_bg: "#f2f4f6"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

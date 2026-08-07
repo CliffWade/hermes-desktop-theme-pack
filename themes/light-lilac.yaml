@@ -1,0 +1,48 @@
+# Hermes skin — light-lilac.
+# Pale lilac with dusty mauve.
+name: light-lilac
+description: Pale lilac with dusty mauve
+
+colors:
+  background: "#f7f1fa"
+  ui_accent: "#8b5ca8"
+  banner_accent: "#8b5ca8"
+  banner_title: "#3a2645"
+  banner_text: "#3a2645"
+  ui_text: "#3a2645"
+  banner_dim: "#6d5a80"
+  banner_border: "#d8c8e0"
+  ui_border: "#d8c8e0"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#3a2645"
+  input_rule: "#8b5ca8"
+  response_border: "#a87fc0"
+  status_bar_bg: "#ede3f2"
+  status_bar_text: "#3a2645"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#8b5ca8"
+  session_border: "#d8c8e0"
+  ui_tool: "#7a4f94"
+  ui_thinking: "#9a8aa8"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#8b5ca8"
+  syntax_comment: "#9a8aa8"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#e6d4ee"
+  completion_menu_meta_bg: "#f9f3fb"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"

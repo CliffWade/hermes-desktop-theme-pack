@@ -1,0 +1,48 @@
+# Hermes skin — light-sage.
+# Muted olive-sage with warm tan.
+name: light-sage
+description: Muted olive-sage with warm tan
+
+colors:
+  background: "#f0f4ea"
+  ui_accent: "#52703a"
+  banner_accent: "#52703a"
+  banner_title: "#2c3a26"
+  banner_text: "#2c3a26"
+  ui_text: "#2c3a26"
+  banner_dim: "#627054"
+  banner_border: "#d2dcc4"
+  ui_border: "#d2dcc4"
+  ui_ok: "#3f7d4e"
+  ui_warn: "#a87a1f"
+  ui_error: "#b23a3a"
+  prompt: "#2c3a26"
+  input_rule: "#52703a"
+  response_border: "#7a9658"
+  status_bar_bg: "#e2e9d8"
+  status_bar_text: "#2c3a26"
+  status_bar_good: "#3f7d4e"
+  status_bar_warn: "#a87a1f"
+  status_bar_critical: "#b23a3a"
+  session_label: "#52703a"
+  session_border: "#d2dcc4"
+  ui_tool: "#4a6634"
+  ui_thinking: "#8a9478"
+  diff_added: "#3f7d4e"
+  diff_removed: "#b23a3a"
+  diff_added_word: "#2e7d46"
+  diff_removed_word: "#c24747"
+  syntax_string: "#2e6b45"
+  syntax_number: "#7a6410"
+  syntax_keyword: "#52703a"
+  syntax_comment: "#8a9478"
+  completion_menu_bg: "#ffffff"
+  completion_menu_current_bg: "#dce5cd"
+  completion_menu_meta_bg: "#f2f6ec"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
