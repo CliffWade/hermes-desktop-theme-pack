@@ -1,8 +1,26 @@
 # Hermes Theme Pack
 
-[![CI](https://github.com/CliffWade/hermes-desktop-theme-pack/actions/workflows/ci.yml/badge.svg)](https://github.com/CliffWade/hermes-desktop-theme-pack/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/CliffWade/hermes-desktop-theme-pack?sort=semver&style=for-the-badge&label=Version&color=7B2D8E)](https://github.com/CliffWade/hermes-desktop-theme-pack/releases)
+[![CI](https://img.shields.io/github/actions/workflow/status/CliffWade/hermes-desktop-theme-pack/ci.yml?style=for-the-badge&label=CI)](https://github.com/CliffWade/hermes-desktop-theme-pack/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/CliffWade/hermes-desktop-theme-pack?style=for-the-badge&label=License)](https://github.com/CliffWade/hermes-desktop-theme-pack/blob/main/LICENSE)
+
+> ## 🚀 v1.0.0 is live
+>
+> The first stable release is out — 34 themes, the Theme Switcher plugin, built-in Appearance integration, and CI-enforced quality. See the [release notes](https://github.com/CliffWade/hermes-desktop-theme-pack/releases/tag/v1.0.0) and the [full changelog](CHANGELOG.md).
 
 34 curated color themes for Hermes Agent, organized into 7 categories, every one contrast-checked to WCAG AA. Drop them in and they appear across the CLI, the TUI, and the desktop app at once, because a Hermes skin themes every surface.
+
+## Features
+
+- **34 themes, 7 categories** — Dark, Light, Vibrant, Nature, Minimal, Retro, and Community (10 themes ported from [BeardedChop/hermes-skins-pack](https://github.com/BeardedChop/hermes-skins-pack))
+- **WCAG AA contrast gate** — every theme passes primary text at 6:1, accents and secondary text at 4.5:1 against its background, enforced by an independent test suite
+- **Themes every surface** — one YAML skin repaints the CLI, the TUI, and the desktop app at once
+- **Theme Switcher desktop plugin** — a Themes page in the app sidebar: every skin in one grid, light/dark grouping, search (including palette colors like "purple" or #7b2d8e), hover preview, one-click apply, undo, random, install-from-YAML, statusbar chip, ⌘K palette entry
+- **Built-in Appearance integration** — pack themes appear in the desktop's native Appearance settings, Cmd-K, and `/skin` (via THEMES_AREA)
+- **Copy YAML to share** — one click on any user theme card exports the raw skin YAML for sharing
+- **Add your own theme** — paste YAML in the app, drop a file in `~/.hermes/skins/`, or use the seed-palette generator
+- **CI-enforced quality** — every PR runs YAML validation, the WCAG test suite, generator drift checks, and plugin syntax checks automatically
+- **Community contribution guide** — [CONTRIBUTING.md](CONTRIBUTING.md) walks contributors through the format, the contrast contract, and verification
 
 In the desktop app, the Theme Switcher page lists every installed skin in a single view, with its real palette, one click to apply. It follows your active skin, so the same page looks like this in light and dark mode:
 
