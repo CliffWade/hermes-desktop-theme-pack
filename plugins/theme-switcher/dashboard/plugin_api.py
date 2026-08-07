@@ -22,6 +22,57 @@ router = APIRouter()
 
 _prev_skin: str = ""
 
+# First-seen install times for user skins. Persisted to
+# <hermes_home>/data/theme-switcher-installs.json so a reinstall (which
+# rewrites the skin file and changes its mtime) does NOT reset the NEW badge:
+# the badge is based on when the theme was FIRST installed, not last written.
+_install_times: Dict[str, int] = {}
+
+
+def _installs_path():
+    from hermes_constants import get_hermes_home
+
+    return get_hermes_home() / "data" / "theme-switcher-installs.json"
+
+
+def _load_install_times() -> None:
+    global _install_times
+    try:
+        import json
+
+        p = _installs_path()
+        if p.is_file():
+            _install_times = {k: int(v) for k, v in json.loads(p.read_text()).items()}
+    except Exception:
+        _install_times = {}
+
+
+def _save_install_times() -> None:
+    try:
+        import json
+
+        p = _installs_path()
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(_install_times), encoding="utf-8")
+    except Exception:
+        pass
+
+
+def _first_install_time(name: str) -> int:
+    """When the theme was first installed (epoch seconds), or the file mtime
+    if we have no record (pre-existing skins and back-compat)."""
+    if name in _install_times:
+        return _install_times[name]
+    try:
+        from hermes_constants import get_hermes_home
+
+        p = get_hermes_home() / "skins" / f"{name}.yaml"
+        if p.is_file():
+            return int(p.stat().st_mtime)
+    except Exception:
+        pass
+    return 0
+
 CATEGORY_PREFIXES = [
     ("dark-", "Dark"),
     ("light-", "Light"),
@@ -94,13 +145,13 @@ def _skins() -> List[Dict[str, str]]:
             cat = "Community"
         installed_at = None
         if s.get("source") != "builtin":
-            try:
-                from hermes_constants import get_hermes_home
-
-                p = get_hermes_home() / "skins" / f"{name}.yaml"
-                installed_at = int(p.stat().st_mtime)
-            except Exception:
-                installed_at = None
+            t = _first_install_time(name)
+            if t:
+                installed_at = t
+                # Record first-seen for pre-existing skins (back-compat).
+                if name not in _install_times:
+                    _install_times[name] = t
+                    _save_install_times()
         out.append(
             {
                 "name": name,
@@ -216,4 +267,13 @@ def install_theme(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
     if path.exists():
         return {"ok": False, "error": f"theme '{name}' already exists"}
     path.write_text(content, encoding="utf-8")
+    # Record first-seen install time. If the theme was seen before (a previous
+    # install that was later removed), keep the ORIGINAL first-seen time so a
+    # reinstall does not re-trigger the NEW badge.
+    _load_install_times()
+    if name not in _install_times:
+        import time as _time
+
+        _install_times[name] = int(_time.time())
+        _save_install_times()
     return {"ok": True, "active": _active(), "name": name}

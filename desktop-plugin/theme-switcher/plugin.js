@@ -415,7 +415,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
   const c = theme.colors || {}
   const accent = c.accent || c.tool || c.background
   const isLight = isLightTheme(theme)
-  const isNew = theme.installed_at && Date.now() / 1000 - theme.installed_at < 14 * 24 * 3600
+  const isNew = theme.installed_at && Date.now() / 1000 - theme.installed_at < 3 * 24 * 3600
   const [copied, setCopied] = useState(false)
 
   const copyYaml = async e => {
