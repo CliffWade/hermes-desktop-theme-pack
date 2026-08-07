@@ -503,7 +503,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
             ]
           }),
           jsx('span', {
-            className: 'truncate text-[0.625rem] text-(--ui-text-tertiary)',
+            className: 'truncate pr-6 text-[0.625rem] text-(--ui-text-tertiary)',
             children: theme.description || ''
           })
         ]
@@ -514,7 +514,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
             onClick: copyYaml,
             title: copied ? 'Copied!' : 'Copy theme YAML',
             className: cn(
-              'absolute right-1.5 top-1.5 rounded border px-1 py-0.5 text-[0.5625rem] transition-colors',
+              'absolute bottom-1.5 right-1.5 rounded border px-1 py-0.5 text-[0.5625rem] transition-colors',
               'bg-(--ui-bg-primary)',
               copied
                 ? 'border-(--ui-ok) text-(--ui-ok)'
