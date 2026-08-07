@@ -520,7 +520,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
             ]
           }),
           jsxs('div', {
-            className: 'flex w-full flex-col px-6',
+            className: 'flex w-full flex-1 flex-col px-6',
             // Reserve two lines (description + pairing) so every card is the
             // same height whether or not it has a twin.
             style: { minHeight: '1.9rem' },
@@ -530,7 +530,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
                 children: theme.description || ''
               }),
               jsx('span', {
-                className: 'truncate text-[0.5625rem] leading-tight',
+                className: 'mt-auto truncate text-[0.6875rem] font-medium leading-tight',
                 style: { color: theme.twin ? 'var(--ui-accent)' : 'transparent' },
                 children: theme.twin ? `⇄ paired with ${theme.twin}` : '⇄'
               })
