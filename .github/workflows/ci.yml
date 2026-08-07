@@ -51,6 +51,20 @@ jobs:
       - name: Run theme pack test suite
         run: uv run pytest tests/ -q
 
+      - name: Verify generated files are current
+        # Regenerate themes/*.yaml + docs/preview.html from the seed palettes,
+        # then fail if anything differs from what's committed. A contributor
+        # who adds a theme (or edits a seed) must commit the regenerated
+        # output; this keeps the gallery and the count invariants honest.
+        run: |
+          uv run python scripts/generate_themes.py
+          if ! git diff --quiet -- themes/ docs/preview.html; then
+            echo "::error::Generated files are out of date. Run 'uv run python scripts/generate_themes.py' and commit the regenerated themes/ and docs/preview.html."
+            git diff --stat -- themes/ docs/preview.html
+            exit 1
+          fi
+          echo "Generated files are current"
+
       - name: Syntax-check desktop plugin
         run: |
           uv run python -c "import ast; ast.parse(open('scripts/generate_themes.py').read())"
