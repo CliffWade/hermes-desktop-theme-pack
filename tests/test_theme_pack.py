@@ -100,3 +100,61 @@ def test_installer_installs_every_theme():
         installed = {p.name for p in Path(td, "skins").glob("*.yaml")}
         expected = {p.name for p in THEMES_DIR.glob("*.yaml")}
         assert installed == expected
+
+
+def test_readme_claims_match_actual_themes():
+    """README count/category claims must track the themes directory.
+
+    Contract between the two sources of truth (docs vs files), not a snapshot
+    of current values: the README's lead line must name the real number of
+    themes and categories, and every theme file must appear in exactly one
+    category row of the Themes table. Adding a theme without updating the
+    README (or vice versa) fails here — the same drift class that previously
+    shipped a stale "24 themes" GitHub description.
+    """
+    readme = (REPO / "README.md").read_text()
+
+    themes = _load_themes()
+    names = {doc["name"] for _stem, doc in themes}
+
+    # Categories are derived from filenames, exactly like the backend
+    # (plugins/theme-switcher/dashboard/plugin_api.py): prefix map first,
+    # then the community set for arbitrary names.
+    prefix_cats = [
+        ("dark-", "Dark"), ("light-", "Light"), ("vibrant-", "Vibrant"),
+        ("nature-", "Nature"), ("minimal-", "Minimal"), ("retro-", "Retro"),
+    ]
+    community = {
+        "vaporwave-mall", "stained-glass", "shadow-thief", "void-sunset",
+        "redwood", "newsprint-noir", "peach-fuzz", "slate-mist",
+        "steel-thread", "warm-ash",
+    }
+
+    def category_of(name):
+        for prefix, label in prefix_cats:
+            if name.startswith(prefix):
+                return label
+        if name in community:
+            return "Community"
+        return "Other"
+
+    cats = {category_of(n) for n in names}
+
+    # Lead line: "34 curated color themes ... 7 categories" must match files.
+    m = re.search(r"(\d+) curated color themes[\s\S]*?(\d+) categories", readme)
+    assert m, "README lead line missing 'N curated color themes ... M categories'"
+    assert int(m.group(1)) == len(themes), f"README says {m.group(1)} themes, themes/ has {len(themes)}"
+    assert int(m.group(2)) == len(cats), f"README says {m.group(2)} categories, themes define {len(cats)}"
+
+    # Themes table: every theme appears in exactly one category row.
+    table = readme.split("| Category | Themes |")[1].split("## Install")[0] if "| Category | Themes |" in readme else ""
+    assert table, "README missing the Themes table"
+    mentioned = set()
+    for row in table.splitlines():
+        if not row.strip().startswith("|") or row.strip().startswith("| Category") or set(row.strip()) <= {"|", "-", " "}:
+            continue
+        for theme in names:
+            if f" {theme}," in row or row.strip().endswith(theme) or f" {theme} " in row:
+                assert theme not in mentioned, f"{theme} appears in multiple category rows"
+                mentioned.add(theme)
+    assert mentioned == names, f"README table missing themes: {sorted(names - mentioned)}"
