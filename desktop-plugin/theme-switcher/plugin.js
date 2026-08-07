@@ -526,7 +526,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
             style: { minHeight: '2.1rem' },
             children: [
               jsx('span', {
-                className: 'truncate text-[0.8125rem] leading-tight text-(--ui-text-tertiary)',
+                className: 'truncate text-[0.8125rem] leading-tight text-(--ui-text-secondary)',
                 children: theme.description || ''
               }),
               jsx('span', {
