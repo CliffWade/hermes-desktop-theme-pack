@@ -452,7 +452,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
   }
 
   return jsxs('div', {
-    className: 'relative',
+    className: 'relative flex',
     // Inline width (7 per row at 8px gap) because the app's Tailwind build
     // only ships grid-cols-1/2/4/6 — plugin grid classes get purged.
     style: { width: 'calc((100% - 48px) / 7)' },
@@ -467,7 +467,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
         onBlur: () => onHover(null),
         title: `${theme.description || theme.name} (${isLight ? 'light' : 'dark'})`,
         className: cn(
-          'flex w-full flex-col gap-1 rounded-lg border p-2 text-left transition-colors',
+          'flex h-full w-full flex-col gap-1 rounded-lg border p-2 text-left transition-colors',
           isActive
             ? 'border-(--ui-accent) bg-(--ui-bg-tertiary)'
             : 'border-(--ui-stroke-secondary) bg-(--ui-bg-secondary) hover:border-(--ui-stroke-strong)'
@@ -519,17 +519,23 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
               swatch(c.border, 'border')
             ]
           }),
-          jsx('span', {
-            className: 'truncate px-6 text-[0.625rem] text-(--ui-text-tertiary)',
-            children: theme.description || ''
-          }),
-          theme.twin
-            ? jsx('span', {
-                title: `Switch to paired theme: ${theme.twin}`,
-                className: 'truncate px-6 text-[0.5625rem] text-(--ui-accent)',
-                children: `⇄ paired with ${theme.twin}`
+          jsxs('div', {
+            className: 'flex w-full flex-col px-6',
+            // Reserve two lines (description + pairing) so every card is the
+            // same height whether or not it has a twin.
+            style: { minHeight: '1.9rem' },
+            children: [
+              jsx('span', {
+                className: 'truncate text-[0.625rem] leading-tight text-(--ui-text-tertiary)',
+                children: theme.description || ''
+              }),
+              jsx('span', {
+                className: 'truncate text-[0.5625rem] leading-tight',
+                style: { color: theme.twin ? 'var(--ui-accent)' : 'transparent' },
+                children: theme.twin ? `⇄ paired with ${theme.twin}` : '⇄'
               })
-            : null
+            ]
+          })
         ]
       }),
       theme.source !== 'builtin'
