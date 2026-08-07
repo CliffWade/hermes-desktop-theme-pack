@@ -29,6 +29,7 @@ import {
   SIDEBAR_NAV_AREA,
   Skeleton,
   STATUSBAR_AREAS,
+  THEMES_AREA,
   useQuery
 } from '@hermes/plugin-sdk'
 import { jsx, jsxs } from 'react/jsx-runtime'
@@ -84,6 +85,162 @@ function swatch(color, label) {
     style: { backgroundColor: color }
   })
 }
+
+// ── Skin → DesktopTheme conversion (mirror of core themes/skin.ts) ─────────
+// Registers pack/user skins into THEMES_AREA so they appear in the built-in
+// Appearance settings, Cmd-K palette, and /skin. Mirrors the desktop's own
+// converter so the registered theme matches what applying it actually shows.
+
+function hexToRgb(hex) {
+  const clean = String(hex || '').trim().replace(/^#/, '')
+  if (!/^[0-9a-f]{6}$/i.test(clean)) return null
+  return [0, 2, 4].map(i => parseInt(clean.slice(i, i + 2), 16))
+}
+
+function rgbToHex(rgb) {
+  return '#' + rgb.map(n => Math.round(Math.min(255, Math.max(0, n))).toString(16).padStart(2, '0')).join('')
+}
+
+function mix(a, b, amount) {
+  const ar = hexToRgb(a)
+  const br = hexToRgb(b)
+  return ar && br
+    ? rgbToHex([ar[0] + (br[0] - ar[0]) * amount, ar[1] + (br[1] - ar[1]) * amount, ar[2] + (br[2] - ar[2]) * amount])
+    : a
+}
+
+const linearize = channel => (channel <= 0.03928 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4)
+
+function relativeLuminance(hex) {
+  const rgb = hexToRgb(hex)
+  if (!rgb) return 0
+  const [r, g, b] = rgb.map(v => linearize(v / 255))
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b
+}
+
+function contrastRatio(a, b) {
+  const la = relativeLuminance(a)
+  const lb = relativeLuminance(b)
+  return la >= lb ? (la + 0.05) / (lb + 0.05) : (lb + 0.05) / (la + 0.05)
+}
+
+function readableOn(hex) {
+  return relativeLuminance(hex) > 0.58 ? '#161616' : '#ffffff'
+}
+
+function ensureContrast(color, bg, min) {
+  if (contrastRatio(color, bg) >= min) return color
+  const towards = relativeLuminance(bg) < 0.5 ? '#ffffff' : '#000000'
+  let best = color
+  for (let amount = 0.2; amount <= 1.0001; amount += 0.2) {
+    best = mix(color, towards, Math.min(amount, 1))
+    if (contrastRatio(best, bg) >= min) return best
+  }
+  return best
+}
+
+const ACCENT_MIN_CONTRAST = 4.5
+
+function pickFirst(colors, keys, backdrop) {
+  for (const key of keys) {
+    const value = String(colors[key] || '').trim().replace(/^#/, '')
+    if (/^[0-9a-f]{6}$/i.test(value)) return `#${value.toLowerCase()}`
+  }
+  return null
+}
+
+function titleCase(name) {
+  return name.charAt(0).toUpperCase() + name.slice(1)
+}
+
+function skinToDesktopTheme(skin) {
+  const name = (skin.name || '').trim()
+  const colors = skin.colors || {}
+  if (!name || typeof colors !== 'object') return null
+
+  const seededBg = pickFirst(colors, ['background', 'status_bar_bg'], '#000000')
+  const foregroundSeed = pickFirst(colors, ['ui_text', 'banner_text', 'status_bar_text'], seededBg || '#000000')
+  const background = seededBg || (foregroundSeed && relativeLuminance(foregroundSeed) > 0.5 ? '#141414' : '#f7f7f8')
+  const dark = lumOf(background) < 0.4
+  const foreground = foregroundSeed || (dark ? '#e6e6e6' : '#161616')
+
+  const accentSeed = pickFirst(colors, ['ui_accent', 'banner_accent', 'banner_title'], background) || mix(foreground, background, 0.55)
+  const sidebar = mix(background, foreground, dark ? 0.02 : 0.012)
+  const accent = ensureContrast(accentSeed, sidebar, ACCENT_MIN_CONTRAST)
+  const border = pickFirst(colors, ['ui_border', 'banner_border'], background) || mix(background, foreground, dark ? 0.16 : 0.14)
+  const mutedForeground = pickFirst(colors, ['banner_dim', 'session_border'], background) || mix(foreground, background, 0.45)
+  const destructive = pickFirst(colors, ['ui_error'], background) || '#e25563'
+
+  const palette = {
+    background,
+    foreground,
+    card: mix(background, foreground, dark ? 0.04 : 0.025),
+    cardForeground: foreground,
+    muted: mix(background, foreground, dark ? 0.06 : 0.04),
+    mutedForeground,
+    popover: mix(background, foreground, dark ? 0.08 : 0.05),
+    popoverForeground: foreground,
+    primary: accent,
+    primaryForeground: readableOn(accent),
+    secondary: mix(accent, background, dark ? 0.72 : 0.86),
+    secondaryForeground: foreground,
+    accent: mix(accent, background, dark ? 0.82 : 0.88),
+    accentForeground: foreground,
+    border,
+    input: pickFirst(colors, ['completion_menu_bg'], background) || mix(background, foreground, dark ? 0.1 : 0.06),
+    ring: accent,
+    midground: accent,
+    midgroundForeground: readableOn(accent),
+    composerRing: accent,
+    destructive,
+    destructiveForeground: readableOn(destructive),
+    sidebarBackground: sidebar,
+    sidebarBorder: border,
+    userBubble: mix(background, accent, dark ? 0.18 : 0.12),
+    userBubbleBorder: border
+  }
+
+  return {
+    name,
+    label: titleCase(name),
+    description: 'Hermes skin',
+    colors: palette,
+    darkColors: palette
+  }
+}
+
+// ── THEMES_AREA registration ────────────────────────────────────────────────
+// Fetches the backend list once and registers every non-built-in skin as a
+// DesktopTheme contribution, so the built-in Appearance settings / Cmd-K /
+// /skin see them. The registry supports late registration: this can fire after
+// register() returns and the Appearance grid re-renders (area-scoped invalidation).
+let themesRegistered = false
+
+async function registerPackThemes() {
+  if (themesRegistered) return
+  try {
+    const data = await rest('/list')
+    const skins = (data && data.skins) || []
+    const contribs = []
+    for (const s of skins) {
+      if (!s || s.source === 'builtin' || !s.full_colors || typeof s.full_colors !== 'object') continue
+      const theme = skinToDesktopTheme({ name: s.name, colors: s.full_colors })
+      if (theme) contribs.push({ id: `theme:${s.name}`, area: THEMES_AREA, data: theme })
+    }
+    if (contribs.length) {
+      // registerMany is available on ctx; this module holds it via register().
+      registerManyThemes(contribs)
+      themesRegistered = true
+    }
+  } catch (e) {
+    // Backend not mounted yet or fetch failed; retry on next reload. Non-fatal.
+    console.warn('[theme-switcher] THEMES_AREA registration failed:', e)
+  }
+}
+
+// Assigned in register(ctx) — kept separate from `rest` so the async
+// registration uses the same transport.
+let registerManyThemes
 
 // ── Hover preview mockup ────────────────────────────────────────────────────
 
@@ -576,6 +733,7 @@ export default {
   defaultEnabled: true,
   register(ctx) {
     rest = ctx.rest
+    registerManyThemes = ctx.registerMany
 
     ctx.registerMany([
       {
@@ -611,5 +769,11 @@ export default {
         }
       }
     ])
+
+    // Register pack/user skins into the built-in Appearance theme grid.
+    // Async on purpose: the backend may not be reachable at register() time,
+    // and the registry accepts late contributions (area-scoped invalidation
+    // re-renders Appearance when they land).
+    registerPackThemes()
   }
 }

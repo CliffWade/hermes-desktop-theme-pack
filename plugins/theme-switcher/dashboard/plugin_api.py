@@ -47,13 +47,20 @@ COMMUNITY_THEMES = {
 }
 
 
-def _skin_preview(name: str) -> Dict[str, str]:
-    """Return the representative palette colors for a skin, or {} on failure."""
+def _skin_colors(name: str) -> Dict[str, str]:
+    """Return the full color key map for a skin, or {} on failure."""
     try:
         from hermes_cli.skin_engine import load_skin
 
-        c = load_skin(name).colors
+        return dict(load_skin(name).colors or {})
     except Exception:
+        return {}
+
+
+def _skin_preview(name: str) -> Dict[str, str]:
+    """Return the representative palette colors for a skin, or {} on failure."""
+    c = _skin_colors(name)
+    if not c:
         return {}
 
     def pick(*keys: str) -> str:
@@ -101,6 +108,7 @@ def _skins() -> List[Dict[str, str]]:
                 "source": s.get("source", "user"),
                 "category": cat,
                 "colors": _skin_preview(name),
+                "full_colors": _skin_colors(name),
                 "installed_at": installed_at,
             }
         )
