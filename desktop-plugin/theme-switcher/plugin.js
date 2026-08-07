@@ -416,76 +416,113 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
   const accent = c.accent || c.tool || c.background
   const isLight = isLightTheme(theme)
   const isNew = theme.installed_at && Date.now() / 1000 - theme.installed_at < 14 * 24 * 3600
+  const [copied, setCopied] = useState(false)
 
-  return jsxs('button', {
-    type: 'button',
-    onClick: () => onApply(theme.name),
-    disabled: applying,
-    onMouseEnter: () => onHover(theme),
-    onMouseLeave: () => onHover(null),
-    onFocus: () => onHover(theme),
-    onBlur: () => onHover(null),
-    title: `${theme.description || theme.name} (${isLight ? 'light' : 'dark'})`,
+  const copyYaml = async e => {
+    e.stopPropagation()
+    e.preventDefault()
+    try {
+      const res = await rest(`/raw?name=${encodeURIComponent(theme.name)}`, { timeoutMs: 8000 })
+      if (!res || !res.ok) throw new Error((res && res.error) || 'could not fetch theme YAML')
+      await navigator.clipboard.writeText(res.yaml)
+      haptic('tap')
+      setCopied(true)
+      host.notify({ kind: 'success', message: `Copied ${theme.name} YAML` })
+      setTimeout(() => setCopied(false), 1500)
+    } catch (err) {
+      host.notify({ kind: 'error', message: `Copy failed: ${err?.message ?? err}` })
+    }
+  }
+
+  return jsxs('div', {
+    className: 'relative',
     // Inline width (7 per row at 8px gap) because the app's Tailwind build
     // only ships grid-cols-1/2/4/6 — plugin grid classes get purged.
     style: { width: 'calc((100% - 48px) / 7)' },
-    className: cn(
-      'flex flex-col gap-1 rounded-lg border p-2 text-left transition-colors',
-      isActive
-        ? 'border-(--ui-accent) bg-(--ui-bg-tertiary)'
-        : 'border-(--ui-stroke-secondary) bg-(--ui-bg-secondary) hover:border-(--ui-stroke-strong)'
-    ),
     children: [
-      accent ? jsx('div', { className: 'h-1 w-full rounded-full', style: { backgroundColor: accent } }) : null,
-      jsxs('div', {
-        className: 'flex w-full items-center justify-between gap-1',
+      jsxs('button', {
+        type: 'button',
+        onClick: () => onApply(theme.name),
+        disabled: applying,
+        onMouseEnter: () => onHover(theme),
+        onMouseLeave: () => onHover(null),
+        onFocus: () => onHover(theme),
+        onBlur: () => onHover(null),
+        title: `${theme.description || theme.name} (${isLight ? 'light' : 'dark'})`,
+        className: cn(
+          'flex w-full flex-col gap-1 rounded-lg border p-2 text-left transition-colors',
+          isActive
+            ? 'border-(--ui-accent) bg-(--ui-bg-tertiary)'
+            : 'border-(--ui-stroke-secondary) bg-(--ui-bg-secondary) hover:border-(--ui-stroke-strong)'
+        ),
         children: [
-          jsxs('span', {
-            className: 'flex min-w-0 items-center gap-1',
+          accent ? jsx('div', { className: 'h-1 w-full rounded-full', style: { backgroundColor: accent } }) : null,
+          jsxs('div', {
+            className: 'flex w-full items-center justify-between gap-1',
             children: [
-              jsx('span', {
-                title: isLight ? 'Light theme' : 'Dark theme',
-                className: isLight ? 'shrink-0 text-[0.75rem] leading-none text-(--ui-warn)' : 'shrink-0 text-[0.75rem] leading-none text-(--ui-accent)',
-                children: isLight ? '☀' : '☾'
+              jsxs('span', {
+                className: 'flex min-w-0 items-center gap-1',
+                children: [
+                  jsx('span', {
+                    title: isLight ? 'Light theme' : 'Dark theme',
+                    className: isLight ? 'shrink-0 text-[0.75rem] leading-none text-(--ui-warn)' : 'shrink-0 text-[0.75rem] leading-none text-(--ui-accent)',
+                    children: isLight ? '☀' : '☾'
+                  }),
+                  jsx('span', { className: 'truncate text-xs font-medium', children: theme.name })
+                ]
               }),
-              jsx('span', { className: 'truncate text-xs font-medium', children: theme.name })
+              isActive
+                ? jsx(Badge, {
+                    variant: 'outline',
+                    className: 'shrink-0 text-[0.5625rem] text-(--ui-accent)',
+                    children: 'Active'
+                  })
+                : isNew
+                  ? jsx(Badge, {
+                      variant: 'outline',
+                      className: 'shrink-0 text-[0.5625rem] text-(--ui-ok)',
+                      children: 'NEW'
+                    })
+                  : theme.category
+                    ? jsx('span', {
+                        className: 'shrink-0 text-[0.5625rem] uppercase tracking-wide text-(--ui-text-tertiary)',
+                        children: theme.category
+                      })
+                    : null
             ]
           }),
-          isActive
-            ? jsx(Badge, {
-                variant: 'outline',
-                className: 'shrink-0 text-[0.5625rem] text-(--ui-accent)',
-                children: 'Active'
-              })
-            : isNew
-              ? jsx(Badge, {
-                  variant: 'outline',
-                  className: 'shrink-0 text-[0.5625rem] text-(--ui-ok)',
-                  children: 'NEW'
-                })
-              : theme.category
-                ? jsx('span', {
-                    className: 'shrink-0 text-[0.5625rem] uppercase tracking-wide text-(--ui-text-tertiary)',
-                    children: theme.category
-                  })
-                : null
+          jsxs('div', {
+            className: 'flex items-center gap-1',
+            children: [
+              swatch(c.background, 'background'),
+              swatch(accent, 'accent'),
+              swatch(c.tool, 'tool'),
+              swatch(c.text, 'text'),
+              swatch(c.secondary, 'secondary'),
+              swatch(c.border, 'border')
+            ]
+          }),
+          jsx('span', {
+            className: 'truncate text-[0.625rem] text-(--ui-text-tertiary)',
+            children: theme.description || ''
+          })
         ]
       }),
-      jsxs('div', {
-        className: 'flex items-center gap-1',
-        children: [
-          swatch(c.background, 'background'),
-          swatch(accent, 'accent'),
-          swatch(c.tool, 'tool'),
-          swatch(c.text, 'text'),
-          swatch(c.secondary, 'secondary'),
-          swatch(c.border, 'border')
-        ]
-      }),
-      jsx('span', {
-        className: 'truncate text-[0.625rem] text-(--ui-text-tertiary)',
-        children: theme.description || ''
-      })
+      theme.source !== 'builtin'
+        ? jsx('button', {
+            type: 'button',
+            onClick: copyYaml,
+            title: copied ? 'Copied!' : 'Copy theme YAML',
+            className: cn(
+              'absolute right-1.5 top-1.5 rounded border px-1 py-0.5 text-[0.5625rem] transition-colors',
+              'bg-(--ui-bg-primary)',
+              copied
+                ? 'border-(--ui-ok) text-(--ui-ok)'
+                : 'border-(--ui-stroke-secondary) text-(--ui-text-tertiary) hover:border-(--ui-accent) hover:text-(--ui-accent)'
+            ),
+            children: copied ? '✓' : '⧉'
+          })
+        : null
     ]
   })
 }

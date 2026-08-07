@@ -165,6 +165,24 @@ def apply_theme(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
     return {"ok": True, "active": name, "previous": _prev_skin}
 
 
+@router.get("/raw")
+def raw_theme(name: str) -> Dict[str, Any]:
+    """Return the raw YAML of an installed user skin, for copy/share.
+
+    Built-in skins have no source file, so they 404 — only user skins can be
+    exported. Used by the desktop plugin's Copy YAML button.
+    """
+    name = str(name or "").strip()
+    if not name:
+        return {"ok": False, "error": "name required"}
+    from hermes_constants import get_hermes_home
+
+    path = get_hermes_home() / "skins" / f"{name}.yaml"
+    if not path.is_file():
+        return {"ok": False, "error": f"no user skin file for '{name}'"}
+    return {"ok": True, "name": name, "yaml": path.read_text(encoding="utf-8")}
+
+
 @router.post("/install")
 def install_theme(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
     """Install a skin from raw YAML pasted in the desktop app."""

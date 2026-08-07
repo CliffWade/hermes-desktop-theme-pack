@@ -124,3 +124,7 @@ The seed palettes live at the top of the generator script. Add a palette, re-run
 ## License
 
 MIT.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for the full history.
