@@ -39,6 +39,7 @@ THEME_PAIRS = [
     ("dark-aubergine", "light-lavender"),
     ("dark-charcoal", "light-cloud"),
     ("dark-crimson", "light-rose"),
+    ("dark-dracula", "light-dracula"),
     ("dark-navy", "light-sky"),
     ("dark-obsidian", "light-porcelain"),
     ("dark-plum", "light-grape"),

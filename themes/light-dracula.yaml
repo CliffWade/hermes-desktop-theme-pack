@@ -1,0 +1,48 @@
+# Hermes skin — light-dracula.
+# Dracula Light, lavender-white with near-black text and deepened neon accents.
+name: light-dracula
+description: Dracula Light, lavender-white with neon
+
+colors:
+  background: "#f8f8f2"
+  ui_accent: "#7b4fb8"
+  banner_accent: "#7b4fb8"
+  banner_title: "#282a36"
+  banner_text: "#282a36"
+  ui_text: "#282a36"
+  banner_dim: "#4c5d99"
+  banner_border: "#dcd9d0"
+  ui_border: "#dcd9d0"
+  ui_ok: "#1f7f3b"
+  ui_warn: "#8a8210"
+  ui_error: "#c22f2f"
+  prompt: "#282a36"
+  input_rule: "#b33f8d"
+  response_border: "#7b4fb8"
+  status_bar_bg: "#ecebe4"
+  status_bar_text: "#282a36"
+  status_bar_good: "#1f7f3b"
+  status_bar_warn: "#8a8210"
+  status_bar_critical: "#c22f2f"
+  session_label: "#b33f8d"
+  session_border: "#dcd9d0"
+  ui_tool: "#0d6b85"
+  ui_thinking: "#4c5d99"
+  diff_added: "#1f7f3b"
+  diff_removed: "#c22f2f"
+  diff_added_word: "#1a6b33"
+  diff_removed_word: "#d64545"
+  syntax_string: "#1f7f3b"
+  syntax_number: "#7b4fb8"
+  syntax_keyword: "#b33f8d"
+  syntax_comment: "#4c5d99"
+  completion_menu_bg: "#f4f4ee"
+  completion_menu_current_bg: "#e8e6de"
+  completion_menu_meta_bg: "#eeece5"
+
+branding:
+  agent_name: Hermes Agent
+  prompt_symbol: ❯
+  help_header: (^_^)? Commands
+
+tool_prefix: "┊"
