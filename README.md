@@ -56,58 +56,33 @@ opposite polarity. In the Theme Switcher, paired themes show `⇄ paired with
 preview shows both polarities side by side. The pack is 50 light / 50 dark;
 every theme is paired — 50 pairs cover all 100 themes.
 
-| Dark | Light |
-|---|---|
-| dark-aubergine | light-lavender |
-| dark-bone | minimal-bone |
-| dark-ayu | light-ayu |
-| dark-catppuccin | light-catppuccin |
-| dark-charcoal | light-cloud |
-| dark-cozy-paper | light-cozy-paper |
-| dark-crimson | light-rose |
-| dark-dracula | light-dracula |
-| dark-everforest | light-everforest |
-| dark-github | light-github |
-| dark-gruvbox | light-gruvbox |
-| dark-kanagawa | light-kanagawa |
-| dark-lcars | light-lcars |
-| dark-lemon | light-lemon |
-| dark-mac | retro-mac |
-| dark-material | light-material |
-| dark-navy | light-sky |
-| dark-nord | light-nord |
-| dark-obsidian | light-porcelain |
-| dark-one | light-one |
-| dark-plum | light-grape |
-| dark-rosepine | light-rosepine |
-| dark-sage | light-sage |
-| dark-solarized | light-solarized |
-| dark-tokyo-night | light-tokyo-day |
-| dark-vanilla | light-vanilla |
-| dark-vscode | light-vscode |
-| minimal-graphite | minimal-pearl |
-| warm-ash | light-oat |
-| nature-autumn | light-melon |
-| nature-desert | light-sand |
-| nature-forest | light-fern |
-| nature-nordic | light-frost |
-| nature-ocean | light-tide |
-| newsprint-noir | light-paper |
-| peach-fuzz | light-peach |
-| redwood | light-cream |
-| retro-amber | light-honey |
-| retro-blue | light-denim |
-| retro-terminal | light-mint |
-| shadow-thief | light-lilac |
-| slate-mist | light-mist |
-| stained-glass | light-stained-glass |
-| steel-thread | light-ash |
-| vaporwave-mall | light-aqua |
-| vibrant-neon | light-neon |
-| vibrant-pacific | light-pacific |
-| vibrant-sunset | light-blush |
-| vibrant-synthwave | light-synthwave |
-| void-sunset | light-sunset |
+| Dark | Light | Dark | Light |
+|---|---|---|---|
+| dark-aubergine | light-lavender | nature-nordic | light-frost |
+| dark-ayu | light-ayu | nature-ocean | light-tide |
+| dark-bone | minimal-bone | newsprint-noir | light-paper |
+| dark-catppuccin | light-catppuccin | peach-fuzz | light-peach |
+| dark-charcoal | light-cloud | redwood | light-cream |
+| dark-cozy-paper | light-cozy-paper | retro-amber | light-honey |
+| dark-crimson | light-rose | retro-blue | light-denim |
+| dark-dracula | light-dracula | retro-terminal | light-mint |
+| dark-everforest | light-everforest | shadow-thief | light-lilac |
+| dark-github | light-github | slate-mist | light-mist |
+| dark-gruvbox | light-gruvbox | stained-glass | light-stained-glass |
+| dark-kanagawa | light-kanagawa | steel-thread | light-ash |
+| dark-lcars | light-lcars | vaporwave-mall | light-aqua |
+| dark-lemon | light-lemon | vibrant-neon | light-neon |
+| dark-mac | retro-mac | vibrant-pacific | light-pacific |
+| dark-material | light-material | vibrant-sunset | light-blush |
+| dark-navy | light-sky | vibrant-synthwave | light-synthwave |
+| dark-nord | light-nord | void-sunset | light-sunset |
+| dark-obsidian | light-porcelain | warm-ash | light-oat |
+| dark-one | light-one | nature-autumn | light-melon |
+| dark-plum | light-grape | nature-desert | light-sand |
+| dark-rosepine | light-rosepine | nature-forest | light-fern |
+| dark-sage | light-sage | minimal-graphite | minimal-pearl |
+| dark-solarized | light-solarized | dark-vanilla | light-vanilla |
+| dark-tokyo-night | light-tokyo-day | dark-vscode | light-vscode |
 
 ## Install
 
