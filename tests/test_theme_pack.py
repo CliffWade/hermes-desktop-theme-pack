@@ -165,6 +165,25 @@ def test_readme_claims_match_actual_themes():
     assert mentioned == names, f"README table missing themes: {sorted(names - mentioned)}"
 
 
+def test_readme_distinguishes_desktop_ui_from_web_dashboard_and_remote_backend():
+    """Install guidance must name both plugin systems and both SSH hosts."""
+    readme = (REPO / "README.md").read_text()
+    section_match = re.search(
+        r"^## Theme Switcher \(native Desktop app\)\n(?P<body>.*?)(?=^## )",
+        readme,
+        re.MULTILINE | re.DOTALL,
+    )
+
+    assert section_match, "README must identify the native Desktop plugin in its heading"
+    section = section_match.group("body")
+    assert "does not load in `hermes dashboard`" in section
+    assert "remote backend host" in section
+    assert "local Desktop computer" in section
+    assert "$env:LOCALAPPDATA" in section
+    assert "nonce-aware stale Desktop SSH backend recovery" in section
+    assert "Do not kill the backend PID directly" in section
+
+
 def test_twin_pairs_resolve_to_real_opposite_polarity_themes():
     """Every light/dark twin pair names existing themes of opposite polarity.
 
