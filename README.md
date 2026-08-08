@@ -136,9 +136,11 @@ Every theme is generated from a seed palette by `scripts/generate_themes.py`, wh
 
 Re-run the generator to regenerate all skins and the preview gallery, or edit any `.yaml` by hand and reload.
 
-## Theme Switcher (desktop browser)
+## Theme Switcher (native Desktop app)
 
 The pack also ships a **Theme Switcher** desktop plugin: a "Themes" entry in the app's left sidebar (like Achievements) that lists every installed skin, marks the active one, and applies a new one with one click. No terminal needed to flip themes.
+
+The Themes page is for the **native Hermes Desktop app only**. It does not load in `hermes dashboard`, whose browser UI uses a separate plugin SDK and bundle format. The skins themselves still work across Hermes surfaces; this limitation applies only to the Theme Switcher page.
 
 Features:
 
@@ -154,20 +156,35 @@ Features:
 - **Statusbar chip** — the bottom bar shows the active theme with its color dot; click to open the Themes page
 - **Command palette** — ⌘K → "Themes: Open"
 
-Install the backend and desktop plugin:
+Install the backend and desktop plugin. With a local Desktop connection, both commands run on the same machine. With Desktop over SSH, install the backend on the **remote backend host** and the UI plugin on the **local Desktop computer**.
+
+On the Hermes backend host:
 
 ```bash
-# backend plugin
-mkdir -p ~/.hermes/plugins/theme-switcher
-cp -R plugins/theme-switcher/* ~/.hermes/plugins/theme-switcher/
+mkdir -p "${HERMES_HOME:-$HOME/.hermes}/plugins/theme-switcher"
+cp -R plugins/theme-switcher/* "${HERMES_HOME:-$HOME/.hermes}/plugins/theme-switcher/"
 hermes plugins enable theme-switcher
-
-# desktop plugin
-mkdir -p ~/.hermes/desktop-plugins/theme-switcher
-cp desktop-plugin/theme-switcher/plugin.js ~/.hermes/desktop-plugins/theme-switcher/
 ```
 
-Restart the app once so the backend mounts, then open **Themes** from the sidebar.
+On the computer running the native Hermes Desktop app:
+
+macOS or Linux:
+
+```bash
+mkdir -p "${HERMES_HOME:-$HOME/.hermes}/desktop-plugins/theme-switcher"
+cp desktop-plugin/theme-switcher/plugin.js "${HERMES_HOME:-$HOME/.hermes}/desktop-plugins/theme-switcher/"
+```
+
+Windows PowerShell:
+
+```powershell
+$hermesHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA "hermes" }
+$destination = Join-Path $hermesHome "desktop-plugins\theme-switcher"
+New-Item -ItemType Directory -Force -Path $destination | Out-Null
+Copy-Item ".\desktop-plugin\theme-switcher\plugin.js" $destination
+```
+
+The backend API routes are mounted when the Hermes backend server starts. If the backend was already running when you enabled the plugin, restart or reconnect it before opening **Themes**; reloading the page or desktop plugin alone cannot mount a missing backend route. For Desktop over SSH, disconnect and reconnect first. If Desktop enters a verification loop or the fresh connection still returns 404, use nonce-aware stale Desktop SSH backend recovery: verify that the process matches Desktop's ownership nonce, terminate only that matching backend, and remove only its matching lock/token state before reconnecting. Do not kill the backend PID directly, because leaving its ownership state behind can prevent Desktop from verifying or restarting the connection.
 
 ## Development
 
