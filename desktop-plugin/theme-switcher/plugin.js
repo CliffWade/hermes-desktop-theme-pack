@@ -42,6 +42,14 @@ let rest
 
 const CATEGORY_ORDER = ['Dark', 'Light', 'Vibrant', 'Nature', 'Minimal', 'Retro', 'Community', 'Built-in', 'Other']
 
+// Inline grid columns avoid relying on responsive Tailwind classes that may
+// not be present in the host build. Cards wrap before their text and controls
+// become unreadably narrow, while a sub-240px viewport still gets one column.
+const THEME_GRID_STYLE = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))'
+}
+
 // ── Color helpers ───────────────────────────────────────────────────────────
 
 function polarityOf(colors) {
@@ -453,9 +461,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
 
   return jsxs('div', {
     className: 'relative flex',
-    // Inline width (7 per row at 8px gap) because the app's Tailwind build
-    // only ships grid-cols-1/2/4/6 — plugin grid classes get purged.
-    style: { width: 'calc((100% - 48px) / 7)' },
+    style: { minWidth: 0 },
     children: [
       jsxs('button', {
         type: 'button',
@@ -747,7 +753,8 @@ function ThemesPage() {
 
   if (isLoading) {
     return jsx('div', {
-      className: 'grid h-full grid-cols-1 gap-4 overflow-y-auto p-6 sm:grid-cols-2 lg:grid-cols-3',
+      className: 'h-full gap-4 overflow-y-auto p-6',
+      style: THEME_GRID_STYLE,
       children: Array.from({ length: 9 }, () => jsx(Skeleton, { className: 'h-24 w-full rounded-lg' }))
     })
   }
@@ -888,7 +895,8 @@ function ThemesPage() {
                         children: `☀ Light (${filtered.filter(t => isLightTheme(t)).length})`
                       }),
                       jsx('div', {
-                        className: 'flex flex-wrap gap-2',
+                        className: 'gap-2',
+                        style: THEME_GRID_STYLE,
                         children: filtered
                           .filter(t => isLightTheme(t))
                           .map(t =>
@@ -914,7 +922,8 @@ function ThemesPage() {
                         children: `☾ Dark (${filtered.filter(t => !isLightTheme(t)).length})`
                       }),
                       jsx('div', {
-                        className: 'flex flex-wrap gap-2',
+                        className: 'gap-2',
+                        style: THEME_GRID_STYLE,
                         children: filtered
                           .filter(t => !isLightTheme(t))
                           .map(t =>
