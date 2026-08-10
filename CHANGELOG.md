@@ -3,6 +3,31 @@
 All notable changes to the Hermes Theme Pack. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-08-10
+
+### Added
+
+- **CLI/TUI light-dark pairing blocks on every theme** — all 100 themes now
+  ship an opposite-polarity palette (`light_colors` for dark themes,
+  `dark_colors` for light themes) so the CLI and TUI repaint coherently when
+  the terminal's polarity differs from the theme's canvas. This mirrors the
+  desktop app's colors/darkColors pairing and closes the last gap in
+  cross-surface compatibility: a Hermes skin now themes the CLI, the TUI,
+  and the desktop app identically in both polarities.
+- Generator derives opposite palettes (flips polarity, keeps accent hue,
+  re-enforces WCAG contrast) when a theme has no literal light/dark twin;
+  literal twins share their real palettes.
+- Community drop-in themes get pairing blocks appended without touching
+  their hand-authored content.
+- New invariant test: every theme carries an opposite-polarity block whose
+  banner_text passes 4.5:1 against the paired background.
+
+### Fixed
+
+- Polarity is now detected from background luminance, never from name
+  prefixes — themes like `minimal-bone` (light background, non-light name)
+  get the correct dark pairing.
+
 ## [1.1.0] - 2026-08-07
 
 ### Added
