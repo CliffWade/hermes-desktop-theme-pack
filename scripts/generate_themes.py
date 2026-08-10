@@ -13,6 +13,8 @@ Usage: python3 scripts/generate_themes.py
 """
 from pathlib import Path
 
+import re
+
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -82,6 +84,82 @@ def contrast(a, b):
     la, lb = lum(a), lum(b)
     hi, lo = max(la, lb), min(la, lb)
     return (hi + 0.05) / (lo + 0.05)
+
+
+def derive_opposite_colors(colors, is_light):
+    """Derive an opposite-polarity palette from a theme's own identity.
+
+    When a theme has no literal light/dark twin, this flips the background
+    polarity (dark -> near-white, light -> near-black), keeps the accent hue
+    (adjusted for contrast against the new canvas), and re-derives every
+    semantic tone. The result is the `light_colors`/`dark_colors` fallback
+    the CLI/TUI use when the terminal's polarity differs from the theme's.
+    """
+    bg = colors["background"]
+    accent = colors["ui_accent"]
+    text = colors["ui_text"]
+    border = colors["ui_border"]
+
+    if is_light:
+        new_bg = "#14161a"
+        # Keep the light theme's accent hue but darken it for a dark canvas.
+        new_accent = ensure_contrast(accent, new_bg, 4.5)
+        new_text = ensure_contrast("#e8e6f2", new_bg, 6.0)
+        new_secondary = ensure_contrast(colors.get("banner_dim", "#8a8699"), new_bg, 4.5)
+        new_border = mix(border, "#ffffff", 0.25)
+        status_bg = darken(new_bg, 0.12)
+    else:
+        new_bg = "#f7f6f3"
+        # Keep the dark theme's accent hue but lighten it for a light canvas.
+        new_accent = ensure_contrast(accent, new_bg, 4.5)
+        new_text = ensure_contrast("#2b2620", new_bg, 6.0)
+        new_secondary = ensure_contrast(colors.get("banner_dim", "#6f675c"), new_bg, 4.5)
+        new_border = mix(border, "#000000", 0.25)
+        status_bg = lighten(new_bg, 0.06)
+
+    ok = ensure_contrast(colors.get("ui_ok", "#4ade80"), new_bg, 3.5)
+    warn = ensure_contrast(colors.get("ui_warn", "#fbbf24"), new_bg, 3.5)
+    error = ensure_contrast(colors.get("ui_error", "#f87171"), new_bg, 3.5)
+    accent_readable = new_accent
+    surface = mix(new_bg, new_accent, 0.09)
+
+    return {
+        "background": new_bg,
+        "ui_accent": accent_readable,
+        "banner_accent": accent_readable,
+        "banner_title": new_text,
+        "banner_text": new_text,
+        "ui_text": new_text,
+        "banner_dim": new_secondary,
+        "banner_border": new_border,
+        "ui_border": new_border,
+        "ui_ok": ok,
+        "ui_warn": warn,
+        "ui_error": error,
+        "prompt": new_text,
+        "input_rule": accent_readable,
+        "response_border": new_accent,
+        "status_bar_bg": status_bg,
+        "status_bar_text": new_text,
+        "status_bar_good": ok,
+        "status_bar_warn": warn,
+        "status_bar_critical": error,
+        "session_label": accent_readable,
+        "session_border": new_border,
+        "ui_tool": new_accent,
+        "ui_thinking": new_secondary,
+        "diff_added": ok,
+        "diff_removed": error,
+        "diff_added_word": ensure_contrast(lighten(ok, 0.25), new_bg, 4.0),
+        "diff_removed_word": ensure_contrast(lighten(error, 0.25), new_bg, 4.0),
+        "syntax_string": ensure_contrast(lighten(ok, 0.15), new_bg, 4.0),
+        "syntax_number": ensure_contrast(lighten(warn, 0.10), new_bg, 4.0),
+        "syntax_keyword": ensure_contrast(lighten(accent_readable, 0.08), new_bg, 4.0),
+        "syntax_comment": new_secondary,
+        "completion_menu_bg": mix(new_bg, new_text, 0.06),
+        "completion_menu_current_bg": mix(new_bg, new_accent, 0.22),
+        "completion_menu_meta_bg": mix(new_bg, new_text, 0.10),
+    }
 
 
 def ensure_contrast(fg, bg, target):
@@ -224,6 +302,15 @@ def emit_yaml(skin):
     out = [f"# Hermes skin — {skin['name']}.", f"# {skin['description']}.", f"name: {skin['name']}", f"description: {skin['description']}", "", "colors:"]
     for k, v in skin["colors"].items():
         out.append(f'  {k}: "{v}"')
+    # Paired opposite-polarity block: the CLI/TUI use this when the terminal's
+    # polarity differs from the theme's canvas, so every theme stays coherent
+    # in both polarities (mirrors the desktop app's colors/darkColors pairing).
+    for block, colors in (("light_colors", skin.get("light_colors")), ("dark_colors", skin.get("dark_colors"))):
+        if colors:
+            out.append("")
+            out.append(f"{block}:")
+            for k, v in colors.items():
+                out.append(f'  {k}: "{v}"')
     out.append("")
     out.append("branding:")
     for k, v in skin["branding"].items():
@@ -233,13 +320,63 @@ def emit_yaml(skin):
     return "\n".join(out) + "\n"
 
 
+def _write_doc_preserving(path, doc):
+    """Write a community theme back WITHOUT clobbering its hand-authored
+    comments/formatting: re-serialize the original mapping (which round-trips
+    comments as best yaml can) and append only the pairing block as literal
+    text. Simpler and safer than surgical text surgery."""
+    raw = path.read_text(encoding="utf-8")
+    # If the file already has a YAML mapping, emit the pairing block by
+    # re-serializing with default_flow_style=False and joining after the
+    # existing content — preserves the theme author's prose/ordering.
+    block_key = "dark_colors" if doc.get("dark_colors") else "light_colors"
+    if block_key in doc:
+        lines = [f"{block_key}:"]
+        for k, v in doc[block_key].items():
+            lines.append(f'  {k}: "{v}"')
+        block_text = "\n".join(lines)
+        # Insert after the colors block (before branding/tool_prefix if present)
+        # or append at end. Use insertion at first blank-line boundary after
+        # 'colors:' content to keep pairing next to colors.
+        idx = raw.find("branding:")
+        if idx == -1:
+            idx = len(raw.rstrip()) + 1
+        head = raw[:idx].rstrip() + "\n\n" + block_text + "\n\n"
+        tail = raw[idx:] if idx < len(raw) else ""
+        path.write_text(head + tail, encoding="utf-8")
+
+
 def main():
     THEMES_DIR.mkdir(parents=True, exist_ok=True)
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
+    # Build a name -> theme map so literal light/dark twins share palettes.
+    by_name = {t["name"]: t for t in THEMES}
+    opposite_of = {}
+    for t in THEMES:
+        m = re.match(r"^(light|dark)-(.+)$", t["name"])
+        if m:
+            polarity, stem = m.group(1), m.group(2)
+            twin_name = ("dark" if polarity == "light" else "light") + "-" + stem
+            if twin_name in by_name:
+                opposite_of[t["name"]] = by_name[twin_name]
+
     report = []
     for t in THEMES:
         skin = build_skin(t)
+        # Polarity from the actual background luminance — name prefixes like
+        # 'minimal-' or 'nature-' don't encode polarity, so never guess.
+        is_light = lum(skin["colors"]["background"]) >= 0.5
+        # Opposite block: literal twin when one exists, else derived.
+        twin = opposite_of.get(t["name"])
+        if twin:
+            opp = build_skin(twin)["colors"]
+        else:
+            opp = derive_opposite_colors(skin["colors"], is_light)
+        if is_light:
+            skin["dark_colors"] = opp
+        else:
+            skin["light_colors"] = opp
         path = THEMES_DIR / f"{t['name']}.yaml"
         path.write_text(emit_yaml(skin), encoding="utf-8")
 
@@ -251,8 +388,29 @@ def main():
         )
         report.append(f"{t['name']:<20} {t['category']:<8} min contrast {min_contrast:.2f}:1")
 
+    # Community themes are drop-in YAML files — never rewritten for their own
+    # content, but they DO need the opposite-polarity pairing block so the
+    # CLI/TUI stay coherent in both polarities. Add it when missing.
+    for path in sorted(THEMES_DIR.glob("*.yaml")):
+        name = path.stem
+        if name in by_name:
+            continue  # curated — already has pairing from the loop above
+        doc = yaml.safe_load(path.read_text(encoding="utf-8"))
+        if not doc or not isinstance(doc, dict):
+            continue
+        colors = doc.get("colors") or {}
+        if not colors.get("background"):
+            continue
+        is_light = lum(colors["background"]) >= 0.5
+        block_key = "dark_colors" if is_light else "light_colors"
+        if doc.get(block_key):
+            continue  # already paired (hand-authored or from a previous run)
+        opp = derive_opposite_colors(colors, is_light)
+        doc[block_key] = opp
+        _write_doc_preserving(path, doc)
+
     # Preview gallery shows every theme on disk — the curated seeds plus any
-    # community drop-in YAML files (which are never rewritten here).
+    # community drop-in YAML files.
     cards = []
     categories = set()
     for path in sorted(THEMES_DIR.glob("*.yaml")):
