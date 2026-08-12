@@ -211,6 +211,35 @@ def test_dashboard_manifest_ships_a_real_tab_and_entry_bundle():
         assert css.exists(), f"declared css missing: {css}"
 
 
+def test_dashboard_bundle_ships_hover_detail_panel():
+    """Hovering a theme card must reveal a right-docked detail panel.
+
+    The web dashboard mirrors the Desktop plugin: on card hover, a fixed
+    right-edge panel shows the theme name, description, and labeled color
+    swatches (from full_colors). The bundle must wire hover state through
+    SectionGrid/ThemeCard and declare the panel + its styles.
+    """
+    manifest = json.loads(
+        (REPO / "plugins/theme-switcher/dashboard/manifest.json").read_text()
+    )
+    entry = REPO / "plugins/theme-switcher/dashboard" / manifest["entry"]
+    source = entry.read_text()
+
+    # The panel renders from full_colors when present (complete palette).
+    assert "HoverPanel" in source, "bundle must define the hover panel"
+    assert "full_colors" in source, "hover panel must render the full palette"
+    assert "onHover" in source, "cards must expose hover state"
+    assert "setHoverTheme" in source, "page must track the hovered theme"
+    assert "position: fixed" not in source  # positioning lives in CSS, not JS
+
+    css = REPO / "plugins/theme-switcher/dashboard" / manifest["css"]
+    styles = css.read_text()
+    assert ".ts-hover-panel" in styles, "hover panel styles missing"
+    assert "right: 24px" in styles, "hover panel must dock to the right edge"
+    assert "top: 96px" in styles, "hover panel must clear the toolbar"
+    assert ".ts-hover-swatch" in styles, "swatches must be labeled rows"
+
+
 def test_dashboard_theme_builder_maps_skin_palette():
     """Generated dashboard themes map bg/text/accent and stay valid.
 

@@ -45,7 +45,7 @@
   }
 
   // ── Theme card (Desktop-style) ─────────────────────────────────────────────
-  function ThemeCard({ theme, activeName, onApply, applying, isDark }) {
+  function ThemeCard({ theme, activeName, onApply, applying, isDark, onHover, onLeave }) {
     const isActive = theme.name === activeName;
     const isNew = Boolean(
       theme.installed_at && Date.now() - theme.installed_at < NEW_MS,
@@ -60,7 +60,11 @@
 
     return React.createElement(
       "div",
-      { className: cn("ts-card-wrap", isActive && "ts-card-active") },
+      {
+        className: cn("ts-card-wrap", isActive && "ts-card-active"),
+        onMouseEnter: onHover ? () => onHover(theme) : undefined,
+        onMouseLeave: onLeave ? onLeave : undefined,
+      },
       React.createElement(
         "button",
         {
@@ -155,7 +159,7 @@
     );
   }
 
-  function SectionGrid({ title, themes, activeName, onApply, applying, isDark }) {
+  function SectionGrid({ title, themes, activeName, onApply, applying, isDark, onHover, onLeave }) {
     if (!themes.length) return null;
     return React.createElement(
       React.Fragment,
@@ -176,7 +180,63 @@
             onApply,
             applying,
             isDark,
+            onHover,
+            onLeave,
           }),
+        ),
+      ),
+    );
+  }
+
+  // ── Hover detail panel ─────────────────────────────────────────────────────
+  // Docked to the right edge (mirrors the Desktop plugin's preview panel) so
+  // hover details never cover the grid. Renders from full_colors when present
+  // so every swatch is labeled with its hex value.
+  function HoverPanel({ theme }) {
+    if (!theme) return null;
+    const c = theme.full_colors || theme.colors || {};
+    const accent = c.accent || c.tool || c.ui_accent || c.banner_accent || c.background || "#888";
+    const entries = Object.entries(c).slice(0, 20);
+
+    return React.createElement(
+      "div",
+      { className: "ts-hover-panel" },
+      React.createElement("h3", { className: "ts-hover-name" }, theme.name),
+      theme.category
+        ? React.createElement("div", { className: "ts-hover-cat" }, theme.category)
+        : null,
+      theme.description
+        ? React.createElement("div", { className: "ts-hover-desc" }, theme.description)
+        : null,
+      React.createElement("div", {
+        className: "ts-hover-bar",
+        style: { backgroundColor: accent },
+      }),
+      theme.twin
+        ? React.createElement(
+            "div",
+            { className: "ts-hover-twin" },
+            "\u21C4 paired with " + theme.twin,
+          )
+        : null,
+      React.createElement(
+        "div",
+        { className: "ts-hover-swatches" },
+        entries.map(([k, v]) =>
+          React.createElement(
+            "div",
+            { key: k, className: "ts-hover-swatch" },
+            React.createElement("span", { className: "ts-hover-swatch-k" }, k),
+            React.createElement(
+              "span",
+              { className: "ts-hover-swatch-v" },
+              String(v),
+              React.createElement("span", {
+                className: "ts-hover-chip",
+                style: { backgroundColor: v },
+              }),
+            ),
+          ),
         ),
       ),
     );
@@ -258,6 +318,7 @@
     const [followSystem, setFollowSystem] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
     const [note, setNote] = useState(null);
+    const [hoverTheme, setHoverTheme] = useState(null);
     const [systemDark, setSystemDark] = useState(
       typeof window !== "undefined" &&
         window.matchMedia &&
@@ -497,6 +558,8 @@
           onApply: apply,
           applying,
           isDark: false,
+          onHover: setHoverTheme,
+          onLeave: () => setHoverTheme(null),
         }),
       tab !== "light" &&
         React.createElement(SectionGrid, {
@@ -506,6 +569,8 @@
           onApply: apply,
           applying,
           isDark: true,
+          onHover: setHoverTheme,
+          onLeave: () => setHoverTheme(null),
         }),
       total === 0 &&
         React.createElement(
@@ -521,6 +586,7 @@
         ),
       showAdd &&
         React.createElement(AddThemeModal, { onClose: () => setShowAdd(false), onInstalled }),
+      React.createElement(HoverPanel, { theme: hoverTheme }),
     );
   }
 
