@@ -3,6 +3,15 @@
 All notable changes to the Hermes Theme Pack. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- **Theme Switcher cards now respond to window width** — replaced the fixed
+  seven-column layout with a responsive grid (240px minimum card width) so
+  theme names, badges, and paired-theme links stay readable on laptop-sized
+  windows. Thanks to @jdtimothy for the report and the fix.
+
 ## [1.2.0] - 2026-08-10
 
 ### Added
