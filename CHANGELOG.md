@@ -38,6 +38,11 @@ All notable changes to the Hermes Theme Pack. This project follows
   fill the last row. Container queries adapt the toolbar/card spacing to the
   tab's actual panel width, with viewport media-query fallbacks for small and
   very large (4K) screens.
+- **Desktop-style compact cards** — the dashboard tab's cards mirror the
+  native Themes page anatomy: compact wide cards with a 4px accent bar, tiny
+  10px color swatches, whole-card apply, floating swap/copy actions, and a
+  `NEW` badge for freshly installed themes. Layout classes are
+  self-contained so the tab never depends on the host's Tailwind build.
 - **Readable themed hover tooltips** — every tooltip on the Desktop Themes
   page (card description, color swatches, polarity glyph, copy/flip buttons,
   Follow system button, statusbar chip) now uses the app's themed `Tip`

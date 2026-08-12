@@ -4,13 +4,15 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/CliffWade/hermes-desktop-theme-pack/ci.yml?style=for-the-badge&label=CI)](https://github.com/CliffWade/hermes-desktop-theme-pack/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/CliffWade/hermes-desktop-theme-pack?style=for-the-badge&label=License)](https://github.com/CliffWade/hermes-desktop-theme-pack/blob/main/LICENSE)
 
-> ## 🚀 100 themes — v1.1.0 is live
+> ## 🚀 v1.3.0 is live — Themes in your web dashboard
 >
-> One hundred curated color themes, perfectly balanced 50 light / 50 dark,
-> and **every single theme has a light/dark twin** — click ⇄ to flip the
-> same vibe to the other polarity, or turn on Follow system to have the
-> active theme flip automatically when macOS switches appearance. See the
-> [release notes](https://github.com/CliffWade/hermes-desktop-theme-pack/releases/tag/v1.1.0) and the [full changelog](CHANGELOG.md).
+> The Theme Switcher now lives in **`hermes dashboard`** too: a full Themes
+> tab with search, Light/Dark tabs, Follow system, Random, and Add-theme,
+> truly responsive desktop-style cards, and a hover detail panel, plus a
+> hover-card readability overhaul on the Desktop page (themed tooltips,
+> guaranteed-contrast previews, opaque panels). All 100 themes, 50 light /
+> 50 dark, every one paired with its twin. See the
+> [release notes](https://github.com/CliffWade/hermes-desktop-theme-pack/releases/tag/v1.3.0) and the [full changelog](CHANGELOG.md).
 
 100 curated color themes for Hermes Agent, organized into 7 categories, every one contrast-checked to WCAG AA. Drop them in and they appear across the CLI, the TUI, and the desktop app at once, because a Hermes skin themes every surface.
 
@@ -20,6 +22,7 @@
 - **WCAG AA contrast gate** — every theme passes primary text at 6:1, accents and secondary text at 4.5:1 against its background, enforced by an independent test suite
 - **Themes every surface** — one YAML skin repaints the CLI, the TUI, and the desktop app at once
 - **Theme Switcher desktop plugin** — a Themes page in the app sidebar: every skin in one grid, light/dark grouping, search (including palette colors like "purple" or #7b2d8e), hover preview, one-click apply, undo, random, install-from-YAML, statusbar chip, ⌘K palette entry
+- **Web dashboard Themes tab** — the same Theme Switcher lives in `hermes dashboard`: search, All/Light/Dark tabs with counts, Follow system, category filter, Random, Add-theme, truly responsive desktop-style cards with a hover detail panel, and instant repaint of the dashboard when a theme is applied
 - **Built-in Appearance integration** — pack themes appear in the desktop's native Appearance settings, Cmd-K, and `/skin` (via THEMES_AREA)
 - **Copy YAML to share** — one click on any user theme card exports the raw skin YAML for sharing
 - **Add your own theme** — paste YAML in the app, drop a file in `~/.hermes/skins/`, or use the seed-palette generator
