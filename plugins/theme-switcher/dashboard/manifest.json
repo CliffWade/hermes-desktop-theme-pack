@@ -1,1 +1,11 @@
-{ "name": "theme-switcher", "api": "plugin_api.py" }
+{
+  "name": "theme-switcher",
+  "label": "Themes",
+  "description": "Browse and apply all Hermes theme pack skins from the browser.",
+  "icon": "Palette",
+  "version": "1.0.0",
+  "tab": { "path": "/themes", "position": "after:skills" },
+  "entry": "dist/index.js",
+  "css": "dist/style.css",
+  "api": "plugin_api.py"
+}

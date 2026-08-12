@@ -5,6 +5,13 @@ All notable changes to the Hermes Theme Pack. This project follows
 
 ## [Unreleased]
 
+### Added
+
+- **Web dashboard Themes tab** — the Theme Switcher now ships a dashboard
+  plugin bundle (manifest tab + IIFE) so `hermes dashboard` gets a Themes tab
+  listing every installed skin with one-click apply, reusing the same backend
+  API as the Desktop page.
+
 ### Changed
 
 - **Theme Switcher setup docs clarified for Desktop-over-SSH** — README now

@@ -136,11 +136,11 @@ Every theme is generated from a seed palette by `scripts/generate_themes.py`, wh
 
 Re-run the generator to regenerate all skins and the preview gallery, or edit any `.yaml` by hand and reload.
 
-## Theme Switcher (native Desktop app)
+## Theme Switcher (Desktop app + web dashboard)
 
-The pack also ships a **Theme Switcher** desktop plugin: a "Themes" entry in the app's left sidebar (like Achievements) that lists every installed skin, marks the active one, and applies a new one with one click. No terminal needed to flip themes.
+The pack ships a **Theme Switcher** in both Hermes surfaces: a "Themes" entry in the native Desktop app's left sidebar and a **Themes tab in the web dashboard** (`hermes dashboard`). Both list every installed skin, mark the active one, and apply a new one with one click. No terminal needed to flip themes.
 
-The Themes page is for the **native Hermes Desktop app only**. It does not load in `hermes dashboard`, whose browser UI uses a separate plugin SDK and bundle format. The skins themselves still work across Hermes surfaces; this limitation applies only to the Theme Switcher page.
+The Desktop page is a Desktop plugin (`desktop-plugin/`); the dashboard tab is a dashboard plugin (`plugins/theme-switcher/dashboard/`: a manifest tab plus a prebuilt IIFE bundle). They share the same backend API (`/api/plugins/theme-switcher/*`) and the same skins, which work across every Hermes surface.
 
 Features:
 
@@ -185,6 +185,10 @@ Copy-Item ".\desktop-plugin\theme-switcher\plugin.js" $destination
 ```
 
 The backend API routes are mounted when the Hermes backend server starts. If the backend was already running when you enabled the plugin, restart or reconnect it before opening **Themes**; reloading the page or desktop plugin alone cannot mount a missing backend route. For Desktop over SSH, disconnect and reconnect first. If Desktop enters a verification loop or the fresh connection still returns 404, use nonce-aware stale Desktop SSH backend recovery: verify that the process matches Desktop's ownership nonce, terminate only that matching backend, and remove only its matching lock/token state before reconnecting. Do not kill the backend PID directly, because leaving its ownership state behind can prevent Desktop from verifying or restarting the connection.
+
+#### Web dashboard tab
+
+The dashboard Themes tab rides along with the same backend install step above — `cp -R plugins/theme-switcher/*` copies `dashboard/` including the tab bundle. After installing and enabling, restart `hermes dashboard` (plugin manifests are read at startup) and open **Themes** in the nav. If the tab is missing, confirm the backend was restarted after `hermes plugins enable theme-switcher`; the API routes mount at backend startup, and without them the tab shows its error state.
 
 ## Development
 

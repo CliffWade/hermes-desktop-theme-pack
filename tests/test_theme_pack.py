@@ -5,6 +5,7 @@ Run from the repo root:  python3 -m pytest tests/ -q
 These assert contracts between the themes and the WCAG gate, not snapshots
 of current values, so adding or removing themes never breaks the suite.
 """
+import json
 import os
 import re
 import subprocess
@@ -169,19 +170,47 @@ def test_readme_distinguishes_desktop_ui_from_web_dashboard_and_remote_backend()
     """Install guidance must name both plugin systems and both SSH hosts."""
     readme = (REPO / "README.md").read_text()
     section_match = re.search(
-        r"^## Theme Switcher \(native Desktop app\)\n(?P<body>.*?)(?=^## )",
+        r"^## Theme Switcher [^\n]*\n(?P<body>.*?)(?=^## )",
         readme,
         re.MULTILINE | re.DOTALL,
     )
 
-    assert section_match, "README must identify the native Desktop plugin in its heading"
+    assert section_match, "README must identify both plugin surfaces in its heading"
     section = section_match.group("body")
-    assert "does not load in `hermes dashboard`" in section
+    assert "Themes tab in the web dashboard" in section
     assert "remote backend host" in section
     assert "local Desktop computer" in section
     assert "$env:LOCALAPPDATA" in section
     assert "nonce-aware stale Desktop SSH backend recovery" in section
     assert "Do not kill the backend PID directly" in section
+
+
+def test_dashboard_manifest_ships_a_real_tab_and_entry_bundle():
+    """The web dashboard must get a real tab + JS bundle, not just the API.
+
+    Mirrors the reported gap in #2: the dashboard manifest used to carry only
+    the backend API, so `hermes dashboard` had no Themes UI. Now it declares a
+    tab and an entry bundle that registers the component.
+    """
+    manifest = json.loads(
+        (REPO / "plugins/theme-switcher/dashboard/manifest.json").read_text()
+    )
+    assert manifest["name"] == "theme-switcher"
+    assert manifest["tab"]["path"] == "/themes"
+    assert manifest["entry"], "manifest must point at a JS bundle"
+
+    entry = REPO / "plugins/theme-switcher/dashboard" / manifest["entry"]
+    assert entry.exists(), f"entry bundle missing: {entry}"
+    assert entry.stat().st_size > 500, "entry bundle looks empty"
+    source = entry.read_text()
+    assert 'register("theme-switcher"' in source, "bundle must register the tab"
+    assert "__HERMES_PLUGIN_SDK__" in source, "bundle must use the dashboard SDK"
+
+    if manifest.get("css"):
+        css = REPO / "plugins/theme-switcher/dashboard" / manifest["css"]
+        assert css.exists(), f"declared css missing: {css}"
+
+
 def test_theme_cards_use_a_readable_responsive_grid():
     """Theme cards must wrap by minimum width instead of forcing seven columns."""
     source = (REPO / "desktop-plugin/theme-switcher/plugin.js").read_text()
