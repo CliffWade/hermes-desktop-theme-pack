@@ -86,6 +86,60 @@ function lumOf(hex) {
   return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255
 }
 
+function contrastOf(a, b) {
+  const la = lumOf(a)
+  const lb = lumOf(b)
+  const hi = Math.max(la, lb)
+  const lo = Math.min(la, lb)
+  return (hi + 0.05) / (lo + 0.05)
+}
+
+// Mix a hex toward black (amount < 0) or white (amount > 0); amount is the
+// fraction moved, in (0, 1]. Used for the mockup's overlay surfaces so text
+// contrast is computed against the ACTUAL composite background, not the base.
+function shade(hex, amount) {
+  const n = parseInt(hex.slice(1), 16)
+  const r = (n >> 16) & 255
+  const g = (n >> 8) & 255
+  const b = n & 255
+  const t = amount > 0 ? 255 : 0
+  const a = Math.abs(amount)
+  const f = (v) => Math.round(v + (t - v) * a)
+  return '#' + [f(r), f(g), f(b)].map((v) => v.toString(16).padStart(2, '0')).join('')
+}
+
+// Return a text color that is GUARANTEED readable on `bg` (>= 4.5:1): the
+// theme's preferred color when it clears the bar, else the darker of the
+// standard dark/light fallbacks. The mockup must never render unreadable
+// text just because a theme pairs a dark accent with a dark surface.
+function readableOn(bg, preferred, darkFallback = '#161616', lightFallback = '#e8e8e8') {
+  if (preferred && /^#([0-9a-f]{6})$/i.test(preferred) && contrastOf(preferred, bg) >= 4.5) {
+    return preferred
+  }
+  return contrastOf(darkFallback, bg) >= contrastOf(lightFallback, bg) ? darkFallback : lightFallback
+}
+
+// Build a mockup bubble surface + text pair that ALWAYS clears 4.5:1. The
+// surface starts as the theme bg shaded by `amount` (visual depth), but since
+// the mockup owns the surface it may nudge it further (darker for dark themes
+// so light text wins, lighter for light themes so dark text wins) until the
+// contrast target is met. Preferred text is honored when it already passes.
+function bubblePair(bg, amount, preferred, isLight) {
+  let surface = shade(bg, amount)
+  if (preferred && /^#([0-9a-f]{6})$/i.test(preferred) && contrastOf(preferred, surface) >= 4.5) {
+    return [surface, preferred]
+  }
+  // Dark themes default to white text, light themes to black — keeps the
+  // mockup visually sane instead of flipping to the opposite polarity.
+  const text = isLight ? '#161616' : '#f2f2f2'
+  let guard = 0
+  while (contrastOf(text, surface) < 4.5 && guard < 30) {
+    surface = shade(surface, isLight ? 0.05 : -0.05)
+    guard++
+  }
+  return [surface, text]
+}
+
 // ── Palette color search ─────────────────────────────────────────────────────
 // Lets the search box find themes by their actual colors: a hex like "#7b2d8e"
 // or a loose color name like "purple" / "teal". Hexes match by Euclidean
@@ -329,6 +383,7 @@ let registerManyThemes
 
 function mockupPalette(theme) {
   const c = (theme && theme.colors) || {}
+  const full = (theme && theme.full_colors) || {}
   const isLight = isLightTheme(theme)
   const bg = c.background || (isLight ? '#f7f7f8' : '#111114')
   const darkBg = !/^#([0-9a-f]{6})$/i.test(bg) || lumOf(bg) <= 0.5
@@ -349,7 +404,14 @@ function mockupPalette(theme) {
     text: c.text || (isLight ? '#161616' : '#e8e8e8'),
     secondary: c.secondary || (isLight ? '#6b7280' : '#9a9a9a'),
     accent: c.accent || c.tool || '#8888aa',
-    border: c.border || (isLight ? '#d4d4d8' : '#333338')
+    border: c.border || (isLight ? '#d4d4d8' : '#333338'),
+    // Real status-bar colors when the full palette is available; the mockup
+    // falls back to border/text-derived surfaces otherwise. `tokens` uses the
+    // theme's status-bar "good" color (its success tone) instead of the raw
+    // accent so it never sits unreadably on the bar.
+    barBg: full.status_bar_bg || c.border || (isLight ? '#d4d4d8' : '#333338'),
+    barText: full.status_bar_text || c.text || (isLight ? '#161616' : '#e8e8e8'),
+    barAccent: full.status_bar_good || c.accent || c.tool || '#8888aa'
   }
 }
 
@@ -360,9 +422,24 @@ function ThemeMockup({ theme }) {
   const secondary = p.secondary
   const accent = p.accent
   const border = p.border
+  const barBg = p.barBg
+  const barText = p.barText
+  const barAccent = p.barAccent
   const isLight = lumOf(bg) > 0.5
-  const overlay = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'
-  const overlayStrong = isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.10)'
+  // Bubble surfaces: composite overlay colors (shaded from the real bg), and
+  // text clamped to readableOn against THOSE composites — never the base.
+  const userBg = shade(bg, isLight ? -0.06 : 0.06)
+  const userText = readableOn(userBg, text)
+  const asstBg = shade(bg, isLight ? -0.10 : 0.10)
+  const asstText = readableOn(asstBg, accent)
+  const metaText = readableOn(bg, secondary)
+  const barTextSafe = readableOn(barBg, barText)
+  const barAccentSafe = readableOn(barBg, barAccent)
+  // Borders are decoration, but they should still read against the bubble:
+  // clamp to a readable tone rather than letting a dark accent vanish on a
+  // dark bubble (or a light one on light).
+  const userBorder = readableOn(userBg, border)
+  const asstBorder = readableOn(asstBg, accent)
 
   return jsxs('div', {
     className: 'flex h-full w-full flex-col overflow-hidden rounded-lg border text-left',
@@ -371,33 +448,33 @@ function ThemeMockup({ theme }) {
       jsx('div', { className: 'h-1.5 w-full shrink-0', style: { backgroundColor: accent } }),
       jsxs('div', { className: 'flex min-h-0 flex-1 gap-2 p-2.5', children: [
         jsxs('div', { className: 'flex w-1/4 shrink-0 flex-col gap-1 pt-1', children: [
-          jsx('div', { className: 'h-1.5 w-full rounded', style: { backgroundColor: border } }),
-          jsx('div', { className: 'h-1.5 w-3/4 rounded', style: { backgroundColor: secondary } }),
-          jsx('div', { className: 'h-1.5 w-2/3 rounded', style: { backgroundColor: accent } })
+          jsx('div', { className: 'h-1.5 w-full rounded', style: { backgroundColor: readableOn(bg, border) } }),
+          jsx('div', { className: 'h-1.5 w-3/4 rounded', style: { backgroundColor: metaText } }),
+          jsx('div', { className: 'h-1.5 w-2/3 rounded', style: { backgroundColor: asstText } })
         ]}),
         jsxs('div', { className: 'flex min-w-0 flex-1 flex-col gap-1.5', children: [
           jsx('div', {
             className: 'self-start max-w-[80%] rounded-md rounded-tl-none border px-2 py-1',
-            style: { borderColor: border, backgroundColor: overlay },
-            children: jsx('span', { className: 'block truncate text-[0.5625rem]', style: { color: text }, children: 'User message' })
+            style: { borderColor: userBorder, backgroundColor: userBg },
+            children: jsx('span', { className: 'block truncate text-[0.5625rem]', style: { color: userText }, children: 'User message' })
           }),
           jsx('div', {
             className: 'self-end max-w-[80%] rounded-md rounded-tr-none border px-2 py-1',
-            style: { borderColor: accent, backgroundColor: overlayStrong },
-            children: jsx('span', { className: 'block truncate text-[0.5625rem]', style: { color: accent }, children: 'Assistant reply' })
+            style: { borderColor: asstBorder, backgroundColor: asstBg },
+            children: jsx('span', { className: 'block truncate text-[0.5625rem]', style: { color: asstText }, children: 'Assistant reply' })
           }),
-          jsxs('div', { className: 'mt-0.5 flex items-center gap-1.5', style: { color: secondary }, children: [
-            jsx('span', { className: 'h-1.5 w-1.5 shrink-0 rounded-full', style: { backgroundColor: accent } }),
+          jsxs('div', { className: 'mt-0.5 flex items-center gap-1.5', style: { color: metaText }, children: [
+            jsx('span', { className: 'h-1.5 w-1.5 shrink-0 rounded-full', style: { backgroundColor: asstText } }),
             jsx('span', { className: 'text-[0.5rem]', children: 'tool call in progress' })
           ]})
         ]})
       ]}),
       jsxs('div', {
         className: 'flex shrink-0 items-center justify-between px-2.5 py-1.5',
-        style: { backgroundColor: border, color: text },
+        style: { backgroundColor: barBg, color: barTextSafe },
         children: [
           jsx('span', { className: 'text-[0.5rem]', children: 'status bar' }),
-          jsx('span', { className: 'text-[0.5rem]', style: { color: accent }, children: 'tokens' })
+          jsx('span', { className: 'text-[0.5rem]', style: { color: barAccentSafe }, children: 'tokens' })
         ]
       })
     ]
