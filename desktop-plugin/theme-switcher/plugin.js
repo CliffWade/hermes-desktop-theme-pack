@@ -427,11 +427,10 @@ function ThemeMockup({ theme }) {
   const barAccent = p.barAccent
   const isLight = lumOf(bg) > 0.5
   // Bubble surfaces: composite overlay colors (shaded from the real bg), and
-  // text clamped to readableOn against THOSE composites — never the base.
-  const userBg = shade(bg, isLight ? -0.06 : 0.06)
-  const userText = readableOn(userBg, text)
-  const asstBg = shade(bg, isLight ? -0.10 : 0.10)
-  const asstText = readableOn(asstBg, accent)
+  // text clamped against THOSE composites — never the base. bubblePair nudges
+  // the surface until the pair ALWAYS clears 4.5:1.
+  const [userBg, userText] = bubblePair(bg, isLight ? -0.06 : 0.06, text, isLight)
+  const [asstBg, asstText] = bubblePair(bg, isLight ? -0.10 : 0.10, accent, isLight)
   const metaText = readableOn(bg, secondary)
   const barTextSafe = readableOn(barBg, barText)
   const barAccentSafe = readableOn(barBg, barAccent)
