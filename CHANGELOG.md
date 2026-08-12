@@ -16,6 +16,10 @@ All notable changes to the Hermes Theme Pack. This project follows
   writes a dashboard-theme YAML from the skin's palette and activates it.
   Where the host SDK exposes the theme bridge (`SDK.theme.apply`) the repaint
   is instant; older hosts fall back to a reload hint.
+- **Full Desktop toolbar in the Themes tab** — search, All/Light/Dark tabs,
+  Follow system (auto twin switch on OS scheme change), category filter,
+  Random, and + Add theme (paste-YAML install with the same validation as the
+  Desktop page). Section headers show per-polarity counts.
 
 ### Changed
 

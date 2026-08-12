@@ -2,12 +2,10 @@
   "use strict";
   // hermes-desktop-theme-pack · Theme Switcher web dashboard tab
   // Lists every installed Hermes skin grouped by polarity (☀ Light / ☾ Dark),
-  // marks the active one, shows each theme's paired twin, and applies a new
-  // one with one click. Card layout mirrors the native Desktop page: compact,
-  // wide cards with an accent bar, tiny swatches, and floating corner actions.
-  // Applying a skin also repaints the web dashboard (backend writes a
-  // dashboard-theme YAML + activates it; the host SDK's theme.apply repaints
-  // live where available). Reuses the shared backend plugin API.
+  // with the full Desktop toolbar: search, All/Light/Dark, Follow system,
+  // category filter, Random, and Add theme. Cards mirror the native Desktop
+  // page (compact, wide, accent bar, floating actions). Applying a skin also
+  // repaints the web dashboard (host SDK theme.apply where available).
   const SDK = window.__HERMES_PLUGIN_SDK__;
   if (!SDK || !window.__HERMES_PLUGINS__) return;
 
@@ -18,15 +16,16 @@
 
   const API = "/api/plugins/theme-switcher";
   const NEW_MS = 3 * 24 * 60 * 60 * 1000;
+  const CATEGORY_ORDER = [
+    "Dark", "Light", "Vibrant", "Nature", "Minimal", "Retro", "Community",
+    "Built-in", "Other",
+  ];
 
-  // Small fetch wrapper with host auth handling (fetchJSON). Throws
-  // Error("<status>: <body>") on non-2xx — call sites surface that.
   function rest(path, options) {
     return SDK.fetchJSON(API + path, options);
   }
 
-  // ── Polarity helpers (mirror the Desktop page: luminance of the
-  //    background decides ☀ light vs ☾ dark) ────────────────────────────────
+  // ── Polarity helpers (mirror the Desktop page) ─────────────────────────────
   function lum(hex) {
     const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || ""));
     if (!m) return 0;
@@ -45,7 +44,7 @@
     return lum(colors.background) >= 0.5;
   }
 
-  // ── Theme card (mirrors the Desktop page's compact card) ──────────────────
+  // ── Theme card (Desktop-style) ─────────────────────────────────────────────
   function ThemeCard({ theme, activeName, onApply, applying, isDark }) {
     const isActive = theme.name === activeName;
     const isNew = Boolean(
@@ -183,13 +182,87 @@
     );
   }
 
+  // ── Add-theme modal (mirrors the Desktop flow: paste YAML → install) ──────
+  function AddThemeModal({ onClose, onInstalled }) {
+    const [yaml, setYaml] = useState("");
+    const [busy, setBusy] = useState(false);
+    const [err, setErr] = useState(null);
+
+    const install = () => {
+      setBusy(true);
+      setErr(null);
+      rest("/install", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: yaml }),
+      })
+        .then((res) => {
+          if (!res || !res.ok) {
+            setErr((res && res.error) || "install failed");
+            return;
+          }
+          onInstalled(res.name);
+        })
+        .catch((e) => setErr(String(e && e.message ? e.message : e)))
+        .finally(() => setBusy(false));
+    };
+
+    return React.createElement(
+      "div",
+      { className: "ts-overlay", onClick: onClose },
+      React.createElement(
+        "div",
+        { className: "ts-modal", onClick: (e) => e.stopPropagation() },
+        React.createElement("div", { className: "ts-modal-title" }, "Add theme"),
+        React.createElement(
+          "textarea",
+          {
+            className: "ts-modal-textarea",
+            placeholder: "Paste a skin YAML here\u2026",
+            value: yaml,
+            onChange: (e) => setYaml(e.target.value),
+            spellCheck: false,
+          },
+        ),
+        err &&
+          React.createElement("div", { className: "ts-error" }, err),
+        React.createElement(
+          "div",
+          { className: "ts-modal-actions" },
+          React.createElement(
+            C.Button,
+            { size: "sm", variant: "outline", onClick: onClose },
+            "Cancel",
+          ),
+          React.createElement(
+            C.Button,
+            {
+              size: "sm",
+              onClick: install,
+              disabled: busy || !yaml.trim(),
+            },
+            busy ? "Installing\u2026" : "Install",
+          ),
+        ),
+      ),
+    );
+  }
+
   function ThemesPage() {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [applying, setApplying] = useState(null);
     const [query, setQuery] = useState("");
     const [tab, setTab] = useState("all");
+    const [category, setCategory] = useState("All");
+    const [followSystem, setFollowSystem] = useState(false);
+    const [showAdd, setShowAdd] = useState(false);
     const [note, setNote] = useState(null);
+    const [systemDark, setSystemDark] = useState(
+      typeof window !== "undefined" &&
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches,
+    );
 
     const load = useCallback(() => {
       setError(null);
@@ -200,7 +273,23 @@
 
     useEffect(() => {
       load();
+      rest("/settings")
+        .then((s) => {
+          if (s && typeof s.follow_system === "boolean") {
+            setFollowSystem(s.follow_system);
+          }
+        })
+        .catch(() => {});
     }, [load]);
+
+    // Track the OS color scheme while following.
+    useEffect(() => {
+      if (!window.matchMedia) return;
+      const mq = window.matchMedia("(prefers-color-scheme: dark)");
+      const onChange = (e) => setSystemDark(e.matches);
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    }, []);
 
     const apply = useCallback(
       (name) => {
@@ -214,8 +303,6 @@
           .then((res) => {
             load();
             if (res && res.dashboard_theme) {
-              // Live repaint where the host SDK exposes theme.apply (the
-              // additive theme bridge); otherwise fall back to a reload hint.
               const applied =
                 SDK.theme && SDK.theme.apply ? SDK.theme.apply(name) : false;
               setNote(
@@ -231,16 +318,66 @@
       [load],
     );
 
+    // Follow system: when the OS scheme flips, switch the active theme to its
+    // paired twin if the current polarity no longer matches.
+    useEffect(() => {
+      if (!followSystem || !data || !data.active) return;
+      const active = data.skins.find((s) => s.name === data.active);
+      if (!active || !active.twin) return;
+      const activeIsLight = isLightTheme(active.colors);
+      const systemWantsLight = !systemDark;
+      if (systemWantsLight !== activeIsLight) {
+        apply(active.twin);
+      }
+    }, [systemDark, followSystem, data, apply]);
+
+    const setFollow = (on) => {
+      setFollowSystem(on);
+      rest("/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ follow_system: on }),
+      }).catch(() => {});
+    };
+
+    const randomApply = () => {
+      if (!visible.length) return;
+      const pool = visible.length > 1 && data
+        ? visible.filter((s) => s.name !== data.active)
+        : visible;
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      if (pick) apply(pick.name);
+    };
+
+    const onInstalled = (name) => {
+      setShowAdd(false);
+      load();
+      setNote("Installed " + name + ".");
+    };
+
     const skins = useMemo(() => {
       if (!data) return [];
       const q = query.trim().toLowerCase();
-      return data.skins.filter(
-        (s) => !q || s.name.toLowerCase().indexOf(q) !== -1,
-      );
-    }, [data, query]);
+      return data.skins.filter((s) => {
+        if (q && s.name.toLowerCase().indexOf(q) === -1) return false;
+        if (category !== "All" && s.category !== category) return false;
+        return true;
+      });
+    }, [data, query, category]);
+
+    const categories = useMemo(() => {
+      if (!data) return ["All"];
+      const present = new Set(data.skins.map((s) => s.category).filter(Boolean));
+      const ordered = CATEGORY_ORDER.filter((c) => present.has(c));
+      for (const c of present) {
+        if (!ordered.includes(c)) ordered.push(c);
+      }
+      return ["All", ...ordered];
+    }, [data]);
 
     const light = useMemo(() => skins.filter((s) => isLightTheme(s.colors)), [skins]);
     const dark = useMemo(() => skins.filter((s) => !isLightTheme(s.colors)), [skins]);
+    const visible = tab === "light" ? light : tab === "dark" ? dark : skins;
 
     if (!data && !error) {
       return React.createElement(
@@ -252,9 +389,9 @@
 
     const total = data ? data.skins.length : 0;
     const tabs = [
-      { id: "all", label: "All (" + total + ")" },
-      { id: "light", label: "\u2600 Light (" + light.length + ")" },
-      { id: "dark", label: "\u263E Dark (" + dark.length + ")" },
+      { id: "all", label: "All" },
+      { id: "light", label: "\u2600 Light" },
+      { id: "dark", label: "\u263E Dark" },
     ];
 
     return React.createElement(
@@ -262,49 +399,87 @@
       { className: "ts-page" },
       React.createElement(
         "div",
-        { className: "ts-header" },
+        { className: "ts-toolbar" },
+        React.createElement(C.Input, {
+          type: "search",
+          placeholder: "Search themes\u2026",
+          value: query,
+          onChange: (e) => setQuery(e.target.value),
+          className: "ts-search",
+        }),
         React.createElement(
           "div",
-          null,
-          React.createElement("h2", { className: "ts-title" }, "Themes"),
+          { className: "ts-tab-group" },
+          tabs.map((t) =>
+            React.createElement(
+              "button",
+              {
+                key: t.id,
+                type: "button",
+                className: cn("ts-tab", tab === t.id && "ts-tab-active"),
+                onClick: () => setTab(t.id),
+              },
+              t.label,
+            ),
+          ),
           React.createElement(
-            "p",
-            { className: "ts-muted" },
-            total + " installed skins \u00B7 applying a theme also repaints the web dashboard",
+            "button",
+            {
+              type: "button",
+              className: cn("ts-tab", followSystem && "ts-tab-follow"),
+              onClick: () => setFollow(!followSystem),
+              title: "Auto-switch to the paired theme when the OS light/dark scheme changes",
+            },
+            "\u21C5 Follow system",
+          ),
+        ),
+        React.createElement(
+          "select",
+          {
+            className: "ts-select",
+            value: category,
+            onChange: (e) => setCategory(e.target.value),
+            title: "Filter by category",
+          },
+          categories.map((c) =>
+            React.createElement("option", { key: c, value: c }, c),
           ),
         ),
         React.createElement(
           "div",
-          { className: "ts-header-actions" },
-          React.createElement(C.Input, {
-            type: "search",
-            placeholder: "Filter themes\u2026",
-            value: query,
-            onChange: (e) => setQuery(e.target.value),
-            className: "ts-search",
-          }),
+          { className: "ts-action-group" },
           React.createElement(
             C.Button,
-            { size: "sm", variant: "outline", onClick: load },
+            {
+              size: "sm",
+              variant: "outline",
+              onClick: randomApply,
+              disabled: !visible.length,
+              title: "Apply a random theme from the current filter",
+            },
+            "\uD83C\uDFB2 Random",
+          ),
+          React.createElement(
+            C.Button,
+            {
+              size: "sm",
+              variant: "outline",
+              onClick: () => setShowAdd(true),
+              title: "Install a theme from pasted YAML",
+            },
+            "+ Add theme",
+          ),
+          React.createElement(
+            C.Button,
+            { size: "sm", variant: "outline", onClick: load, title: "Reload the list" },
             "Refresh",
           ),
         ),
       ),
       React.createElement(
         "div",
-        { className: "ts-tabs" },
-        tabs.map((t) =>
-          React.createElement(
-            "button",
-            {
-              key: t.id,
-              type: "button",
-              className: cn("ts-tab", tab === t.id && "ts-tab-active"),
-              onClick: () => setTab(t.id),
-            },
-            t.label,
-          ),
-        ),
+        { className: "ts-muted" },
+        total + " installed skins \u00B7 applying a theme also repaints the web dashboard",
       ),
       note &&
         React.createElement("div", { className: "ts-note" }, note),
@@ -316,7 +491,7 @@
         ),
       tab !== "dark" &&
         React.createElement(SectionGrid, {
-          title: "\u2600 Light",
+          title: "\u2600 Light (" + light.length + ")",
           themes: light,
           activeName: data ? data.active : "",
           onApply: apply,
@@ -325,7 +500,7 @@
         }),
       tab !== "light" &&
         React.createElement(SectionGrid, {
-          title: "\u263E Dark",
+          title: "\u263E Dark (" + dark.length + ")",
           themes: dark,
           activeName: data ? data.active : "",
           onApply: apply,
@@ -338,12 +513,14 @@
           { className: "ts-empty" },
           "No skins installed yet. Install the theme pack to populate this tab.",
         ),
-      total > 0 && light.length + dark.length === 0 &&
+      total > 0 && visible.length === 0 &&
         React.createElement(
           "div",
           { className: "ts-empty" },
-          "No themes match \u201C" + query + "\u201D.",
+          "No themes match the current filter.",
         ),
+      showAdd &&
+        React.createElement(AddThemeModal, { onClose: () => setShowAdd(false), onInstalled }),
     );
   }
 
