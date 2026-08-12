@@ -309,6 +309,25 @@ def test_hover_tooltips_use_the_themed_tip_component():
     assert "title: follow ?" not in source
 
 
+def test_hover_preview_mockup_guarantees_readable_contrast():
+    """The hover preview mockup must never render unreadable text.
+
+    It renders theme colors directly (backgrounds, accents, status bar), and
+    themes are allowed to pair low-contrast keys for decoration. The mockup
+    must clamp every text/background pair to >= 4.5:1 via WCAG contrast, using
+    the real status-bar colors from full_colors when present."""
+    source = (REPO / "desktop-plugin/theme-switcher/plugin.js").read_text()
+
+    # Contrast machinery exists and is used.
+    assert "function contrastOf(" in source
+    assert "function readableOn(" in source
+    assert "function bubblePair(" in source
+    assert "0.03928" in source  # gamma-corrected WCAG luminance, not linear
+    assert "barBg: full.status_bar_bg" in source
+    assert "readableOn(barBg, barText)" in source
+    assert "bubblePair(bg" in source
+
+
 def test_dashboard_cards_share_the_desktop_responsive_grid():
     """The dashboard tab's grid must use the same fluid formula as the Desktop
     page: auto-fit (fills the last row), min(100%, ...) guard (sub-240px

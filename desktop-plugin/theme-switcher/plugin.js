@@ -87,8 +87,18 @@ function lumOf(hex) {
 }
 
 function contrastOf(a, b) {
-  const la = lumOf(a)
-  const lb = lumOf(b)
+  // WCAG relative luminance (gamma-corrected), matching the pack's own
+  // contrast gate — the linear lumOf() is only good for polarity buckets.
+  const l = (hex) => {
+    const n = parseInt(hex.slice(1), 16)
+    const f = (v) => {
+      v /= 255
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)
+    }
+    return 0.2126 * f((n >> 16) & 255) + 0.7152 * f((n >> 8) & 255) + 0.0722 * f(n & 255)
+  }
+  const la = l(a)
+  const lb = l(b)
   const hi = Math.max(la, lb)
   const lo = Math.min(la, lb)
   return (hi + 0.05) / (lo + 0.05)
@@ -396,7 +406,10 @@ function mockupPalette(theme) {
       text: '#161616',
       secondary: '#6b7280',
       accent: c.accent || c.tool || '#d4a017',
-      border: '#d4d4d8'
+      border: '#d4d4d8',
+      barBg: full.status_bar_bg || '#d4d4d8',
+      barText: full.status_bar_text || '#161616',
+      barAccent: full.status_bar_good || '#2b6a2b'
     }
   }
   return {

@@ -44,6 +44,13 @@ All notable changes to the Hermes Theme Pack. This project follows
   component instead of native `title=` attributes, which rendered as
   unreadable white-on-pale text. `Tip` auto-inverts with the app theme, so
   the hover card is always legible.
+- **Guaranteed-readable hover preview mockup** — the hover preview panel's
+  mini UI mockup now clamps every text/background pair to >= 4.5:1 WCAG
+  contrast (gamma-corrected luminance, matching the pack's own gate), uses
+  the theme's real status-bar colors (`status_bar_bg/text/good` from
+  `full_colors`) instead of raw accent/border, and nudges bubble surfaces
+  until text clears the bar. Themes may pair decorative colors however they
+  like; the preview never renders unreadable text.
 
 ### Changed
 
