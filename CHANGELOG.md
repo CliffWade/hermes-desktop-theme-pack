@@ -27,6 +27,12 @@ All notable changes to the Hermes Theme Pack. This project follows
   fill the last row. Container queries adapt the toolbar/card spacing to the
   tab's actual panel width, with viewport media-query fallbacks for small and
   very large (4K) screens.
+- **Readable themed hover tooltips** — every tooltip on the Desktop Themes
+  page (card description, color swatches, polarity glyph, copy/flip buttons,
+  Follow system button, statusbar chip) now uses the app's themed `Tip`
+  component instead of native `title=` attributes, which rendered as
+  unreadable white-on-pale text. `Tip` auto-inverts with the app theme, so
+  the hover card is always legible.
 
 ### Changed
 

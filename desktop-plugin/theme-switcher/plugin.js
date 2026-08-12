@@ -30,6 +30,7 @@ import {
   Skeleton,
   STATUSBAR_AREAS,
   THEMES_AREA,
+  Tip,
   useQuery
 } from '@hermes/plugin-sdk'
 import { jsx, jsxs } from 'react/jsx-runtime'
@@ -159,10 +160,12 @@ function themeMatchesColor(theme, query) {
 
 function swatch(color, label) {
   if (!color) return null
-  return jsx('span', {
-    title: `${label}: ${color}`,
-    className: 'h-3.5 w-3.5 rounded-[4px] ring-1 ring-black/20',
-    style: { backgroundColor: color }
+  return jsx(Tip, {
+    label: `${label}: ${color}`,
+    children: jsx('span', {
+      className: 'h-3.5 w-3.5 rounded-[4px] ring-1 ring-black/20',
+      style: { backgroundColor: color }
+    })
   })
 }
 
@@ -467,22 +470,23 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
     className: 'relative flex',
     style: { minWidth: 0 },
     children: [
-      jsxs('button', {
-        type: 'button',
-        onClick: () => onApply(theme.name),
-        disabled: applying,
-        onMouseEnter: () => onHover(theme),
-        onMouseLeave: () => onHover(null),
-        onFocus: () => onHover(theme),
-        onBlur: () => onHover(null),
-        title: `${theme.description || theme.name} (${isLight ? 'light' : 'dark'})`,
-        className: cn(
-          'flex h-full w-full flex-col gap-1 rounded-lg border p-2 text-left transition-colors',
-          isActive
-            ? 'border-(--ui-accent) bg-(--ui-bg-tertiary)'
-            : 'border-(--ui-stroke-secondary) bg-(--ui-bg-secondary) hover:border-(--ui-stroke-strong)'
-        ),
-        children: [
+      jsx(Tip, {
+        label: `${theme.description || theme.name} (${isLight ? 'light' : 'dark'})`,
+        children: jsxs('button', {
+          type: 'button',
+          onClick: () => onApply(theme.name),
+          disabled: applying,
+          onMouseEnter: () => onHover(theme),
+          onMouseLeave: () => onHover(null),
+          onFocus: () => onHover(theme),
+          onBlur: () => onHover(null),
+          className: cn(
+            'flex h-full w-full flex-col gap-1 rounded-lg border p-2 text-left transition-colors',
+            isActive
+              ? 'border-(--ui-accent) bg-(--ui-bg-tertiary)'
+              : 'border-(--ui-stroke-secondary) bg-(--ui-bg-secondary) hover:border-(--ui-stroke-strong)'
+          ),
+          children: [
           accent ? jsx('div', { className: 'h-1 w-full rounded-full', style: { backgroundColor: accent } }) : null,
           jsxs('div', {
             className: 'flex w-full items-center justify-between gap-1',
@@ -490,10 +494,12 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
               jsxs('span', {
                 className: 'flex min-w-0 items-center gap-1',
                 children: [
-                  jsx('span', {
-                    title: isLight ? 'Light theme' : 'Dark theme',
-                    className: isLight ? 'shrink-0 text-[0.75rem] leading-none text-(--ui-warn)' : 'shrink-0 text-[0.75rem] leading-none text-(--ui-accent)',
-                    children: isLight ? '☀' : '☾'
+                  jsx(Tip, {
+                    label: isLight ? 'Light theme' : 'Dark theme',
+                    children: jsx('span', {
+                      className: isLight ? 'shrink-0 text-[0.75rem] leading-none text-(--ui-warn)' : 'shrink-0 text-[0.75rem] leading-none text-(--ui-accent)',
+                      children: isLight ? '☀' : '☾'
+                    })
                   }),
                   jsx('span', { className: 'truncate text-[0.8125rem] font-medium', children: theme.name })
                 ]
@@ -546,33 +552,37 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
               })
             ]
           })
-        ]
+        }),
       }),
       theme.source !== 'builtin'
-        ? jsx('button', {
-            type: 'button',
-            onClick: copyYaml,
-            title: copied ? 'Copied!' : 'Copy theme YAML',
-            className: cn(
-              'absolute bottom-1.5 right-1.5 rounded border px-1 py-0.5 text-[0.5625rem] transition-colors',
-              'bg-(--ui-bg-primary)',
-              copied
-                ? 'border-(--ui-ok) text-(--ui-ok)'
-                : 'border-(--ui-stroke-secondary) text-(--ui-text-tertiary) hover:border-(--ui-accent) hover:text-(--ui-accent)'
-            ),
-            children: copied ? '✓' : '⧉'
+        ? jsx(Tip, {
+            label: copied ? 'Copied!' : 'Copy theme YAML',
+            children: jsx('button', {
+              type: 'button',
+              onClick: copyYaml,
+              className: cn(
+                'absolute bottom-1.5 right-1.5 rounded border px-1 py-0.5 text-[0.5625rem] transition-colors',
+                'bg-(--ui-bg-primary)',
+                copied
+                  ? 'border-(--ui-ok) text-(--ui-ok)'
+                  : 'border-(--ui-stroke-secondary) text-(--ui-text-tertiary) hover:border-(--ui-accent) hover:text-(--ui-accent)'
+              ),
+              children: copied ? '✓' : '⧉'
+            })
           })
         : null,
       theme.twin
-        ? jsx('button', {
-            type: 'button',
-            onClick: () => onApply(theme.twin),
-            title: `Switch to paired theme: ${theme.twin}`,
-            className: cn(
-              'absolute bottom-1.5 left-1.5 rounded border px-1 py-0.5 text-[0.5625rem] transition-colors',
-              'bg-(--ui-bg-primary) border-(--ui-stroke-secondary) text-(--ui-text-tertiary) hover:border-(--ui-accent) hover:text-(--ui-accent)'
-            ),
-            children: '⇄'
+        ? jsx(Tip, {
+            label: `Switch to paired theme: ${theme.twin}`,
+            children: jsx('button', {
+              type: 'button',
+              onClick: () => onApply(theme.twin),
+              className: cn(
+                'absolute bottom-1.5 left-1.5 rounded border px-1 py-0.5 text-[0.5625rem] transition-colors',
+                'bg-(--ui-bg-primary) border-(--ui-stroke-secondary) text-(--ui-text-tertiary) hover:border-(--ui-accent) hover:text-(--ui-accent)'
+              ),
+              children: '⇄'
+            })
           })
         : null
     ]
@@ -676,19 +686,21 @@ function ThemeChip() {
     return () => mql.removeEventListener('change', sync)
   }, [follow, active, skins])
 
-  return jsx('button', {
-    type: 'button',
-    onClick: () => {
-      haptic('tap')
-      host.navigate('/themes')
-    },
-    title: follow ? `Open Theme Switcher (following system light/dark: ${active})` : 'Open Theme Switcher',
-    className: 'flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[0.6875rem] text-(--ui-text-secondary) hover:bg-(--ui-bg-tertiary) hover:text-(--ui-text-primary)',
-    children: [
-      dot ? jsx('span', { className: 'h-2 w-2 shrink-0 rounded-full', style: { backgroundColor: dot } }) : null,
-      jsx('span', { className: 'truncate', children: active || 'default' }),
-      follow ? jsx('span', { className: 'shrink-0 text-[0.5625rem] text-(--ui-text-tertiary)', children: '⇅' }) : null
-    ]
+  return jsx(Tip, {
+    label: follow ? `Open Theme Switcher (following system light/dark: ${active})` : 'Open Theme Switcher',
+    children: jsx('button', {
+      type: 'button',
+      onClick: () => {
+        haptic('tap')
+        host.navigate('/themes')
+      },
+      className: 'flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[0.6875rem] text-(--ui-text-secondary) hover:bg-(--ui-bg-tertiary) hover:text-(--ui-text-primary)',
+      children: [
+        dot ? jsx('span', { className: 'h-2 w-2 shrink-0 rounded-full', style: { backgroundColor: dot } }) : null,
+        jsx('span', { className: 'truncate', children: active || 'default' }),
+        follow ? jsx('span', { className: 'shrink-0 text-[0.5625rem] text-(--ui-text-tertiary)', children: '⇅' }) : null
+      ]
+    })
   })
 }
 
@@ -845,14 +857,16 @@ function ThemesPage() {
               children: label
             })
           ),
-          jsx('button', {
-            type: 'button',
-            onClick: () => void toggleFollow(),
-            title: follow
+          jsx(Tip, {
+            label: follow
               ? 'Following system light/dark: active theme flips to its paired twin when macOS switches'
               : 'Follow system light/dark: auto-switch to the paired twin theme when macOS switches',
-            className: cn(chipCls, follow && 'border-(--ui-accent) bg-(--ui-bg-tertiary) text-(--ui-accent)'),
-            children: follow ? '⇅ Follow system: on' : '⇅ Follow system'
+            children: jsx('button', {
+              type: 'button',
+              onClick: () => void toggleFollow(),
+              className: cn(chipCls, follow && 'border-(--ui-accent) bg-(--ui-bg-tertiary) text-(--ui-accent)'),
+              children: follow ? '⇅ Follow system: on' : '⇅ Follow system'
+            })
           }),
           jsx('select', {
             value: cat,

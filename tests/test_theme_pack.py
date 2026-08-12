@@ -256,6 +256,30 @@ def test_theme_cards_use_a_readable_responsive_grid():
     assert source.count("style: THEME_GRID_STYLE") == 3
 
 
+def test_hover_tooltips_use_the_themed_tip_component():
+    """Hover tooltips must use the app's themed Tip (SDK export), never native
+    title= attributes — native titles render unreadable (white on pale) on
+    some hosts. Every interactive tooltip on the Themes page is themed."""
+    source = (REPO / "desktop-plugin/theme-switcher/plugin.js").read_text()
+
+    # The themed tooltip component is imported from the SDK and used.
+    assert "Tip," in source
+    assert "from '@hermes/plugin-sdk'" in source
+
+    # Card description tooltip (the hover card) is themed.
+    assert "title: `${theme.description" not in source
+    assert "jsx(Tip, {" in source
+    assert "label: `${theme.description || theme.name}" in source
+
+    # Swatch, polarity glyph, copy/flip buttons, follow button, statusbar chip.
+    assert "title: `${label}: ${color}`" not in source
+    assert "title: isLight ? 'Light theme' : 'Dark theme'" not in source
+    assert "title: copied ? 'Copied!'" not in source
+    assert "title: `Switch to paired theme:" not in source
+    assert "title: follow" not in source
+    assert "title: follow ?" not in source
+
+
 def test_dashboard_cards_share_the_desktop_responsive_grid():
     """The dashboard tab's grid must use the same fluid formula as the Desktop
     page: auto-fit (fills the last row), min(100%, ...) guard (sub-240px
