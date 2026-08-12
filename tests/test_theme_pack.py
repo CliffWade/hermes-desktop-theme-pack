@@ -375,6 +375,33 @@ def test_hover_panel_chrome_uses_readable_secondary_text():
     assert "text-(--ui-text-tertiary)" not in panel
 
 
+def test_floating_surfaces_use_the_opaque_app_background():
+    """Floating surfaces (hover panel, add-theme modal) must use the app's
+    OPAQUE --background token, never the translucent --ui-bg-primary.
+
+    --ui-bg-primary is a layering token (color-mix with a transparent
+    operand), so a panel floating over theme cards bleeds the grid through
+    its "white" body, the exact report that opened this round. Only the
+    small in-card icon buttons may keep the translucent primary token (they
+    sit on a card, not over other content)."""
+    source = (REPO / "desktop-plugin/theme-switcher/plugin.js").read_text()
+
+    # Two floating surfaces: the hover panel and the add-theme modal.
+    assert source.count("bg-background") == 2
+    assert source.count("backgroundColor: 'var(--background)'") == 2
+
+    # The hover panel body must not use the translucent token.
+    panel = source[source.index("function PreviewPanel(") : source.index("// ── Theme card")]
+    assert "bg-(--ui-bg-primary)" not in panel
+
+    # The add-theme modal body must not use it either.
+    add_theme = source[source.index("'Add a theme'") - 500 : source.index("'Add a theme'") + 80]
+    assert "bg-(--ui-bg-primary)" not in add_theme
+
+    # Exactly the two in-card icon buttons may keep the translucent token.
+    assert source.count("bg-(--ui-bg-primary)") == 2
+
+
 def test_dashboard_cards_share_the_desktop_responsive_grid():
     """The dashboard tab's grid must use the same fluid formula as the Desktop
     page: auto-fit (fills the last row), min(100%, ...) guard (sub-240px

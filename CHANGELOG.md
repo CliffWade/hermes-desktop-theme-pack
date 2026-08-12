@@ -71,6 +71,15 @@ All notable changes to the Hermes Theme Pack. This project follows
   status bar; both pass AA but read as dim at 8px. The mockup clamps them to
   near-white ink instead, and `readableOn` gained a caller-supplied floor
   (`min`) so the guarantee is explicit.
+- **Opaque floating surfaces** — the hover preview panel and the Add-theme
+  modal used the app's `--ui-bg-primary` token, which is *translucent by
+  design* (a `color-mix` with a transparent operand): the theme-card grid
+  bled straight through the panel's "white" body, stacking card text under
+  panel text. Both floating surfaces now use the app's opaque
+  `--background` surface (the same token the app's own dialogs, tabs, and
+  sidebar use), set inline so the build's class purge cannot strip it.
+  Verified by rendering both tokens over a busy card grid: the old token
+  shows the grid through the panel, the new one blocks it completely.
 
 ### Changed
 

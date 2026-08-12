@@ -501,11 +501,15 @@ function PreviewPanel({ theme, skins }) {
   const twinName = theme.twin
   const twin = twinName && skins ? skins.find(s => s.name === twinName) : null
   return jsxs('div', {
-    className: 'pointer-events-none fixed z-30 w-72 rounded-xl border border-(--ui-stroke-secondary) bg-(--ui-bg-primary) p-3 shadow-2xl',
+    className: 'pointer-events-none fixed z-30 w-72 rounded-xl border border-(--ui-stroke-secondary) bg-background p-3 shadow-2xl',
     // Inline right/top: the app's Tailwind build strips right-6/top-24 (only
     // core files feed the purge), so utility classes for these land nowhere
-    // and the panel would collapse to the left edge unpositioned.
-    style: { right: 24, top: 96 },
+    // and the panel would collapse to the left edge unpositioned. The
+    // background is also set inline: --ui-bg-primary is a TRANSLUCENT
+    // layering token (color-mix with transparent), so a floating panel over
+    // theme cards must use the app's opaque --background surface instead,
+    // or the grid bleeds through the "white" panel.
+    style: { right: 24, top: 96, backgroundColor: 'var(--background)' },
     children: [
       jsxs('div', { className: 'flex items-baseline justify-between gap-2', children: [
         jsx('span', { className: 'truncate text-xs font-semibold', children: theme.name }),
@@ -713,7 +717,11 @@ function InstallModal({ onClose, onInstalled }) {
     onClick: onClose,
     children: [
       jsxs('div', {
-        className: 'w-full max-w-lg rounded-xl border border-(--ui-stroke-secondary) bg-(--ui-bg-primary) p-5 shadow-2xl',
+        className: 'w-full max-w-lg rounded-xl border border-(--ui-stroke-secondary) bg-background p-5 shadow-2xl',
+        // Same opaque-surface rule as the hover panel: --ui-bg-primary is
+        // translucent, so a floating modal would show the dimmed page
+        // through its body. Use the app's opaque --background.
+        style: { backgroundColor: 'var(--background)' },
         onClick: e => e.stopPropagation(),
         children: [
           jsx('div', { className: 'text-sm font-semibold', children: 'Add a theme' }),
