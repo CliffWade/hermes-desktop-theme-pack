@@ -1,6 +1,8 @@
 /* Theme Switcher — web dashboard tab styles.
-   Layout classes are self-contained (no host Tailwind dependency); colors use
-   dashboard theme variables with safe fallbacks. */
+   Card layout mirrors the native Desktop page: compact, wide cards with an
+   accent bar, tiny swatches, and floating corner actions. Layout classes are
+   self-contained (no host Tailwind dependency); colors use dashboard theme
+   variables with safe fallbacks. */
 
 .ts-page {
   display: flex;
@@ -41,120 +43,8 @@
 
 .ts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 12px;
-}
-
-.ts-card {
-  height: 100%;
-  transition: box-shadow 120ms ease;
-}
-
-.ts-card-active {
-  box-shadow: 0 0 0 2px var(--ring, rgba(139, 92, 246, 0.5));
-}
-
-.ts-card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  height: 100%;
-  padding: 14px;
-}
-
-.ts-swatch-row {
-  display: flex;
-  gap: 6px;
-}
-
-.ts-swatch {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 9999px;
-  border: 1px solid rgba(0, 0, 0, 0.18);
-}
-
-.ts-card-title-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.ts-card-name {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ts-card-meta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.ts-chip {
-  display: inline-block;
-  padding: 1px 8px;
-  border-radius: 9999px;
-  font-size: 0.6875rem;
-  background: var(--muted, rgba(128, 128, 128, 0.16));
-  color: var(--muted-foreground, #9ca3af);
-}
-
-.ts-badge {
-  font-size: 0.6875rem;
-  line-height: 1;
-}
-
-.ts-badge-active {
-  color: #16a34a;
-  border-color: rgba(22, 163, 74, 0.5);
-}
-
-.ts-badge-new {
-  color: #7c3aed;
-  border-color: rgba(124, 58, 237, 0.5);
-}
-
-.ts-card-desc {
-  margin: 0;
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  color: var(--muted-foreground, #9ca3af);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.ts-card-twin {
-  margin: 0;
-  font-size: 0.75rem;
-  color: var(--primary, #7c3aed);
-}
-
-.ts-card-actions {
-  margin-top: auto;
-  padding-top: 4px;
-}
-
-.ts-empty {
-  padding: 40px 16px;
-  text-align: center;
-  font-size: 0.875rem;
-  color: var(--muted-foreground, #9ca3af);
-}
-
-.ts-error {
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 0.8125rem;
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
 }
 
 .ts-tabs {
@@ -195,8 +85,176 @@
   color: var(--muted-foreground, #9ca3af);
 }
 
-.ts-flip {
+/* ── Card (Desktop-style) ─────────────────────────────────────────────────── */
+
+.ts-card-wrap {
+  position: relative;
+  height: 100%;
+  min-width: 0;
+}
+
+.ts-card {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border, rgba(128, 128, 128, 0.35));
+  background: var(--card, rgba(128, 128, 128, 0.06));
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 120ms ease;
+}
+
+.ts-card:hover {
+  border-color: var(--ring, rgba(139, 92, 246, 0.6));
+}
+
+.ts-card-disabled {
+  cursor: default;
+}
+
+.ts-card-active {
+  box-shadow: 0 0 0 2px var(--ring, rgba(139, 92, 246, 0.5));
+}
+
+.ts-accent-bar {
+  display: block;
+  height: 4px;
+  width: 100%;
+  border-radius: 9999px;
+}
+
+.ts-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 0;
+}
+
+.ts-card-name {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.ts-polarity {
+  flex-shrink: 0;
   font-size: 0.75rem;
+  line-height: 1;
+  color: var(--muted-foreground, #9ca3af);
+}
+
+.ts-name-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ts-category {
+  flex-shrink: 0;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground, #9ca3af);
+  white-space: nowrap;
+}
+
+.ts-badge {
+  font-size: 0.625rem;
+  line-height: 1;
+}
+
+.ts-badge-active {
+  color: #16a34a;
+  border-color: rgba(22, 163, 74, 0.5);
+}
+
+.ts-badge-new {
+  color: #7c3aed;
+  border-color: rgba(124, 58, 237, 0.5);
+}
+
+.ts-swatch-row {
+  display: flex;
+  gap: 4px;
+}
+
+.ts-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+.ts-card-meta-block {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 2.1rem;
+  padding: 0 6px 0 30px; /* left pad clears the floating ⇄ button */
+}
+
+.ts-card-desc {
+  font-size: 0.75rem;
+  line-height: 1.25;
+  color: var(--muted-foreground, #9ca3af);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ts-card-twin {
+  margin-top: auto;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ts-flip {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  z-index: 1;
+  padding: 1px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border, rgba(128, 128, 128, 0.35));
+  background: var(--card, #ffffff);
+  font-size: 0.625rem;
+  color: var(--muted-foreground, #9ca3af);
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.ts-flip:hover:not(:disabled) {
+  border-color: var(--ring, rgba(139, 92, 246, 0.6));
+  color: var(--primary, #7c3aed);
+}
+
+/* ── Feedback states ──────────────────────────────────────────────────────── */
+
+.ts-empty {
+  padding: 40px 16px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--muted-foreground, #9ca3af);
+}
+
+.ts-error {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
 }
 
 .ts-note {

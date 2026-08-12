@@ -3,10 +3,11 @@
   // hermes-desktop-theme-pack · Theme Switcher web dashboard tab
   // Lists every installed Hermes skin grouped by polarity (☀ Light / ☾ Dark),
   // marks the active one, shows each theme's paired twin, and applies a new
-  // one with one click. Applying a skin also repaints the web dashboard: the
-  // backend writes a dashboard-theme YAML and activates it (config
-  // dashboard.theme). Reuses the shared backend plugin API that also powers
-  // the native Desktop page.
+  // one with one click. Card layout mirrors the native Desktop page: compact,
+  // wide cards with an accent bar, tiny swatches, and floating corner actions.
+  // Applying a skin also repaints the web dashboard (backend writes a
+  // dashboard-theme YAML + activates it; the host SDK's theme.apply repaints
+  // live where available). Reuses the shared backend plugin API.
   const SDK = window.__HERMES_PLUGIN_SDK__;
   if (!SDK || !window.__HERMES_PLUGINS__) return;
 
@@ -44,114 +45,114 @@
     return lum(colors.background) >= 0.5;
   }
 
-  function SwatchRow({ colors }) {
-    if (!colors) return null;
-    const swatches = [
-      { key: "background", label: "background" },
-      { key: "accent", label: "accent" },
-      { key: "tool", label: "tool" },
-      { key: "text", label: "text" },
-      { key: "secondary", label: "secondary" },
-      { key: "border", label: "border" },
-    ].filter((s) => colors[s.key]);
-
-    if (!swatches.length) return null;
-
-    return React.createElement(
-      "div",
-      { className: "ts-swatch-row" },
-      swatches.map((s) =>
-        React.createElement("span", {
-          key: s.key,
-          title: s.label + ": " + colors[s.key],
-          className: "ts-swatch",
-          style: { backgroundColor: colors[s.key] },
-        }),
-      ),
-    );
-  }
-
+  // ── Theme card (mirrors the Desktop page's compact card) ──────────────────
   function ThemeCard({ theme, activeName, onApply, applying, isDark }) {
     const isActive = theme.name === activeName;
     const isNew = Boolean(
       theme.installed_at && Date.now() - theme.installed_at < NEW_MS,
     );
+    const c = theme.colors || {};
+    const accent = c.accent || c.tool || c.background || "";
     const hasTwin = Boolean(theme.twin);
-    const applyingSelf = applying === theme.name;
-    const applyingTwin = hasTwin && applying === theme.twin;
+    const busy = applying === theme.name || (hasTwin && applying === theme.twin);
+    const swatches = ["background", "accent", "tool", "text", "secondary", "border"].filter(
+      (k) => c[k],
+    );
 
     return React.createElement(
-      C.Card,
-      { className: cn("ts-card", isActive && "ts-card-active") },
+      "div",
+      { className: cn("ts-card-wrap", isActive && "ts-card-active") },
       React.createElement(
-        C.CardContent,
-        { className: "ts-card-body" },
-        React.createElement(SwatchRow, { colors: theme.colors }),
+        "button",
+        {
+          type: "button",
+          className: cn("ts-card", isActive && "ts-card-disabled"),
+          onClick: () => onApply(theme.name),
+          disabled: isActive || busy,
+          title: (theme.description || theme.name) + " (" + (isDark ? "dark" : "light") + ")",
+        },
+        accent
+          ? React.createElement("span", {
+              className: "ts-accent-bar",
+              style: { backgroundColor: accent },
+            })
+          : null,
         React.createElement(
           "div",
           { className: "ts-card-title-row" },
-          React.createElement("span", { className: "ts-card-name" }, theme.name),
-          isActive &&
-            React.createElement(
-              C.Badge,
-              { variant: "outline", className: "ts-badge ts-badge-active" },
-              "Active",
-            ),
-        ),
-        React.createElement(
-          "div",
-          { className: "ts-card-meta" },
           React.createElement(
             "span",
-            { className: "ts-chip" },
-            theme.category || "Other",
-          ),
-          isNew &&
+            { className: "ts-card-name" },
             React.createElement(
-              C.Badge,
-              { variant: "outline", className: "ts-badge ts-badge-new" },
-              "NEW",
+              "span",
+              { className: "ts-polarity" },
+              isDark ? "\u263E" : "\u2600",
             ),
-        ),
-        theme.description &&
-          React.createElement(
-            "p",
-            { className: "ts-card-desc" },
-            theme.description,
+            React.createElement("span", { className: "ts-name-text" }, theme.name),
           ),
-        React.createElement(
-          "div",
-          { className: "ts-card-actions" },
           isActive
             ? React.createElement(
-                C.Button,
-                { size: "sm", variant: "outline", disabled: true },
+                C.Badge,
+                { variant: "outline", className: "ts-badge ts-badge-active" },
                 "Active",
               )
-            : React.createElement(
-                C.Button,
-                {
-                  size: "sm",
-                  onClick: () => onApply(theme.name),
-                  disabled: applyingSelf || applyingTwin,
-                },
-                applyingSelf ? "Applying\u2026" : "Apply",
-              ),
-          hasTwin &&
-            React.createElement(
-              C.Button,
-              {
-                size: "sm",
-                variant: "outline",
-                className: "ts-flip",
-                title: "Apply paired theme " + theme.twin,
-                onClick: () => onApply(theme.twin),
-                disabled: applyingSelf || applyingTwin,
-              },
-              applyingTwin ? "\u2026" : "\u21C4 " + theme.twin,
-            ),
+            : isNew
+              ? React.createElement(
+                  C.Badge,
+                  { variant: "outline", className: "ts-badge ts-badge-new" },
+                  "NEW",
+                )
+              : theme.category
+                ? React.createElement(
+                    "span",
+                    { className: "ts-category" },
+                    theme.category,
+                  )
+                : null,
+        ),
+        React.createElement(
+          "div",
+          { className: "ts-swatch-row" },
+          swatches.map((k) =>
+            React.createElement("span", {
+              key: k,
+              className: "ts-swatch",
+              style: { backgroundColor: c[k] },
+              title: k + ": " + c[k],
+            }),
+          ),
+        ),
+        React.createElement(
+          "div",
+          { className: "ts-card-meta-block" },
+          React.createElement(
+            "span",
+            { className: "ts-card-desc" },
+            theme.description || "",
+          ),
+          React.createElement(
+            "span",
+            {
+              className: "ts-card-twin",
+              style: theme.twin ? undefined : { color: "transparent" },
+            },
+            theme.twin ? "\u21C4 paired with " + theme.twin : "\u21C4",
+          ),
         ),
       ),
+      hasTwin
+        ? React.createElement(
+            "button",
+            {
+              type: "button",
+              className: "ts-flip",
+              title: "Switch to paired theme: " + theme.twin,
+              onClick: () => onApply(theme.twin),
+              disabled: busy,
+            },
+            applying === theme.twin ? "\u2026" : "\u21C4",
+          )
+        : null,
     );
   }
 
