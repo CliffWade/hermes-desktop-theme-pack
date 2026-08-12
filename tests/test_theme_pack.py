@@ -182,6 +182,13 @@ def test_readme_distinguishes_desktop_ui_from_web_dashboard_and_remote_backend()
     assert "$env:LOCALAPPDATA" in section
     assert "nonce-aware stale Desktop SSH backend recovery" in section
     assert "Do not kill the backend PID directly" in section
+def test_theme_cards_use_a_readable_responsive_grid():
+    """Theme cards must wrap by minimum width instead of forcing seven columns."""
+    source = (REPO / "desktop-plugin/theme-switcher/plugin.js").read_text()
+
+    assert "calc((100% - 48px) / 7)" not in source
+    assert "repeat(auto-fit, minmax(min(100%, 240px), 1fr))" in source
+    assert source.count("style: THEME_GRID_STYLE") == 3
 
 
 def test_twin_pairs_resolve_to_real_opposite_polarity_themes():
@@ -230,3 +237,36 @@ def test_twin_pairs_resolve_to_real_opposite_polarity_themes():
     unpaired = [n for n in by_name if n not in seen]
     for name in unpaired:
         assert mod.twin(name) == "", f"twin({name}) should be empty"
+
+
+def test_every_theme_ships_opposite_polarity_colors():
+    """Every curated + community theme carries a light_colors or dark_colors
+    block, so the CLI/TUI can repaint coherently when the terminal polarity
+    differs from the theme's canvas.
+
+    Light themes must ship dark_colors (a dark fallback); dark themes must
+    ship light_colors. The block must be a mapping whose background has the
+    OPPOSITE polarity and whose banner_text passes the 4.5:1 contrast gate
+    against that background.
+    """
+    for p in THEMES_DIR.glob("*.yaml"):
+        doc = yaml.safe_load(p.read_text())
+        assert doc and isinstance(doc, dict), f"{p.name}: not a mapping"
+        name = doc.get("name", "")
+        colors = doc.get("colors") or {}
+        is_light = _lum(colors.get("background", "").lstrip("#")) > 0.5
+
+        if is_light:
+            block = doc.get("dark_colors")
+            assert block, f"{name}: light theme missing dark_colors fallback"
+        else:
+            block = doc.get("light_colors")
+            assert block, f"{name}: dark theme missing light_colors fallback"
+
+        assert isinstance(block, dict) and block.get("background"), f"{name}: empty pairing block"
+        opp_lum = _lum(block["background"].lstrip("#"))
+        assert (opp_lum > 0.5) != is_light, f"{name}: pairing block not opposite polarity"
+
+        ratio = _contrast(str(block.get("banner_text", "")).lstrip("#"), str(block["background"]).lstrip("#"))
+        assert ratio >= 4.5, f"{name}: pairing banner_text contrast {ratio:.2f} < 4.5"
+

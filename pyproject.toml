@@ -1,6 +1,6 @@
 [project]
 name = "hermes-desktop-theme-pack"
-version = "1.0.0"
+version = "1.2.0"
 description = "Curated color themes for Hermes Agent with a Theme Switcher desktop plugin"
 requires-python = ">=3.10"
 
