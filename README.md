@@ -1,6 +1,6 @@
 # Hermes Theme Pack
 
-[![Release](https://img.shields.io/github/v/release/CliffWade/hermes-desktop-theme-pack?sort=semver&style=for-the-badge&label=Version&color=7B2D8E)](https://github.com/CliffWade/hermes-desktop-theme-pack/releases)
+[![Release](https://img.shields.io/github/v/release/CliffWade/hermes-desktop-theme-pack?sort=semver&style=for-the-badge&label=Version&color=7B2D8E&cacheSeconds=3600)](https://github.com/CliffWade/hermes-desktop-theme-pack/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/CliffWade/hermes-desktop-theme-pack/ci.yml?style=for-the-badge&label=CI)](https://github.com/CliffWade/hermes-desktop-theme-pack/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/CliffWade/hermes-desktop-theme-pack?style=for-the-badge&label=License)](https://github.com/CliffWade/hermes-desktop-theme-pack/blob/main/LICENSE)
 
