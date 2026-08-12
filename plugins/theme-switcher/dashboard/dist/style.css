@@ -8,6 +8,9 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* The tab renders inside a resizable panel, so cards adapt to the actual
+     container width (container queries) on top of viewport media queries. */
+  container-type: inline-size;
 }
 
 .ts-header {
@@ -38,12 +41,19 @@
 }
 
 .ts-search {
-  width: 220px;
+  width: min(240px, 100%);
+  flex: 1 1 220px;
+  min-width: 120px;
+  max-width: 300px;
 }
 
 .ts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  /* Same fluid formula as the Desktop page: cards wrap by minimum width and
+     never overflow a sub-240px container (min(100%, ...) guard collapses to
+     one column). auto-fit (not auto-fill) lets the last row stretch to fill
+     the container width instead of leaving phantom empty tracks. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: 10px;
 }
 
@@ -275,7 +285,10 @@
 }
 
 .ts-search {
-  width: 220px;
+  width: min(240px, 100%);
+  flex: 1 1 220px;
+  min-width: 120px;
+  max-width: 300px;
 }
 
 .ts-tab-group {
@@ -355,4 +368,60 @@
   display: flex;
   justify-content: flex-end;
   gap: 8px;
+}
+
+/* ── Responsive breakpoints ──────────────────────────────────────────────── */
+/* The tab renders inside a resizable panel (sidebar to full-width window), so
+   container queries are the primary responsive axis; viewport media queries
+   cover window/monitor/resolution changes and act as a fallback on hosts
+   without container-query support. Card columns themselves are handled by the
+   fluid grid formula above at every size. */
+
+@container (max-width: 560px) {
+  .ts-toolbar {
+    gap: 6px;
+  }
+  .ts-search {
+    flex-basis: 100%;
+    max-width: none;
+  }
+  .ts-card {
+    padding: 6px;
+    gap: 3px;
+  }
+  .ts-card-meta-block {
+    min-height: 1.8rem;
+  }
+  .ts-grid {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .ts-toolbar {
+    gap: 6px;
+  }
+  .ts-search {
+    flex-basis: 100%;
+    max-width: none;
+  }
+  .ts-page {
+    gap: 12px;
+  }
+  .ts-modal {
+    width: 100vw;
+    max-height: 92vh;
+  }
+}
+
+/* High-DPI / very large screens: keep the compact card size the Desktop uses
+   (the grid already yields more columns); just relax the tightest paddings so
+   cards don't look cramped on a 4K display. */
+@media (min-width: 1920px) {
+  .ts-grid {
+    gap: 12px;
+  }
+  .ts-card {
+    padding: 10px;
+  }
 }

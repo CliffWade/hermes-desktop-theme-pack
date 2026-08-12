@@ -256,6 +256,21 @@ def test_theme_cards_use_a_readable_responsive_grid():
     assert source.count("style: THEME_GRID_STYLE") == 3
 
 
+def test_dashboard_cards_share_the_desktop_responsive_grid():
+    """The dashboard tab's grid must use the same fluid formula as the Desktop
+    page: auto-fit (fills the last row), min(100%, ...) guard (sub-240px
+    containers collapse to one column instead of overflowing), and container
+    queries so cards adapt to the resizable panel, not just the viewport."""
+    css = (REPO / "plugins/theme-switcher/dashboard/dist/style.css").read_text()
+
+    assert "grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr))" in css
+    assert "grid-template-columns: repeat(auto-fill" not in css
+    assert "calc((100% - 48px) / 7)" not in css
+    assert "container-type: inline-size" in css
+    assert "@container (max-width: 560px)" in css
+    assert "@media (max-width: 640px)" in css
+
+
 def test_twin_pairs_resolve_to_real_opposite_polarity_themes():
     """Every light/dark twin pair names existing themes of opposite polarity.
 

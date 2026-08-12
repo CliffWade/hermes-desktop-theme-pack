@@ -20,6 +20,13 @@ All notable changes to the Hermes Theme Pack. This project follows
   Follow system (auto twin switch on OS scheme change), category filter,
   Random, and + Add theme (paste-YAML install with the same validation as the
   Desktop page). Section headers show per-polarity counts.
+- **Truly responsive theme cards** — the dashboard grid now uses the same
+  fluid formula as the Desktop page (`repeat(auto-fit, minmax(min(100%,
+  240px), 1fr))`): cards wrap by minimum width at every window size, collapse
+  to a single column instead of overflowing on narrow panels, and stretch to
+  fill the last row. Container queries adapt the toolbar/card spacing to the
+  tab's actual panel width, with viewport media-query fallbacks for small and
+  very large (4K) screens.
 
 ### Changed
 
