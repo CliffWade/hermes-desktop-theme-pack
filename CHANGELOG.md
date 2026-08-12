@@ -5,6 +5,15 @@ All notable changes to the Hermes Theme Pack. This project follows
 
 ## [Unreleased]
 
+### Changed
+
+- **Theme Switcher setup docs clarified for Desktop-over-SSH** — README now
+  splits installation between the remote backend host and the local Desktop
+  computer (including the Windows `%LOCALAPPDATA%\hermes` path), notes that
+  the Themes page is for the native Desktop app only (not `hermes dashboard`),
+  and documents the backend restart requirement plus the nonce-aware stale
+  backend recovery boundary. Thanks to @jdtimothy for the report and the writeup.
+
 ### Fixed
 
 - **Theme Switcher cards now respond to window width** — replaced the fixed
