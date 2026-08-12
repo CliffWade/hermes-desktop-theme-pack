@@ -351,6 +351,23 @@ def test_plugin_is_valid_strict_esm_without_duplicate_declarations():
     assert source.count("function readableInk(") == 1
 
 
+def test_hover_panel_chrome_uses_readable_secondary_text():
+    """The hover preview panel's chrome (polarity tag, twin labels, twin
+    names, descriptions) must use the readable secondary text token, not the
+    faint tertiary one — tertiary is 54% opacity and renders unreadable at
+    10px on light panels. The mockup body itself is covered by the contrast
+    gate above; this pins the panel chrome."""
+    source = (REPO / "desktop-plugin/theme-switcher/plugin.js").read_text()
+
+    # Pull out the PreviewPanel function body only.
+    panel = source[source.index("function PreviewPanel(") : source.index("// ── Theme card")]
+
+    # Chrome text spans: polarity tag, twin label, twin name, twin description.
+    assert "text-(--ui-text-secondary)" in panel
+    # No faint tertiary anywhere in the panel chrome.
+    assert "text-(--ui-text-tertiary)" not in panel
+
+
 def test_dashboard_cards_share_the_desktop_responsive_grid():
     """The dashboard tab's grid must use the same fluid formula as the Desktop
     page: auto-fit (fills the last row), min(100%, ...) guard (sub-240px

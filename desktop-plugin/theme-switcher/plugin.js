@@ -507,7 +507,9 @@ function PreviewPanel({ theme, skins }) {
     children: [
       jsxs('div', { className: 'flex items-baseline justify-between gap-2', children: [
         jsx('span', { className: 'truncate text-xs font-semibold', children: theme.name }),
-        jsx('span', { className: 'shrink-0 text-[0.625rem] text-(--ui-text-tertiary)', children: `${theme.category || ''} ${isLight ? '☀ light' : '☾ dark'}` })
+        // Secondary (not tertiary): the polarity tag is 10px, and tertiary
+        // (54% opacity) renders as faint gray on light panels — unreadable.
+        jsx('span', { className: 'shrink-0 text-[0.625rem] text-(--ui-text-secondary)', children: `${theme.category || ''} ${isLight ? '☀ light' : '☾ dark'}` })
       ]}),
       jsx('div', { className: 'mt-2 h-40', children: jsx(ThemeMockup, { theme }) }),
       twin
@@ -515,12 +517,12 @@ function PreviewPanel({ theme, skins }) {
             className: 'mt-3 border-t border-(--ui-stroke-secondary) pt-2',
             children: [
               jsxs('div', { className: 'flex items-center justify-between gap-2', children: [
-                jsx('span', { className: 'text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)', children: isLight ? '☾ Dark twin' : '☀ Light twin' }),
-                jsx('span', { className: 'shrink-0 text-[0.625rem] text-(--ui-text-tertiary)', children: `⇄ ${twin.name}` })
+                jsx('span', { className: 'text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-secondary)', children: isLight ? '☾ Dark twin' : '☀ Light twin' }),
+                jsx('span', { className: 'shrink-0 text-[0.625rem] text-(--ui-text-secondary)', children: `⇄ ${twin.name}` })
               ]}),
               jsx('div', { className: 'mt-1 h-24', children: jsx(ThemeMockup, { theme: twin }) }),
               twin.description
-                ? jsx('div', { className: 'mt-1 truncate text-[0.625rem] text-(--ui-text-tertiary)', children: twin.description })
+                ? jsx('div', { className: 'mt-1 truncate text-[0.625rem] text-(--ui-text-secondary)', children: twin.description })
                 : null
             ]
           })
@@ -607,7 +609,7 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
                     })
                   : theme.category
                     ? jsx('span', {
-                        className: 'shrink-0 text-[0.5625rem] uppercase tracking-wide text-(--ui-text-tertiary)',
+                        className: 'shrink-0 text-[0.5625rem] uppercase tracking-wide text-(--ui-text-secondary)',
                         children: theme.category
                       })
                     : null
@@ -713,7 +715,7 @@ function InstallModal({ onClose, onInstalled }) {
         onClick: e => e.stopPropagation(),
         children: [
           jsx('div', { className: 'text-sm font-semibold', children: 'Add a theme' }),
-          jsx('div', { className: 'mt-1 text-xs text-(--ui-text-tertiary)', children: 'Paste a Hermes skin YAML. It lands in your skins folder and appears on this page immediately.' }),
+          jsx('div', { className: 'mt-1 text-xs text-(--ui-text-secondary)', children: 'Paste a Hermes skin YAML. It lands in your skins folder and appears on this page immediately.' }),
           jsx('textarea', {
             value: content,
             onChange: e => setContent(e.target.value),
@@ -920,7 +922,7 @@ function ThemesPage() {
         children: [
           jsx('div', { className: 'text-sm font-semibold', children: 'Theme Switcher' }),
           jsx('div', {
-            className: 'mt-0.5 text-xs text-(--ui-text-tertiary)',
+            className: 'mt-0.5 text-xs text-(--ui-text-secondary)',
             children:
               q.trim() || pol !== 'all' || cat !== 'All'
                 ? `Active: ${active} · showing ${filtered.length} of ${skins.length} · ☀ light ☾ dark`
@@ -999,7 +1001,7 @@ function ThemesPage() {
                 filtered.some(t => isLightTheme(t))
                   ? jsxs('div', { className: 'mb-2', children: [
                       jsx('div', {
-                        className: 'mb-1 text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)',
+                        className: 'mb-1 text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-secondary)',
                         children: `☀ Light (${filtered.filter(t => isLightTheme(t)).length})`
                       }),
                       jsx('div', {
@@ -1026,7 +1028,7 @@ function ThemesPage() {
                       style: { borderTopWidth: 2, borderTopColor: 'var(--ui-stroke-strong)' },
                       children: [
                       jsx('div', {
-                        className: 'mb-1 text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-tertiary)',
+                        className: 'mb-1 text-[0.625rem] font-medium uppercase tracking-wide text-(--ui-text-secondary)',
                         children: `☾ Dark (${filtered.filter(t => !isLightTheme(t)).length})`
                       }),
                       jsx('div', {

@@ -58,6 +58,12 @@ All notable changes to the Hermes Theme Pack. This project follows
   skin-converter helper is renamed to `readableInk` and a gate test now
   rejects duplicate module-level declarations so this class of breakage
   cannot ship again.
+- **Readable hover panel chrome** — the hover preview panel's polarity tag,
+  twin labels, twin names, and descriptions used the faint `--ui-text-tertiary`
+  token (54% opacity), which rendered as pale gray at 10px on light panels.
+  All panel chrome now uses `--ui-text-secondary`; the page subtitle, section
+  headers, card category badges, and install-modal helper text follow the
+  same rule (small text must be readable, not faint).
 
 ### Changed
 
