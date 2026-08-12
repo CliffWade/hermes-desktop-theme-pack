@@ -97,3 +97,30 @@ for _dark, _light in THEME_PAIRS:
 def twin(name: str) -> str:
     """The paired theme of the opposite polarity, or '' if none."""
     return _TWIN_LOOKUP.get(name, "")
+
+
+def dashboard_theme_label(name: str) -> str:
+    """Human label for a dashboard theme generated from a skin name."""
+    return name.replace("-", " ").strip().title()
+
+
+def build_dashboard_theme(name: str, colors: dict) -> dict:
+    """Build a minimal dashboard-theme dict from a skin's preview colors.
+
+    Maps the Hermes skin triplet onto the web dashboard's 3-layer palette:
+    background -> canvas, text -> midground (primary text + accent), accent ->
+    foreground (ring/highlight). Missing keys fall back to the dashboard
+    normaliser's defaults so the generated theme is always valid; the
+    dashboard fills typography/layout from its own defaults.
+    """
+    src = colors or {}
+    return {
+        "name": name,
+        "label": dashboard_theme_label(name),
+        "description": f"Auto-generated from the Hermes skin '{name}'.",
+        "palette": {
+            "background": src.get("background") or "#041c1c",
+            "midground": src.get("text") or "#ffe6cb",
+            "foreground": src.get("accent") or "#268bd2",
+        },
+    }

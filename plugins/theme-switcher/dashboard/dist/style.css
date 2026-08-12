@@ -156,3 +156,53 @@
   background: rgba(239, 68, 68, 0.1);
   color: #ef4444;
 }
+
+.ts-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ts-tab {
+  padding: 5px 12px;
+  border-radius: 9999px;
+  border: 1px solid var(--border, rgba(128, 128, 128, 0.35));
+  background: transparent;
+  color: var(--muted-foreground, #9ca3af);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.ts-tab:hover {
+  background: var(--muted, rgba(128, 128, 128, 0.16));
+}
+
+.ts-tab-active {
+  background: var(--primary, #7c3aed);
+  border-color: var(--primary, #7c3aed);
+  color: var(--primary-foreground, #ffffff);
+}
+
+.ts-tab-active:hover {
+  background: var(--primary, #7c3aed);
+}
+
+.ts-section-title {
+  margin: 4px 0 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--muted-foreground, #9ca3af);
+}
+
+.ts-flip {
+  font-size: 0.75rem;
+}
+
+.ts-note {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+}

@@ -10,7 +10,10 @@ All notable changes to the Hermes Theme Pack. This project follows
 - **Web dashboard Themes tab** — the Theme Switcher now ships a dashboard
   plugin bundle (manifest tab + IIFE) so `hermes dashboard` gets a Themes tab
   listing every installed skin with one-click apply, reusing the same backend
-  API as the Desktop page.
+  API as the Desktop page. Themes are grouped into ☀ Light / ☾ Dark sections
+  with counts and tabs, every paired theme shows its `⇄` twin with a flip
+  button, and applying a skin also **repaints the web dashboard**: the backend
+  writes a dashboard-theme YAML from the skin's palette and activates it.
 
 ### Changed
 

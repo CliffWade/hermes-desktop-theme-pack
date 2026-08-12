@@ -28,7 +28,12 @@ _DASH_DIR = os.path.dirname(os.path.abspath(__file__))
 if _DASH_DIR not in sys.path:
     sys.path.insert(0, _DASH_DIR)
 
-from theme_data import CATEGORY_PREFIXES, COMMUNITY_THEMES, twin as _twin
+from theme_data import (
+    CATEGORY_PREFIXES,
+    COMMUNITY_THEMES,
+    build_dashboard_theme,
+    twin as _twin,
+)
 
 router = APIRouter()
 
@@ -214,6 +219,40 @@ def _apply_skin(name: str) -> None:
     _write_config_key("display.skin", name)
 
 
+def _dashboard_themes_dir():
+    from hermes_constants import get_hermes_home
+
+    return get_hermes_home() / "dashboard-themes"
+
+
+def _ensure_dashboard_theme(name: str, colors: Dict[str, str]) -> bool:
+    """Write ~/.hermes/dashboard-themes/<name>.yaml if it does not exist.
+
+    Returns True when the theme file is present afterwards (written now or
+    already there). Never overwrites an existing user theme: a hand-authored
+    YAML wins over the generated one.
+    """
+    if _yaml is None:
+        return False
+    try:
+        d = _dashboard_themes_dir()
+        d.mkdir(parents=True, exist_ok=True)
+        target = d / f"{name}.yaml"
+        if target.exists():
+            return True
+        target.write_text(
+            _yaml.safe_dump(
+                build_dashboard_theme(name, colors),
+                sort_keys=False,
+                default_flow_style=False,
+            ),
+            encoding="utf-8",
+        )
+        return True
+    except Exception:
+        return False
+
+
 @router.get("/list")
 def list_themes() -> Dict[str, Any]:
     return {"skins": _skins(), "active": _active()}
@@ -244,11 +283,26 @@ def apply_theme(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
     if name not in available:
         return {"ok": False, "error": f"unknown skin: {name}"}
     try:
+        skins = _skins()
+        skin_colors = next((s.get("colors") for s in skins if s["name"] == name), None)
+        if not isinstance(skin_colors, dict):
+            skin_colors = {}
         _prev_skin = _active()
         _apply_skin(name)
+        dashboard_ok = False
+        if _ensure_dashboard_theme(name, skin_colors):
+            from tui_gateway.server import _write_config_key
+
+            _write_config_key("dashboard.theme", name)
+            dashboard_ok = True
     except Exception as e:  # noqa: BLE001 - surface honest failure to the UI
         return {"ok": False, "error": f"apply failed: {e}"}
-    return {"ok": True, "active": name, "previous": _prev_skin}
+    return {
+        "ok": True,
+        "active": name,
+        "previous": _prev_skin,
+        "dashboard_theme": name if dashboard_ok else None,
+    }
 
 
 @router.get("/raw")

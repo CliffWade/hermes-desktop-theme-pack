@@ -211,6 +211,42 @@ def test_dashboard_manifest_ships_a_real_tab_and_entry_bundle():
         assert css.exists(), f"declared css missing: {css}"
 
 
+def test_dashboard_theme_builder_maps_skin_palette():
+    """Generated dashboard themes map bg/text/accent and stay valid.
+
+    The backend writes these to ~/.hermes/dashboard-themes/ on apply so the
+    web dashboard repaints in the chosen skin. The mapping must be exact and
+    the fallbacks must never produce an invalid theme.
+    """
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "theme_data",
+        REPO / "plugins/theme-switcher/dashboard/theme_data.py",
+    )
+    assert spec and spec.loader, "could not load theme_data.py"
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    colors = {
+        "background": "#002b36",
+        "text": "#839496",
+        "accent": "#268bd2",
+    }
+    t = mod.build_dashboard_theme("dark-solarized", colors)
+    assert t["name"] == "dark-solarized"
+    assert t["label"] == "Dark Solarized"
+    assert t["palette"]["background"] == "#002b36"
+    assert t["palette"]["midground"] == "#839496"
+    assert t["palette"]["foreground"] == "#268bd2"
+
+    # Missing colors must fall back to valid hex values, never None/empty.
+    t2 = mod.build_dashboard_theme("minimal-bone", {})
+    for key in ("background", "midground", "foreground"):
+        assert t2["palette"][key] and t2["palette"][key].startswith("#")
+    assert t2["label"] == "Minimal Bone"
+
+
 def test_theme_cards_use_a_readable_responsive_grid():
     """Theme cards must wrap by minimum width instead of forcing seven columns."""
     source = (REPO / "desktop-plugin/theme-switcher/plugin.js").read_text()

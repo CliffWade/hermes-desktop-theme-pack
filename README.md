@@ -190,6 +190,8 @@ The backend API routes are mounted when the Hermes backend server starts. If the
 
 The dashboard Themes tab rides along with the same backend install step above — `cp -R plugins/theme-switcher/*` copies `dashboard/` including the tab bundle. After installing and enabling, restart `hermes dashboard` (plugin manifests are read at startup) and open **Themes** in the nav. If the tab is missing, confirm the backend was restarted after `hermes plugins enable theme-switcher`; the API routes mount at backend startup, and without them the tab shows its error state.
 
+The tab mirrors the Desktop page: themes are grouped into ☀ Light and ☾ Dark sections with counts (tabs for All / Light / Dark), and every paired theme shows its `⇄` twin with a one-click flip. Applying a theme also **repaints the web dashboard**: the backend writes a `dashboard-theme` YAML from the skin's palette into `~/.hermes/dashboard-themes/` (never overwriting a hand-authored theme of the same name) and sets it active, so the browser UI picks up the same colors. Refresh the dashboard after applying to see it repaint.
+
 ## Development
 
 ```bash
