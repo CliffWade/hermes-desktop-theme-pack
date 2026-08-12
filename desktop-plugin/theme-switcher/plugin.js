@@ -514,8 +514,12 @@ function PreviewPanel({ theme, skins }) {
       jsxs('div', { className: 'flex items-baseline justify-between gap-2', children: [
         jsx('span', { className: 'truncate text-xs font-semibold', children: theme.name }),
         // Secondary (not tertiary): the polarity tag is 10px, and tertiary
-        // (54% opacity) renders as faint gray on light panels — unreadable.
-        jsx('span', { className: 'shrink-0 text-[0.625rem] text-(--ui-text-secondary)', children: `${theme.category || ''} ${isLight ? '☀ light' : '☾ dark'}` })
+        // (54% opacity) renders as faint gray on light panels, unreadable.
+        // The tag is emoji + category ONLY: category is already "Light" or
+        // "Dark", so appending the polarity word ("☀ light"/"☾ dark")
+        // produced "Light ☀ light" / "Dark ☾ dark", the word twice in one
+        // tag. The emoji carries polarity; the word appears once.
+        jsx('span', { className: 'shrink-0 text-[0.625rem] text-(--ui-text-secondary)', children: `${isLight ? '☀' : '☾'}${theme.category ? ' ' + theme.category : ''}` })
       ]}),
       jsx('div', { className: 'mt-2 h-40', children: jsx(ThemeMockup, { theme }) }),
       twin

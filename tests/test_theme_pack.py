@@ -402,6 +402,26 @@ def test_floating_surfaces_use_the_opaque_app_background():
     assert source.count("bg-(--ui-bg-primary)") == 2
 
 
+def test_panel_polarity_tag_says_each_word_once():
+    """The hover panel's polarity tag must not repeat the polarity word.
+
+    The old template was `category + polarity word` ("Light ☀ light" /
+    "Dark ☾ dark"), the category is ALREADY "Light" or "Dark", so the tag
+    said the word twice. The tag is now emoji + category only ("☀ Light" /
+    "☾ Dark"), matching the page's own section headers."""
+    source = (REPO / "desktop-plugin/theme-switcher/plugin.js").read_text()
+
+    panel = source[source.index("function PreviewPanel(") : source.index("// ── Theme card")]
+
+    # The duplicated form must not exist anywhere in the panel.
+    assert "${theme.category || ''} ${isLight" not in panel
+    assert "'☀ light'" not in panel
+    assert "'☾ dark'" not in panel
+
+    # The tag is emoji + category only.
+    assert "${isLight ? '☀' : '☾'}${theme.category" in panel
+
+
 def test_dashboard_cards_share_the_desktop_responsive_grid():
     """The dashboard tab's grid must use the same fluid formula as the Desktop
     page: auto-fit (fills the last row), min(100%, ...) guard (sub-240px

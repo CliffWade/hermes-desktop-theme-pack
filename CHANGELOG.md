@@ -80,6 +80,11 @@ All notable changes to the Hermes Theme Pack. This project follows
   sidebar use), set inline so the build's class purge cannot strip it.
   Verified by rendering both tokens over a busy card grid: the old token
   shows the grid through the panel, the new one blocks it completely.
+- **Polarity tag says each word once** — the hover panel's top-right tag
+  rendered `category + polarity word`: "Light ☀ light" and "Dark ☾ dark",
+  repeating the word because the category already IS "Light" or "Dark".
+  The tag is now emoji + category only ("☀ Light" / "☾ Dark"), matching the
+  page's own section headers.
 
 ### Changed
 
