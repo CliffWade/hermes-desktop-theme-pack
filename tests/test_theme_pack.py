@@ -328,6 +328,29 @@ def test_hover_preview_mockup_guarantees_readable_contrast():
     assert "bubblePair(bg" in source
 
 
+def test_plugin_is_valid_strict_esm_without_duplicate_declarations():
+    """The desktop plugin must evaluate as strict-mode ESM.
+
+    The runtime loader blob-imports plugin.js as a module, where duplicate
+    function declarations are a hard SyntaxError (CJS tolerates them, so
+    node --check misses this class of bug). A duplicate readableOn broke the
+    whole plugin — sidebar entry included. This test pins the module-level
+    declaration set so the same failure cannot ship again."""
+    source = (REPO / "desktop-plugin/theme-switcher/plugin.js").read_text()
+
+    import re
+
+    funcs = re.findall(r"^function\s+([A-Za-z_$][\w$]*)\s*\(", source, re.M)
+    dupes = {f for f in funcs if funcs.count(f) > 1}
+    assert not dupes, f"duplicate function declarations (ESM SyntaxError): {sorted(dupes)}"
+
+    # The two distinct contrast helpers must keep distinct names.
+    assert "function readableOn(" in source
+    assert "function readableInk(" in source
+    assert source.count("function readableOn(") == 1
+    assert source.count("function readableInk(") == 1
+
+
 def test_dashboard_cards_share_the_desktop_responsive_grid():
     """The dashboard tab's grid must use the same fluid formula as the Desktop
     page: auto-fit (fills the last row), min(100%, ...) guard (sub-240px

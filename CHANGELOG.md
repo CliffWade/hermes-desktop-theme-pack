@@ -51,6 +51,13 @@ All notable changes to the Hermes Theme Pack. This project follows
   `full_colors`) instead of raw accent/border, and nudges bubble surfaces
   until text clears the bar. Themes may pair decorative colors however they
   like; the preview never renders unreadable text.
+- **Fixed desktop plugin failing to load (Themes missing from sidebar)** —
+  the plugin file carried two `readableOn` declarations, a hard
+  `SyntaxError` under the strict-mode ESM blob import the runtime loader
+  uses (CJS parsing tolerates duplicates, so `node --check` missed it). The
+  skin-converter helper is renamed to `readableInk` and a gate test now
+  rejects duplicate module-level declarations so this class of breakage
+  cannot ship again.
 
 ### Changed
 

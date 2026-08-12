@@ -271,7 +271,7 @@ function contrastRatio(a, b) {
   return la >= lb ? (la + 0.05) / (lb + 0.05) : (lb + 0.05) / (la + 0.05)
 }
 
-function readableOn(hex) {
+function readableInk(hex) {
   return relativeLuminance(hex) > 0.58 ? '#161616' : '#ffffff'
 }
 
@@ -328,7 +328,7 @@ function skinToDesktopTheme(skin) {
     popover: mix(background, foreground, dark ? 0.08 : 0.05),
     popoverForeground: foreground,
     primary: accent,
-    primaryForeground: readableOn(accent),
+    primaryForeground: readableInk(accent),
     secondary: mix(accent, background, dark ? 0.72 : 0.86),
     secondaryForeground: foreground,
     accent: mix(accent, background, dark ? 0.82 : 0.88),
@@ -337,10 +337,10 @@ function skinToDesktopTheme(skin) {
     input: pickFirst(colors, ['completion_menu_bg'], background) || mix(background, foreground, dark ? 0.1 : 0.06),
     ring: accent,
     midground: accent,
-    midgroundForeground: readableOn(accent),
+    midgroundForeground: readableInk(accent),
     composerRing: accent,
     destructive,
-    destructiveForeground: readableOn(destructive),
+    destructiveForeground: readableInk(destructive),
     sidebarBackground: sidebar,
     sidebarBorder: border,
     userBubble: mix(background, accent, dark ? 0.18 : 0.12),
@@ -641,8 +641,9 @@ function ThemeCard({ theme, active, onApply, applying, onHover }) {
               })
             ]
           })
-        }),
+        ]
       }),
+    }),
       theme.source !== 'builtin'
         ? jsx(Tip, {
             label: copied ? 'Copied!' : 'Copy theme YAML',
