@@ -407,7 +407,11 @@ function PreviewPanel({ theme, skins }) {
   const twinName = theme.twin
   const twin = twinName && skins ? skins.find(s => s.name === twinName) : null
   return jsxs('div', {
-    className: 'pointer-events-none fixed right-6 top-24 z-30 w-72 rounded-xl border border-(--ui-stroke-secondary) bg-(--ui-bg-primary) p-3 shadow-2xl',
+    className: 'pointer-events-none fixed z-30 w-72 rounded-xl border border-(--ui-stroke-secondary) bg-(--ui-bg-primary) p-3 shadow-2xl',
+    // Inline right/top: the app's Tailwind build strips right-6/top-24 (only
+    // core files feed the purge), so utility classes for these land nowhere
+    // and the panel would collapse to the left edge unpositioned.
+    style: { right: 24, top: 96 },
     children: [
       jsxs('div', { className: 'flex items-baseline justify-between gap-2', children: [
         jsx('span', { className: 'truncate text-xs font-semibold', children: theme.name }),
