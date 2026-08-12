@@ -118,12 +118,14 @@ function shade(hex, amount) {
   return '#' + [f(r), f(g), f(b)].map((v) => v.toString(16).padStart(2, '0')).join('')
 }
 
-// Return a text color that is GUARANTEED readable on `bg` (>= 4.5:1): the
-// theme's preferred color when it clears the bar, else the darker of the
-// standard dark/light fallbacks. The mockup must never render unreadable
-// text just because a theme pairs a dark accent with a dark surface.
-function readableOn(bg, preferred, darkFallback = '#161616', lightFallback = '#e8e8e8') {
-  if (preferred && /^#([0-9a-f]{6})$/i.test(preferred) && contrastOf(preferred, bg) >= 4.5) {
+// Return a text color that is GUARANTEED readable on `bg` (>= min, default
+// 4.5:1): the theme's preferred color when it clears the bar, else the darker
+// of the standard dark/light fallbacks. The mockup must never render
+// unreadable text just because a theme pairs a dark accent with a dark
+// surface. Callers with TINY labels (8px mockup footers) pass min = 7: at
+// that size 4.5:1 is still dim on near-black (newsprint-noir proved it).
+function readableOn(bg, preferred, darkFallback = '#161616', lightFallback = '#e8e8e8', min = 4.5) {
+  if (preferred && /^#([0-9a-f]{6})$/i.test(preferred) && contrastOf(preferred, bg) >= min) {
     return preferred
   }
   return contrastOf(darkFallback, bg) >= contrastOf(lightFallback, bg) ? darkFallback : lightFallback
@@ -444,9 +446,9 @@ function ThemeMockup({ theme }) {
   // the surface until the pair ALWAYS clears 4.5:1.
   const [userBg, userText] = bubblePair(bg, isLight ? -0.06 : 0.06, text, isLight)
   const [asstBg, asstText] = bubblePair(bg, isLight ? -0.10 : 0.10, accent, isLight)
-  const metaText = readableOn(bg, secondary)
-  const barTextSafe = readableOn(barBg, barText)
-  const barAccentSafe = readableOn(barBg, barAccent)
+  const metaText = readableOn(bg, secondary, undefined, undefined, 7)
+  const barTextSafe = readableOn(barBg, barText, undefined, undefined, 7)
+  const barAccentSafe = readableOn(barBg, barAccent, undefined, undefined, 7)
   // Borders are decoration, but they should still read against the bubble:
   // clamp to a readable tone rather than letting a dark accent vanish on a
   // dark bubble (or a light one on light).

@@ -324,8 +324,15 @@ def test_hover_preview_mockup_guarantees_readable_contrast():
     assert "function bubblePair(" in source
     assert "0.03928" in source  # gamma-corrected WCAG luminance, not linear
     assert "barBg: full.status_bar_bg" in source
-    assert "readableOn(barBg, barText)" in source
     assert "bubblePair(bg" in source
+
+    # The TINY 8px footer/meta labels (status bar, tokens, tool call in
+    # progress) demand a 7:1 floor: 4.5:1 mid-grey on near-black is still dim
+    # at that size (newsprint-noir's #888898 on #08080a proved it).
+    assert "readableOn(barBg, barText, undefined, undefined, 7)" in source
+    assert "readableOn(barBg, barAccent, undefined, undefined, 7)" in source
+    assert "readableOn(bg, secondary, undefined, undefined, 7)" in source
+    assert "min = 4.5" in source  # readableOn supports a caller-supplied floor
 
 
 def test_plugin_is_valid_strict_esm_without_duplicate_declarations():

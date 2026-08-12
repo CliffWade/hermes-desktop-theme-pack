@@ -64,6 +64,13 @@ All notable changes to the Hermes Theme Pack. This project follows
   All panel chrome now uses `--ui-text-secondary`; the page subtitle, section
   headers, card category badges, and install-modal helper text follow the
   same rule (small text must be readable, not faint).
+- **7:1 floor for the mockup's tiny labels** — the 8px footer/meta labels
+  (`status bar`, `tokens`, `tool call in progress`) now demand a 7:1 WCAG
+  contrast floor, not 4.5:1. A theme like newsprint-noir pairs mid-gray
+  (`#888898`, 5.6:1) and mid-green (`#60a070`, 6.8:1) with its near-black
+  status bar; both pass AA but read as dim at 8px. The mockup clamps them to
+  near-white ink instead, and `readableOn` gained a caller-supplied floor
+  (`min`) so the guarantee is explicit.
 
 ### Changed
 
