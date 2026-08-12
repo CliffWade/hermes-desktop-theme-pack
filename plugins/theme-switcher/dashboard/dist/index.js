@@ -196,15 +196,21 @@
     if (!theme) return null;
     const c = theme.full_colors || theme.colors || {};
     const accent = c.accent || c.tool || c.ui_accent || c.banner_accent || c.background || "#888";
-    const entries = Object.entries(c).slice(0, 20);
+    // Key palette entries first, capped so the panel stays compact (2-col grid).
+    const order = ["background", "accent", "tool", "text", "secondary", "border", "ui_accent", "banner_accent", "banner_title", "banner_text", "ui_text", "banner_dim", "banner_border", "ui_ok", "ui_warn", "ui_error"];
+    const entries = [];
+    for (const k of order) {
+      if (c[k] !== undefined && entries.length < 12) entries.push([k, c[k]]);
+    }
+    for (const [k, v] of Object.entries(c)) {
+      if (entries.length >= 12) break;
+      if (!entries.some(([ek]) => ek === k)) entries.push([k, v]);
+    }
 
     return React.createElement(
       "div",
       { className: "ts-hover-panel" },
       React.createElement("h3", { className: "ts-hover-name" }, theme.name),
-      theme.category
-        ? React.createElement("div", { className: "ts-hover-cat" }, theme.category)
-        : null,
       theme.description
         ? React.createElement("div", { className: "ts-hover-desc" }, theme.description)
         : null,
@@ -212,13 +218,6 @@
         className: "ts-hover-bar",
         style: { backgroundColor: accent },
       }),
-      theme.twin
-        ? React.createElement(
-            "div",
-            { className: "ts-hover-twin" },
-            "\u21C4 paired with " + theme.twin,
-          )
-        : null,
       React.createElement(
         "div",
         { className: "ts-hover-swatches" },

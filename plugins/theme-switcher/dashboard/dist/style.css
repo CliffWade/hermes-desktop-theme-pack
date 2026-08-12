@@ -428,18 +428,19 @@
 
 /* ── Hover detail panel ────────────────────────────────────────────────────
    Docked to the right edge (mirrors the Desktop plugin's preview panel) so
-   hover details never cover the grid. Elevated, legible, theme-aware. */
+   hover details never cover the grid. Compact by design: small footprint,
+   2-column swatches, legible but not bulky. */
 .ts-hover-panel {
   position: fixed;
   right: 24px;
   top: 96px;
-  width: 320px;
+  width: 264px;
   max-height: calc(100vh - 140px);
   overflow-y: auto;
   z-index: 90;
   pointer-events: none;
-  padding: 16px 16px 12px;
-  border-radius: 14px;
+  padding: 12px 12px 10px;
+  border-radius: 12px;
   border: 1px solid var(--border, rgba(128, 128, 160, 0.35));
   background: var(--card, #14121a);
   color: var(--foreground, #f3f0fa);
@@ -447,75 +448,64 @@
 }
 
 .ts-hover-name {
-  margin: 0 0 2px;
-  font-size: 1rem;
+  margin: 0;
+  font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.25;
   word-break: break-word;
 }
 
-.ts-hover-cat {
-  margin: 0;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--muted-foreground, #9a8fc0);
-}
-
 .ts-hover-desc {
-  margin: 8px 0 10px;
-  font-size: 0.8125rem;
-  line-height: 1.55;
+  margin: 4px 0 8px;
+  font-size: 0.75rem;
+  line-height: 1.45;
   color: var(--muted-foreground, #cfc9de);
 }
 
 .ts-hover-bar {
-  height: 22px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
-
-.ts-hover-twin {
-  margin: 0 0 10px;
-  font-size: 0.75rem;
-  color: var(--muted-foreground, #9a8fc0);
+  height: 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
 }
 
 .ts-hover-swatches {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 10px;
 }
 
 .ts-hover-swatch {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 3px 0;
+  gap: 6px;
+  min-width: 0;
 }
 
 .ts-hover-swatch-k {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   color: var(--muted-foreground, #cfc9de);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .ts-hover-swatch-v {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.6875rem;
+  gap: 5px;
+  font-size: 0.625rem;
   color: var(--muted-foreground, #9aa);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  flex-shrink: 0;
 }
 
 .ts-hover-chip {
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
