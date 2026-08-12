@@ -444,33 +444,108 @@ def _card_html(t, skin):
         f'<span style="display:inline-block;width:34px;height:34px;border-radius:8px;background:{v};margin-right:6px" title="{k}"></span>'
         for k, v in list(c.items())[:8]
     )
+    # Every swatch as labeled rows so the hover panel can show the palette.
+    swatch_rows = "".join(
+        f'<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 0">'
+        f'<span style="font-size:12px;color:#cfc9de">{k}</span>'
+        f'<span style="display:inline-flex;align-items:center;gap:8px">'
+        f'<span style="font-size:11px;color:#9aa">{v}</span>'
+        f'<span style="display:inline-block;width:20px;height:20px;border-radius:5px;background:{v};border:1px solid rgba(255,255,255,0.12)"></span>'
+        f'</span></div>'
+        for k, v in list(c.items())[:14]
+    )
+    import json as _json
     return f"""
-    <div style="background:{c['background']};border:1px solid {c['banner_border']};border-radius:12px;padding:16px;min-width:300px">
+    <div class="theme-card" style="background:{c['background']};border:1px solid {c['banner_border']};border-radius:12px;padding:16px;min-width:300px"
+      data-name="{t['name']}"
+      data-category="{t.get('category', '')}"
+      data-description="{t.get('description', '')}"
+      data-colors="{_json.dumps({k: v for k, v in list(c.items())[:14]}).replace('"', '&quot;')}">
       <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
         <span style="color:{c['banner_title']};font-weight:700;font-size:14px">{t['name']}</span>
-        <span style="color:{c['banner_dim']};font-size:11px">{t['category']}</span>
+        <span style="color:{c['banner_dim']};font-size:11px">{t.get('category', '')}</span>
       </div>
-      <div style="color:{c['banner_dim']};font-size:11px;margin-top:2px">{t['description']}</div>
+      <div style="color:{c['banner_dim']};font-size:11px;margin-top:2px">{t.get('description', '')}</div>
       <div style="height:26px;border-radius:6px;background:{c['ui_accent']};margin:12px 0 8px"></div>
       <div style="color:{c['banner_text']};font-size:12px">Aa — primary text</div>
       <div style="color:{c['banner_dim']};font-size:12px">Aa — muted / secondary</div>
       <div style="color:{c['ui_accent']};font-size:12px;margin-bottom:10px">Aa — accent</div>
       <div>{accent_bar}</div>
+      <div style="display:none">{swatch_rows}</div>
     </div>"""
 
 
 def _write_preview(cards, total=None, cat_count=None):
     total = len(cards) if total is None else total
     cat_count = len({_category_of(getattr(c, "name", "")) for c in cards}) if cat_count is None else cat_count
-    html = f"""<!doctype html><html><head><meta charset="utf-8"><title>Hermes Theme Pack</title></head>
-<body style="margin:0;background:#0e0e12;color:#eee;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+    style = """<style>
+  body { margin:0; background:#0e0e12; color:#eee; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+  .theme-card { transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease; }
+  .theme-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.45); }
+  /* Hover detail panel — docks to the right edge, mirrors the desktop plugin. */
+  #hover-panel {
+    position: fixed; right: 24px; top: 96px; width: 340px; max-height: calc(100vh - 140px);
+    overflow-y: auto; z-index: 40; pointer-events: none;
+    background: #14121a; border: 1px solid #3a3350; border-radius: 14px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.55); padding: 18px 18px 14px;
+    opacity: 0; transform: translateX(10px); transition: opacity 0.14s ease, transform 0.14s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  #hover-panel.show { opacity: 1; transform: translateX(0); }
+  #hover-panel h3 { margin: 0 0 2px; font-size: 16px; font-weight: 700; color: #f3f0fa; }
+  #hover-panel .cat { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #9a8fc0; }
+  #hover-panel .desc { margin: 8px 0 12px; font-size: 13px; line-height: 1.55; color: #cfc9de; }
+  #hover-panel .bar { height: 22px; border-radius: 6px; margin-bottom: 12px; }
+  #hover-panel .swatch { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:3px 0; }
+  #hover-panel .swatch span.k { font-size: 12px; color: #cfc9de; }
+  #hover-panel .swatch span.v { font-size: 11px; color: #9aa; }
+  #hover-panel .chip { display:inline-block; width:20px; height:20px; border-radius:5px; border:1px solid rgba(255,255,255,0.12); }
+  #hover-panel .empty { font-size: 13px; color: #9aa; }
+  @media (max-width: 900px) { #hover-panel { display:none; } }
+</style>"""
+    script = """<script>
+(function () {
+  var panel = document.getElementById('hover-panel');
+  if (!panel) return;
+  var current = null;
+  function render(card) {
+    var name = card.getAttribute('data-name') || '';
+    var cat = card.getAttribute('data-category') || '';
+    var desc = card.getAttribute('data-description') || '';
+    var raw = card.getAttribute('data-colors') || '{}';
+    var colors;
+    try { colors = JSON.parse(raw.replace(/&quot;/g, '"')); } catch (e) { colors = {}; }
+    var accent = colors['ui_accent'] || colors['banner_accent'] || '#888';
+    var html = '<h3>' + name + '</h3>' +
+      '<div class="cat">' + cat + '</div>' +
+      '<div class="desc">' + desc + '</div>' +
+      '<div class="bar" style="background:' + accent + '"></div>';
+    for (var k in colors) {
+      if (Object.prototype.hasOwnProperty.call(colors, k)) {
+        html += '<div class="swatch"><span class="k">' + k + '</span><span style="display:inline-flex;align-items:center;gap:8px">' +
+          '<span class="v">' + colors[k] + '</span><span class="chip" style="background:' + colors[k] + '"></span></span></div>';
+      }
+    }
+    panel.innerHTML = html;
+    panel.classList.add('show');
+  }
+  document.querySelectorAll('.theme-card').forEach(function (card) {
+    card.addEventListener('mouseenter', function () { current = card; render(card); });
+    card.addEventListener('mouseleave', function () { current = null; panel.classList.remove('show'); });
+  });
+})();
+</script>"""
+    html = f"""<!doctype html><html><head><meta charset="utf-8"><title>Hermes Theme Pack</title>{style}</head>
+<body>
 <div style="padding:28px 32px 8px">
   <div style="font-size:24px;font-weight:800">Hermes Theme Pack</div>
-  <div style="color:#9aa;font-size:13px;margin-top:4px">{total} skins · {cat_count} categories · WCAG contrast checked</div>
+  <div style="color:#9aa;font-size:13px;margin-top:4px">{total} skins · {cat_count} categories · WCAG contrast checked · hover a card for details</div>
 </div>
 <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;padding:20px 32px 32px">
 {''.join(cards)}
 </div>
+<div id="hover-panel"></div>
+{script}
 </body></html>"""
     (DOCS_DIR / "preview.html").write_text(html, encoding="utf-8")
 
