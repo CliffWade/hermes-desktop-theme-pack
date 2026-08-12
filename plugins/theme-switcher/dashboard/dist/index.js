@@ -213,8 +213,14 @@
           .then((res) => {
             load();
             if (res && res.dashboard_theme) {
+              // Live repaint where the host SDK exposes theme.apply (the
+              // additive theme bridge); otherwise fall back to a reload hint.
+              const applied =
+                SDK.theme && SDK.theme.apply ? SDK.theme.apply(name) : false;
               setNote(
-                "Applied " + name + ". Reload the dashboard to repaint it.",
+                applied
+                  ? "Applied " + name + "."
+                  : "Applied " + name + ". Reload the dashboard to repaint it.",
               );
             }
           })

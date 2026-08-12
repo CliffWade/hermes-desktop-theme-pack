@@ -14,6 +14,8 @@ All notable changes to the Hermes Theme Pack. This project follows
   with counts and tabs, every paired theme shows its `⇄` twin with a flip
   button, and applying a skin also **repaints the web dashboard**: the backend
   writes a dashboard-theme YAML from the skin's palette and activates it.
+  Where the host SDK exposes the theme bridge (`SDK.theme.apply`) the repaint
+  is instant; older hosts fall back to a reload hint.
 
 ### Changed
 
