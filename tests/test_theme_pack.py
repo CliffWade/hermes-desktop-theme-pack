@@ -165,6 +165,15 @@ def test_readme_claims_match_actual_themes():
     assert mentioned == names, f"README table missing themes: {sorted(names - mentioned)}"
 
 
+def test_theme_cards_use_a_readable_responsive_grid():
+    """Theme cards must wrap by minimum width instead of forcing seven columns."""
+    source = (REPO / "desktop-plugin/theme-switcher/plugin.js").read_text()
+
+    assert "calc((100% - 48px) / 7)" not in source
+    assert "repeat(auto-fit, minmax(min(100%, 240px), 1fr))" in source
+    assert source.count("style: THEME_GRID_STYLE") == 3
+
+
 def test_twin_pairs_resolve_to_real_opposite_polarity_themes():
     """Every light/dark twin pair names existing themes of opposite polarity.
 
